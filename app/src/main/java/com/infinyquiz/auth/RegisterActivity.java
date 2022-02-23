@@ -33,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         //Get FireBase instance:
         mAuth = FirebaseAuth.getInstance();
 
@@ -157,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) { //if user is registered succesfully (authentication not database)
                             //Put user object into real-time database (firebase)
-                            FirebaseDatabase.getInstance().getReference("Users")
+                            FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()) //Get user ID to put into database
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() { //Test whether this has gone succesfully or not.
                                         @Override
