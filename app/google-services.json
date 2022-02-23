@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "949946326854",
+    "project_id": "infinyquiz-a135e",
+    "storage_bucket": "infinyquiz-a135e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949946326854:android:dd282b2dd136b73274cf47",
+        "android_client_info": {
+          "package_name": "com.infinyquiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949946326854-ij9edsqm4inhfirh8hh4kj49rn3fahqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzmKDhRSt1obg5U2BO845TTwJ4r_Z5K_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949946326854-ij9edsqm4inhfirh8hh4kj49rn3fahqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

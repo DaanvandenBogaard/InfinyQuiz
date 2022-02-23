@@ -14,6 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.infinyquiz.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
 import com.infinyquiz.User;
@@ -23,11 +28,14 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText usernameET, mailET, passwordET, passwordRepeatET;
     private Button confirmBtn;
 
-
+    private FirebaseAuth mAuth;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        //Get FireBase instance:
+        mAuth = FirebaseAuth.getInstance();
 
         Button button = findViewById(R.id.toLogin);
         button.setOnClickListener(new MoveToActivityOnClickListener(
@@ -44,8 +52,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (v.getId() == R.id.registerConfirmBtn) {
                     String[] input = RetrieveInput();
-                    if(isValidInput(input)){
-                        createAccount(input[1],input[2]);
+                    if (isValidInput(input)) {
+                        User thisUser = new User(input[0],input[1]);
+                        createAccount(input[1], input[2], thisUser);
                     }
                 }
             }
@@ -67,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
      *        @result[3] == passwordRepeatET.getText().toString().trim()}
      */
 
-    private String[] RetrieveInput() throws IllegalArgumentException{
+    private String[] RetrieveInput() throws IllegalArgumentException {
         if (usernameET == null || mailET == null || passwordET == null || passwordRepeatET == null) {
             throw new IllegalArgumentException("One of the views is not instantiated correctly.");
         }
@@ -88,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
      *
      * @returns {@result == (the input satisfies our conditions)}
      */
-    public boolean isValidInput(String[] input)  {
+    public boolean isValidInput(String[] input) {
         //Convert string array to 4 different strings.
         String username = input[0];
         String mail = input[1];
@@ -141,8 +150,33 @@ public class RegisterActivity extends AppCompatActivity {
 
     //A method used to make an account. Copied from google so no contract nor unit tests.
     //We assume google's code is correct.
-    public void createAccount(String email, String password) {
+    public void createAccount(String email, String password, User user) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) { //if user is registered succesfully (authentication not database)
+                            //Put user object into real-time database (firebase)
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()) //Get user ID to put into database
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() { //Test whether this has gone succesfully or not.
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){ //If user has been added to realtime database
+                                                Toast.makeText(RegisterActivity.this, "User has been registered succesfully!", Toast.LENGTH_LONG).show();
 
+                                                //TODO redirect to login!
+                                            }
+                                            else{
+                                                Toast.makeText(RegisterActivity.this, "Failed to put user into real time database", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                            });
+                        } else{ //If user could not be registered to authentication
+                            Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
 }
