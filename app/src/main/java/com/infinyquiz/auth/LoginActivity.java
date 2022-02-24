@@ -44,13 +44,15 @@ public class LoginActivity extends AppCompatActivity {
                 String[] input = retrieveInput();
                 String email = input[0];
                 String password = input[1];
-                validateLoginInput(email, password);
-                login(email, password);
+                if(isValidLoginInput(email, password)){
+                    login(email, password);
+                }
+
             }
         });
     }
 
-    private String[] retrieveInput() throws IllegalArgumentException {
+    public String[] retrieveInput() throws IllegalArgumentException {
         if (emailET == null || passwordET == null) {
             throw new IllegalArgumentException("One of the views is not instantiated correctly.");
         }
@@ -60,35 +62,36 @@ public class LoginActivity extends AppCompatActivity {
         return new String[] {email, password};
     }
 
-    private void validateLoginInput(String email, String password) {
+    public boolean isValidLoginInput(String email, String password) {
 
         //check if email is empty
         if (email.isEmpty()) {
             emailET.setError("Email is required.");
             emailET.requestFocus();
-            return;
+            return false;
         }
 
         //check if email is of correct format
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailET.setError("Please enter a valid mail.");
             emailET.requestFocus();
-            return;
+            return false;
         }
 
         //check if password is empty
         if (password.isEmpty()) {
             passwordET.setError("Password is required");
             passwordET.requestFocus();
-            return;
+            return false;
         }
 
         //check password length smaller than 6
         if (password.length() < 6) {
             passwordET.setError("Password is at least 6 characters");
             passwordET.requestFocus();
-            return;
+            return false;
         }
+        return true;
     }
 
     private void login(String email, String password) {
