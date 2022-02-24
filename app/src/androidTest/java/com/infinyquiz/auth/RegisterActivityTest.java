@@ -1,6 +1,5 @@
 package com.infinyquiz.auth;
 
-
 import android.support.test.rule.ActivityTestRule;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -15,6 +14,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 
 public class RegisterActivityTest {
     //Code to run activity during test:
