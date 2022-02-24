@@ -1,3 +1,7 @@
 <resources>
+    // Start screen strings
     <string name="app_name">InfinyQuiz</string>
+    <string name="welcomeTo">Welcome to</string>
+    <string name="login">Log in</string>
+    <string name="createAcc">Create account</string>
 </resources>
