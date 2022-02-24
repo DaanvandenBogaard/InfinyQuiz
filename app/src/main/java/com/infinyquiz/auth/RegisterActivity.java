@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
      *        @result[3] == passwordRepeatET.getText().toString().trim()}
      */
 
-    private String[] RetrieveInput() throws IllegalArgumentException {
+    String[] RetrieveInput() throws IllegalArgumentException {
         if (usernameET == null || mailET == null || passwordET == null || passwordRepeatET == null) {
             throw new IllegalArgumentException("One of the views is not instantiated correctly.");
         }
