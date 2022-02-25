@@ -4,4 +4,15 @@
     <string name="welcomeTo">Welcome to</string>
     <string name="login">Log in</string>
     <string name="createAcc">Create account</string>
+
+    // Login screen strings
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+
+    // Home screen strings
+    <string name="settings">Settings</string>
+    <string name="playNow">Play Now</string>
+    <string name="customMatch">Custom Match</string>
+    <string name="createQuestion">Create Questions</string>
+    <string name="rateQuestion">Rate Questions</string>
 </resources>

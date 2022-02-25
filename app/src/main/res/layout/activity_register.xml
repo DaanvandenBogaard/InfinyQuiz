@@ -122,7 +122,7 @@
     <Button
         android:id="@+id/registerConfirmBtn"
         android:layout_width="250dp"
-        android:layout_height="71dp"
+        android:layout_height="65dp"
         android:layout_marginStart="80dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="81dp"

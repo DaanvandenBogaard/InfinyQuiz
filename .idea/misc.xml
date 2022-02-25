@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_login.xml" value="0.5541666666666667" />
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_register.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/drawable/circlebutton.xml" value="0.4025" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/drawable/light_blue_btn.xml" value="0.4415" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/drawable/rounded_corner.xml" value="0.178" />
+        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_home.xml" value="0.5471014492753623" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_login.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_register.xml" value="0.5" />
