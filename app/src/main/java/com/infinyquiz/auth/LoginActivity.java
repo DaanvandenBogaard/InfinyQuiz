@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.infinyquiz.MainActivity;
 import com.infinyquiz.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
 
@@ -52,6 +54,18 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
+    /* Returns an array of lentgh 2 with the (by the user entered) information.
+     * The array is of the following form:
+     * [email, password]
+     *
+     * @pre {@code emailET != null &  password != null}
+     * @modifies none
+     * @Throws IllegalArgumentException if pre condition violated.
+     * @Return Array with 4 Strings. Where:
+     * {@code @result[0] == emailET.getText().toString().trim() &
+     *        @result[1] == passwordET.getText().toString().trim() }
+     */
     public String[] retrieveInput() throws IllegalArgumentException {
         if (emailET == null || passwordET == null) {
             throw new IllegalArgumentException("One of the views is not instantiated correctly.");
@@ -62,6 +76,14 @@ public class LoginActivity extends AppCompatActivity {
         return new String[] {email, password};
     }
 
+    /* Checks whether or not the input is valid (fullfills both firebase's requirements and our own).
+     * @pre {@code input.length() == 2 &&
+     *      (\forall i; input.has(i); input[i].getClass() == String.getClass())}
+     *
+     * @modifies none
+     *
+     * @returns {@result == (the input satisfies our conditions)}
+     */
     public boolean isValidLoginInput(String email, String password) {
 
         //check if email is empty
@@ -103,8 +125,18 @@ public class LoginActivity extends AppCompatActivity {
 
                 //if user has successfully signed in
                 if (task.isSuccessful()) {
-                    //TODO: redirect to home activity
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    if (user.isEmailVerified()) {
+                        //TODO: redirect to home activity
+                    } else {
+                        user.sendEmailVerification();
+                        Toast.makeText(LoginActivity.this, "Check your email to verify your account", Toast.LENGTH_LONG).show();
+                    }
+
                     //TODO: remove temporary Toast
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     Toast.makeText(LoginActivity.this, "Successfully signed up!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login. Please check credentials", Toast.LENGTH_LONG).show();
