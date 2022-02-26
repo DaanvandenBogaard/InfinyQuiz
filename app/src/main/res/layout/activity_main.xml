@@ -4,30 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
-        android:layout_marginEnd="19dp"
-        android:text="TempLogin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:background="@color/background">
 
     <TextView
-        android:id="@+id/resultView"
+        android:id="@+id/welcomeToView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="338dp"
-        android:layout_marginBottom="326dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:layout_marginTop="86dp"
+        android:fontFamily="@font/buttonfont"
+        android:text="@string/welcomeTo"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/startAppNameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:fontFamily="@font/harlowsoliditalic"
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeToView" />
+
+    <ImageView
+        android:id="@+id/startLogoView"
+        android:layout_width="307dp"
+        android:layout_height="151dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startAppNameView"
+        app:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/createAccBtn"
+        android:layout_width="185dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@color/lightBlueBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="@string/createAcc"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startLogoView"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/startLoginBtn"
+        android:layout_width="185dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginBottom="173dp"
+        android:backgroundTint="@color/lightBlueBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="@string/login"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createAccBtn"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

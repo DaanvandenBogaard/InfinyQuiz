@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.infinyquiz.HomeActivity;
 import com.infinyquiz.MainActivity;
 import com.infinyquiz.OnClickListener.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
@@ -128,17 +129,17 @@ public class LoginActivity extends AppCompatActivity {
                 //if user has successfully signed in
                 if (task.isSuccessful()) {
 
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseUser fireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                    if (user.isEmailVerified()) {
+                    if (fireBaseUser.isEmailVerified()) {
                         //TODO: redirect to home activity
                     } else {
-                        user.sendEmailVerification();
+                        fireBaseUser.sendEmailVerification();
                         Toast.makeText(LoginActivity.this, "Check your email to verify your account", Toast.LENGTH_LONG).show();
                     }
 
                     //TODO: remove temporary Toast
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     Toast.makeText(LoginActivity.this, "Successfully signed up!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login. Please check credentials", Toast.LENGTH_LONG).show();
