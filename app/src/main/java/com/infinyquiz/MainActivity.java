@@ -11,12 +11,18 @@ import android.widget.TextView;
 import com.infinyquiz.auth.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
-    //For now, non final code. In final product: Once the user opens the app (and is not logged in),
-    //the user must be redirected to the login activity.
+    /* TODO:
+     * Logout button
+     * Redirection to login activity
+     * Check requirements to see other things main screen must do.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //If user is not logged in, redirect to login screen
+        //TODO implement redirection to login screen.
 
         //Retrieve button:
         Button button = findViewById(R.id.button);
