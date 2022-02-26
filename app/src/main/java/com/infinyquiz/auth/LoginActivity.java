@@ -132,14 +132,13 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseUser fireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
                     if (fireBaseUser.isEmailVerified()) {
-                        //TODO: redirect to home activity
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     } else {
                         fireBaseUser.sendEmailVerification();
                         Toast.makeText(LoginActivity.this, "Check your email to verify your account", Toast.LENGTH_LONG).show();
                     }
 
                     //TODO: remove temporary Toast
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     Toast.makeText(LoginActivity.this, "Successfully signed up!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login. Please check credentials", Toast.LENGTH_LONG).show();

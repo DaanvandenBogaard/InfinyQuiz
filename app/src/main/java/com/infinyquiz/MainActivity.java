@@ -30,11 +30,5 @@ public class MainActivity extends AppCompatActivity {
         createAccBtn.setOnClickListener(new MoveToActivityOnClickListener(new RegisterActivity(), this));
         startLoginBtn.setOnClickListener(new MoveToActivityOnClickListener(new LoginActivity(),this));
 
-        //If user is already logged in, redirect to homepage
-        FirebaseUser fireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (fireBaseUser != null) { //TODO make sure this check is enough!
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
-        }
     }
 }
