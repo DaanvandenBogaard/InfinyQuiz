@@ -46,12 +46,14 @@ public class LoginActivity extends AppCompatActivity {
                 String[] input = retrieveInput();
                 String email = input[0];
                 String password = input[1];
-                if(isValidLoginInput(email, password)){
+                if (isValidLoginInput(email, password)) {
                     login(email, password);
                 }
 
             }
         });
+
+        setOldValues();
     }
 
 
@@ -73,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailET.getText().toString().trim();
         String password = passwordET.getText().toString().trim();
 
-        return new String[] {email, password};
+        return new String[]{email, password};
     }
 
     /* Checks whether or not the input is valid (fullfills both firebase's requirements and our own).
@@ -116,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    //Login code for firebase
     private void login(String email, String password) {
 
         //sign in with Firebase
@@ -143,5 +146,28 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /* A function to set the values according to the intent.
+     *
+     * @pre none
+     * @post if {@code getIntent.getExtras() != null} then:
+     * ({@code Bundle extras = getIntent().getExtras()}) &
+     * (if {@code extras.getString("email") != null} then the value in the UI field is set accordingly) &
+     * (if {@code extras.getString("password") != null} then the value in the UI field is set accordingly)
+     */
+    private void setOldValues(){
+        //Retrieve (possible) info from register activity
+        Bundle info = getIntent().getExtras();
+        if (info != null) {
+            String email = info.getString("email");
+            String password = info.getString("password");
+            if(email != null){
+                emailET.setText(email);
+            }
+            if(password != null){
+                passwordET.setText(password);
+            }
+        }
     }
 }

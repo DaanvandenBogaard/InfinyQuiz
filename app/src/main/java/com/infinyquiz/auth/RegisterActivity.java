@@ -163,8 +163,12 @@ public class RegisterActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){ //If user has been added to realtime database
                                                 Toast.makeText(RegisterActivity.this, "User has been registered succesfully!", Toast.LENGTH_LONG).show();
-
-                                                //TODO redirect to login!
+                                                //Redirect to login, with the login data:
+                                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                                //Add data to login:
+                                                intent.putExtra("email" , email);
+                                                intent.putExtra("password", password);
+                                                startActivity(intent);
                                             }
                                             else{
                                                 Toast.makeText(RegisterActivity.this, "Failed to put user into real time database", Toast.LENGTH_LONG).show();
