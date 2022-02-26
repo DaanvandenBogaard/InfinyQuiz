@@ -15,4 +15,9 @@
     <string name="customMatch">Custom Match</string>
     <string name="createQuestion">Create Questions</string>
     <string name="rateQuestion">Rate Questions</string>
+
+    // Settings strings
+    <string name="musicVolume">Music Volume</string>
+    <string name="fxVolume">FX Volume</string>
+    <string name="publicProfile">Set public profile information</string>
 </resources>
