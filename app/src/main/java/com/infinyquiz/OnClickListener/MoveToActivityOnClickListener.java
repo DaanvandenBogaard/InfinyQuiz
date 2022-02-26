@@ -1,4 +1,4 @@
-package com.infinyquiz;
+package com.infinyquiz.OnClickListener;
 
 import android.content.Context;
 import android.content.Intent;
