@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    /* Returns an array of lentgh 2 with the (by the user entered) information.
+    /* Returns an array of length 2 with the (by the user entered) information.
      * The array is of the following form:
      * [email, password]
      *
