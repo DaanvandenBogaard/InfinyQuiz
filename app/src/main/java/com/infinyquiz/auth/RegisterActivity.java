@@ -16,9 +16,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.infinyquiz.OnClickListener.MoveToActivityOnClickListener;
+import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
-import com.infinyquiz.User;
+import com.infinyquiz.datarepresentation.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
