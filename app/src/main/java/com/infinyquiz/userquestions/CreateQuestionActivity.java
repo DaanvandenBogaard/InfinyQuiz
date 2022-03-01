@@ -8,8 +8,11 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.infinyquiz.R;
+import com.infinyquiz.datarepresentation.Question;
 
 public class CreateQuestionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    //TODO: Implement the adding of pictures
 
     //The string of the category will be stored here.
     private String category;
@@ -42,5 +45,16 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
     public void onNothingSelected(AdapterView<?> adapterView) {
         String[] arr = getResources().getStringArray(R.array.categories);
         category = arr[0];
+    }
+
+    /* A function to retrieve the input
+     * It returns a Question object
+     *
+     * @pre none
+     * @returns a Question object as specified above
+     * @modifies none
+     */
+    public Question retrieveInput(){
+        return null;
     }
 }
