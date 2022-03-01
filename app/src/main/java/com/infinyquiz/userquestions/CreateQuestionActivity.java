@@ -17,7 +17,7 @@ import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
-public class CreateQuestionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CreateQuestionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     //TODO: Implement the adding of pictures
 
@@ -49,6 +49,10 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         answerCTV = (TextView) findViewById(R.id.questionAnswerCInput);
         answerDTV = (TextView) findViewById(R.id.questionAnswerDInput);
         difficultySlider = (Slider) findViewById(R.id.difficultySlider);
+
+        //Finally, we set the submit button
+        Button submitButton = (Button) findViewById(R.id.saveQuestionBtn);
+        submitButton.setOnClickListener(this);
     }
 
     //A method to set the values of our spinner (drop down menu for categories)
@@ -94,5 +98,45 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
 
     /* A function that will test whether or not all fields are nonempty and if all our requirements hold.
      *
+     * @pre none
+     * @modifies none
+     * @returns {@result == (the input satisfies our conditions)}
      */
+    public boolean isValidInput(){
+        //Test for being non empty
+        if(questionTV.getText().toString().trim().isEmpty()){
+            questionTV.setError("Question must be entered.");
+            questionTV.requestFocus();
+            return false;
+        }
+        if(answerATV.getText().toString().trim().isEmpty()){
+            answerATV.setError("Correct answer must be entered.");
+            answerATV.requestFocus();
+            return false;
+        }
+        if(answerBTV.getText().toString().trim().isEmpty()){
+            answerBTV.setError("option must be entered.");
+            answerBTV.requestFocus();
+            return false;
+        }
+        if(answerCTV.getText().toString().trim().isEmpty()){
+            answerCTV.setError("option must be entered.");
+            answerCTV.requestFocus();
+            return false;
+        }
+        if(answerDTV.getText().toString().trim().isEmpty()){
+            answerDTV.setError("option must be entered.");
+            answerDTV.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(isValidInput()){
+            Question question = getQuestionFromInput();
+            //Submit question to database
+        }
+    }
 }
