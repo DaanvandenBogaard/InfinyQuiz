@@ -24,8 +24,10 @@
         android:text="Submit your question!"
         app:layout_constraintBottom_toTopOf="@+id/questionCategorySpinner"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.741" />
 
     <Button
         android:id="@+id/questionPicBtn"
@@ -58,8 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:hint="enter correct answer"
         android:inputType="textPersonName"
-        android:text="enter correct answer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,10 +73,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:hint="enter correct answer"
         android:inputType="textPersonName"
-        android:text="Enter wrong answer"
-        app:layout_constraintTop_toBottomOf="@+id/questionAnswerAInput"
-        tools:layout_editor_absoluteX="100dp" />
+        app:layout_constraintStart_toStartOf="@+id/questionAnswerAInput"
+        app:layout_constraintTop_toBottomOf="@+id/questionAnswerAInput" />
 
     <EditText
         android:id="@+id/questionAnswerCInput"
@@ -82,10 +84,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:hint="enter correct answer"
         android:inputType="textPersonName"
-        android:text="Enter wrong answer"
-        app:layout_constraintTop_toBottomOf="@+id/questionAnswerBInput"
-        tools:layout_editor_absoluteX="100dp" />
+        app:layout_constraintStart_toStartOf="@+id/questionAnswerBInput"
+        app:layout_constraintTop_toBottomOf="@+id/questionAnswerBInput" />
 
     <EditText
         android:id="@+id/questionAnswerDInput"
@@ -93,10 +95,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:hint="enter correct answer"
         android:inputType="textPersonName"
-        android:text="Enter wrong answer"
-        app:layout_constraintTop_toBottomOf="@+id/questionAnswerCInput"
-        tools:layout_editor_absoluteX="100dp" />
+        app:layout_constraintStart_toStartOf="@+id/questionAnswerCInput"
+        app:layout_constraintTop_toBottomOf="@+id/questionAnswerCInput" />
 
     <Button
         android:id="@+id/saveQuestionBtn"
@@ -119,9 +121,18 @@
         android:stepSize="1"
         android:valueFrom="1"
         android:valueTo="5"
+        android:value="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionAnswerDInput" />
+
+    <Button
+        android:id="@+id/backToHomeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to home"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
