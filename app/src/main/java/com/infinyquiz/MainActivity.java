@@ -2,12 +2,14 @@ package com.infinyquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import com.infinyquiz.auth.LoginActivity;
 import com.infinyquiz.auth.RegisterActivity;
+import com.infinyquiz.userquestions.CreateQuestionActivity;
 
 public class MainActivity extends AppCompatActivity {
     /* TODO:
@@ -18,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //TODO: delelete this is just for easy testing
+        startActivity(new Intent(this, CreateQuestionActivity.class));
+        //TODO: end delete
 
         //Set buttons and their OnClicklisteners
         Button createAccBtn = (Button) findViewById(R.id.createAccBtn);

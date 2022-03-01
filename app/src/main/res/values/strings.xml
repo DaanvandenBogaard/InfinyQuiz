@@ -20,4 +20,11 @@
     <string name="musicVolume">Music Volume</string>
     <string name="fxVolume">FX Volume</string>
     <string name="publicProfile">Set public profile information</string>
+
+    // String array for categories:
+    <string-array name="categories">
+        <item>History</item>
+        <item>Science</item>
+        <item>category3</item>
+    </string-array>
 </resources>

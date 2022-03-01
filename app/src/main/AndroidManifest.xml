@@ -21,6 +21,7 @@
         <activity android:name=".auth.LoginActivity"></activity>
         <activity android:name=".auth.RegisterActivity"></activity>
         <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".userquestions.CreateQuestionActivity"></activity>
     </application>
 
 </manifest>
