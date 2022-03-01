@@ -1,5 +1,6 @@
 package com.infinyquiz.userquestions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -7,19 +8,31 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.slider.Slider;
+import com.google.firebase.database.FirebaseDatabase;
 import com.infinyquiz.HomeActivity;
 import com.infinyquiz.R;
+import com.infinyquiz.auth.LoginActivity;
 import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CreateQuestionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     //TODO: Implement the adding of pictures
+
+    //The firebase database
+    private FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
 
     //The string of the category will be stored here.
     private String category;
@@ -85,15 +98,12 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
      * @modifies none
      */
     public Question getQuestionFromInput() {
-        String[] options = new String[4];
-        options[0] = (String) answerATV.getText();
-        options[1] = (String) answerBTV.getText();
-        options[2] = (String) answerCTV.getText();
-        options[3] = (String) answerDTV.getText();
-        for (int i = 0; i < options.length; i++) {
-            options[i] = options[i].trim();
-        }
-        return new Question((String) questionTV.getText(), category, (int) difficultySlider.getValue(), options, options[0], pictureID);
+        ArrayList<String> options = new ArrayList<String>();
+        options.add(answerATV.getText().toString().trim());
+        options.add(answerBTV.getText().toString().trim());
+        options.add(answerCTV.getText().toString().trim());
+        options.add(answerDTV.getText().toString().trim());
+        return new Question((String) questionTV.getText().toString().trim(), category, (int) difficultySlider.getValue(), options, answerATV.getText().toString().trim(), pictureID);
     }
 
     /* A function that will test whether or not all fields are nonempty and if all our requirements hold.
@@ -137,6 +147,20 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         if(isValidInput()){
             Question question = getQuestionFromInput();
             //Submit question to database
+            //TODO add firebase connection and add question
+            database.getReference().child("NotValidatedQuestions").push().setValue(question).addOnCompleteListener(new OnCompleteListener<Void>() { //Test whether this has gone succesfully or not.
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){ //If user has been added to realtime database
+                        Toast.makeText(CreateQuestionActivity.this, "Question succesfully submitted!!", Toast.LENGTH_LONG).show();
+                        //Reload page
+                        startActivity(new Intent(CreateQuestionActivity.this, CreateQuestionActivity.class));
+                    }
+                    else{
+                        Toast.makeText(CreateQuestionActivity.this, "Something went wrong with your submission, please try again!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         }
     }
 }

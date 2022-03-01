@@ -1,6 +1,8 @@
 package com.infinyquiz.datarepresentation;
 
 
+import java.util.ArrayList;
+
 public class Question {
 
     //The question itself
@@ -13,7 +15,7 @@ public class Question {
     private int difficulty;
 
     //The different possible answers
-    private String[] options;
+    private ArrayList<String> options;
 
     //The correct answer
     private String correctOption;
@@ -32,7 +34,7 @@ public class Question {
      * @throws IllegalArgumentException if precondition is violated.
      * @modifies none
      */
-    public Question(String question, String category, int difficulty, String[] options, String correctOption, String pictureID) throws IllegalArgumentException {
+    public Question(String question, String category, int difficulty, ArrayList<String> options, String correctOption, String pictureID) throws IllegalArgumentException {
         this.question = question;
         this.category = category;
         if (1 <= difficulty & difficulty <= 5) {
@@ -58,7 +60,7 @@ public class Question {
         return difficulty;
     }
 
-    public String[] getOptions() {
+    public ArrayList<String> getOptions() {
         return options;
     }
 
