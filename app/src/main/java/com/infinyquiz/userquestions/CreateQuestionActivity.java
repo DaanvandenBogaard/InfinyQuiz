@@ -103,7 +103,9 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         options.add(answerBTV.getText().toString().trim());
         options.add(answerCTV.getText().toString().trim());
         options.add(answerDTV.getText().toString().trim());
-        return new Question((String) questionTV.getText().toString().trim(), category, (int) difficultySlider.getValue(), options, answerATV.getText().toString().trim(), pictureID);
+        return new Question((String) questionTV.getText().toString().trim(), category,
+                (int) difficultySlider.getValue(), options, answerATV.getText().toString().trim(),
+                pictureID);
     }
 
     /* A function that will test whether or not all fields are nonempty and if all our requirements hold.
@@ -147,7 +149,6 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         if(isValidInput()){
             Question question = getQuestionFromInput();
             //Submit question to database
-            //TODO add firebase connection and add question
             database.getReference().child("NotValidatedQuestions").push().setValue(question).addOnCompleteListener(new OnCompleteListener<Void>() { //Test whether this has gone succesfully or not.
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

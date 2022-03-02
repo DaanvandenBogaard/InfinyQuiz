@@ -71,4 +71,33 @@ public class Question {
     public String getPictureID() {
         return pictureID;
     }
+
+    //Check if 2 instances are equal
+    @Override
+    public boolean equals(final Object obj) {
+        //check if obj is of right type:
+        if (obj == null | !(obj instanceof Question)) {
+            return false;
+        }
+        Question reference = (Question) obj;
+        if (!this.getQuestion().equals(reference.getQuestion())) {
+            return false;
+        }
+        if (!this.getCategory().equals(reference.getCategory())) {
+            return false;
+        }
+        if (this.getDifficulty() != reference.getDifficulty()) {
+            return false;
+        }
+        if (!this.getOptions().equals(reference.getOptions())) {
+            return false;
+        }
+        if (!this.getCorrectOption().equals(reference.getCorrectOption())) {
+            return false;
+        }
+        if (!this.getPictureID().equals(reference.getPictureID())) {
+            return false;
+        }
+        return true;
+    }
 }
