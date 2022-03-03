@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.datarepresentation.Question;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 //A class to retrieve (approved) questions from the database
@@ -26,7 +27,7 @@ public class QuestionRetriever {
     private DatabaseReference ref;
 
     //Constructor
-    public QuestionRetriever(Context context){
+    public QuestionRetriever(Context context) {
         this.context = context;
         res = context.getResources();
         categories = res.getStringArray(R.array.categories);
@@ -37,59 +38,54 @@ public class QuestionRetriever {
      * @pre none
      * @post {@code categories.has(\result)}
      */
-    public String getRandomCategory(){
+    public String getRandomCategory() {
         int length = categories.length;
         int i = new Random().nextInt(length);
         return categories[i];
     }
 
     //Gets a question with a random category
-    public Question getQuestion(){
+    public Question getQuestion() {
         //Get a random category
         String category = getRandomCategory();
         //retrieve question from database
         return getQuestion(category);
     }
 
-    public static Question getQuestion(String category){
+    public static Question getQuestion(String category) {
         //TODO: implement this method
         return new Question();
     }
 
-    public Question getReviewQuestion(){
-        initFirebaseConnection();
-        ref = getReference("NotValidatedQuestions");
+    public Question getReviewQuestion() {
+        ref = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("NotValidatedQuestions");
         // Attach a listener to read the data at our posts reference
-        final Question[] question = new Question[1];
+        ArrayList<Question> questions = new ArrayList<>();
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                question[0] = dataSnapshot.getValue(Question.class);
-                Log.i("question" ,  question[0].toString());
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Question question = snapshot.getValue(Question.class);
+                    questions.add(question);
+                    System.out.println("TEST");
+                    System.out.println("question == null:" + question.getQuestion() == null );
+                    System.out.println("question =" + question.getQuestion());
+                    System.out.println("TEST");
+                }
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e("could not read data" , "The read failed: " + databaseError.getCode());
+                Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
-        return question[0];
-    }
-
-    //A method to initialise our firebase database
-    private void initFirebaseConnection(){
-        if(database != null){
-            database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
+        if(questions.size() == 0){
+            return null;
         }
-        else {
-            System.out.println("Database connection is already initiated");
-        }
+        return questions.get(0);
     }
-
-    private DatabaseReference getReference(String path){
-        return database.getReference(path);
-    }
-
 
 
 }

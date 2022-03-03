@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.infinyquiz.HomeActivity;
 import com.infinyquiz.QuestionRetriever;
 import com.infinyquiz.R;
 import com.infinyquiz.datarepresentation.Question;
@@ -16,11 +17,13 @@ public class ReviewQuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviewquestion);
 
+        Button backToHomeBtn = (Button) findViewById(R.id.backToHomeBtn);
+        backToHomeBtn.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(),this));
+
         QuestionRetriever qR = new QuestionRetriever(this);
-        Question question = qR.getQuestion();
+        Question question = qR.getReviewQuestion();
+
         TextView debugTV = findViewById(R.id.debugTV);
-        debugTV.setText(question.toString());
-        System.out.print(question);
     }
 
     public Question getRandomQuestion(){
