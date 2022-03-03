@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //TODO: delelete this is just for easy testing
-        startActivity(new Intent(this, CreateQuestionActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
         //TODO: end delete
 
         //Set buttons and their OnClicklisteners
