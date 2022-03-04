@@ -17,8 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.infinyquiz.HomeActivity;
-import com.infinyquiz.MainActivity;
-import com.infinyquiz.OnClickListener.MoveToActivityOnClickListener;
+import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
 
 public class LoginActivity extends AppCompatActivity {

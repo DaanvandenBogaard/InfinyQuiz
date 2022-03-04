@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/settingsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="133dp"
+        android:fontFamily="@font/harlowsoliditalic"
+        android:text="@string/settings"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/toHomeBtn"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="314dp"
+        android:layout_marginBottom="635dp"
+        android:backgroundTint="@color/yellowBtn"
+        app:icon="@drawable/back_icon"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/musicSlider"
+        android:layout_width="243dp"
+        android:layout_height="46dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/slider_bar"
+        android:thumb="@drawable/slider_thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musicVolumeView" />
+
+    <SeekBar
+        android:id="@+id/sfxSlider"
+        android:layout_width="243dp"
+        android:layout_height="46dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/slider_bar"
+        android:thumb="@drawable/slider_thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fxVolumeView" />
+
+    <TextView
+        android:id="@+id/musicVolumeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="73dp"
+        android:fontFamily="@font/buttonfont"
+        android:text="@string/musicVolume"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsView" />
+
+    <TextView
+        android:id="@+id/fxVolumeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:fontFamily="@font/buttonfont"
+        android:text="@string/fxVolume"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musicSlider" />
+
+    <Button
+        android:id="@+id/setPublicProfileBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="118dp"
+        android:layout_marginBottom="159dp"
+        android:backgroundTint="@color/lightBlueBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="@string/publicProfile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sfxSlider"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

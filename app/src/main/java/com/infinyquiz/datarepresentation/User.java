@@ -1,4 +1,4 @@
-package com.infinyquiz;
+package com.infinyquiz.datarepresentation;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
