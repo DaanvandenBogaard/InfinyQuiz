@@ -23,6 +23,9 @@ public class Question {
     //The ID/identifier of the picture in firebase database (is null if no picture is set).
     private String pictureID;
 
+    //Reference in firebase, usefull for retrieving random questions.
+    private String reference;
+
     //Public empty constructor, needed by firebase
     public Question() {
     }
@@ -99,5 +102,18 @@ public class Question {
             return false;
         }
         return true;
+    }
+
+    //A check to see if question is equal to the empty question
+    public boolean isEmpty() {
+        return this.equals(new Question());
+    }
+
+    public void setReference(String string) {
+        reference = string;
+    }
+
+    public String getReference() {
+        return reference;
     }
 }
