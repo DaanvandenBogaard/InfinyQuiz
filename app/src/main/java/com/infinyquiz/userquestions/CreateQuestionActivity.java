@@ -19,13 +19,10 @@ import com.google.android.material.slider.Slider;
 import com.google.firebase.database.FirebaseDatabase;
 import com.infinyquiz.HomeActivity;
 import com.infinyquiz.R;
-import com.infinyquiz.auth.LoginActivity;
-import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CreateQuestionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
@@ -50,7 +47,7 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         setContentView(R.layout.activity_createquestion);
 
         //Set button to go back to home
-        Button backToHomeBtn = (Button) findViewById(R.id.backToHomeBtn);
+        Button backToHomeBtn = (Button) findViewById(R.id.quitToHomeBtn);
         backToHomeBtn.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(), this));
 
         setSpinner();

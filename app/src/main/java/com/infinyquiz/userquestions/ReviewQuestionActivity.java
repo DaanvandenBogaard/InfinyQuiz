@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +23,8 @@ import java.util.Random;
 
 public class ReviewQuestionActivity extends AppCompatActivity {
 
+    //TODO implement image of question!
+
     private boolean hasRetrievedQuestion = false;
     private Question question = new Question();
 
@@ -29,10 +32,12 @@ public class ReviewQuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviewquestion);
 
-        Button backToHomeBtn = (Button) findViewById(R.id.backToHomeBtn);
+        getQuestion();
+
+        //Set buttons
+        Button backToHomeBtn = (Button) findViewById(R.id.quitToHomeBtn);
         backToHomeBtn.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(), this));
 
-        getQuestion();
     }
 
     //Method to get question data
@@ -43,7 +48,7 @@ public class ReviewQuestionActivity extends AppCompatActivity {
         ArrayList<Question> questions = new ArrayList<>();
         ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(hasRetrievedQuestion){
                     return;
                 }
@@ -59,7 +64,7 @@ public class ReviewQuestionActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
@@ -67,11 +72,27 @@ public class ReviewQuestionActivity extends AppCompatActivity {
 
     //sets the correct question into UI;
     private void setQuestion(Question question){
-        //TODO: provide correct implementation
-        System.out.println(question);
-        System.out.println(question.getQuestion());
-        System.out.println(question.getCorrectOption());
-        System.out.println(question.getOptions());
+        //Get UI elements
+        TextView questionTV = (TextView) findViewById(R.id.questionTV);
+        TextView correctOptionTV = (TextView) findViewById(R.id.correctAnswerTV);
+        TextView optionsTV = (TextView) findViewById(R.id.optionsTV);
+        TextView categoryTV = (TextView) findViewById(R.id.categoryTV);
+        TextView difficultyTV = (TextView) findViewById(R.id.difficulityTV);
+
+        //set text accordingly
+        questionTV.setText(question.getQuestion());
+        correctOptionTV.setText(question.getCorrectOption());
+        categoryTV.setText(question.getCategory());
+        difficultyTV.setText(String.valueOf(question.getDifficulty()));
+
+        //We first rewrite this string
+        StringBuilder optionsString = new StringBuilder();
+        for(String option : question.getOptions()){
+            optionsString.append(option).append(",");
+        }
+        optionsString = new StringBuilder(optionsString.substring(0, optionsString.length() - 1));
+        optionsString.append(".");
+        optionsTV.setText(optionsString.toString());
     }
 
 }
