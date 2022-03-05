@@ -2,7 +2,6 @@ package com.infinyquiz.userquestions;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.health.SystemHealthManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +32,7 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
 
     //The minimum number of votes needed before we either validate or invalidate our question.
     //Should be "50" according to our specifications (MUST).
-    private final int VALIDATION_THRESHOLD = 2; //=50; //TODO SET CORRECT VALUE
+    private final int VALIDATION_THRESHOLD = 1; //=50; //TODO SET CORRECT VALUE
 
     //The percentage (value must be in the range of [0,1]) of positive votes after which a question
     //is accepted.
@@ -82,9 +81,6 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
      * @throws DatabaseError if no connection could be made to the database
      */
     private void getQuestion(){
-        System.out.println("TEST");
-        System.out.println("GETQUESTION");
-        System.out.println("TEST");
         Question[] returnQuestion = new Question[1];
         returnQuestion[0] = new Question();
 
@@ -98,7 +94,6 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    System.out.println("Good1");
                     Question newQuestion = snapshot.getValue(Question.class);
                     newQuestion.setReference(snapshot.getKey());
                     //If the current user has already voted on this question, it will not be added
@@ -202,7 +197,7 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
             FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
             if (numPosVotes / (numNegVotes + numPosVotes) >= ACCEPTANCE_PERCENTAGE) {
                 //Move question to validated questions
-                database.getReference().child("ValidatedQuestions").push().setValue(question);
+                database.getReference().child("ValidatedQuestions").child(question.getCategory()).push().setValue(question);
             }
             //Remove question from database "NotValidatedQuestions"
             database.getReference().child("NotValidatedQuestions").child(question.getReference()).removeValue();
