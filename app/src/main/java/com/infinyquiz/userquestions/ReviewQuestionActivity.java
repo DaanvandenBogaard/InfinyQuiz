@@ -1,5 +1,6 @@
 package com.infinyquiz.userquestions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +21,7 @@ import com.infinyquiz.R;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -56,7 +59,7 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(hasRetrievedQuestion){
+                if (hasRetrievedQuestion) {
                     return;
                 }
                 hasRetrievedQuestion = true;
@@ -64,10 +67,30 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Question question = snapshot.getValue(Question.class);
                     question.setReference(snapshot.getKey());
-                    questions.add(question);
+                    //If the current user has already voted on this question, it will not be added
+                    String curUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    ArrayList<String> posVotes = new ArrayList<>();
+                    ArrayList<String> negVotes = new ArrayList<>();
+
+                    for (DataSnapshot data : snapshot.child("posVote").getChildren()) {
+                        String user = data.getValue(String.class);
+                        posVotes.add(user);
+                    }
+                    for (DataSnapshot data : snapshot.child("negVote").getChildren()) {
+                        String user = data.getValue(String.class);
+                        negVotes.add(user);
+                    }
+                    if (!negVotes.contains(curUserID) && !posVotes.contains(curUserID)) {
+                        questions.add(question);
+                    }
                 }
                 //pick random question
-                question = questions.get(new Random().nextInt(questions.size()));
+                if (questions.size() == 0) {
+                    question = new Question();
+                }
+                else {
+                    question = questions.get(new Random().nextInt(questions.size()));
+                }
                 setQuestion(question);
             }
 
@@ -79,7 +102,7 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
     }
 
     //sets the correct question into UI;
-    private void setQuestion(Question question){
+    private void setQuestion(Question question) {
         //Get UI elements
         TextView questionTV = (TextView) findViewById(R.id.questionTV);
         TextView correctOptionTV = (TextView) findViewById(R.id.correctAnswerTV);
@@ -95,7 +118,7 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
 
         //We first rewrite this string
         StringBuilder optionsString = new StringBuilder();
-        for(String option : question.getOptions()){
+        for (String option : question.getOptions()) {
             optionsString.append(option).append(",");
         }
         optionsString = new StringBuilder(optionsString.substring(0, optionsString.length() - 1));
@@ -107,12 +130,20 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View view) {
         //If question is not yet loaded, do nothing
-        if(question.isEmpty()){
+        if (question.isEmpty()) {
             return; //Do nothing
         }
+        String posOrNeg = "posVote";
+        if (view.getId() == R.id.voteNegativeBtn) {
+            posOrNeg = "negVote";
+        }
         DatabaseReference ref = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("NotValidatedQuestions");
-        ref.child(question.getReference()).child("test").push().setValue(1);
+        ref.child(question.getReference()).child(posOrNeg).push().setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
+        //Check if question must be moved to validated questions
+        //TODO implement
+
+        startActivity(new Intent(this, ReviewQuestionActivity.class));
     }
 
 }

@@ -12,7 +12,7 @@ public class Question {
     private String category;
 
     //The difficulty of the question, on a 1-5 scale.
-    private int difficulty;
+    private int difficulty = 0;
 
     //The different possible answers
     private ArrayList<String> options;
@@ -52,10 +52,16 @@ public class Question {
 
     //Getters:
     public String getQuestion() {
+        if (question == null) {
+            return "Could not find a Question";
+        }
         return question;
     }
 
     public String getCategory() {
+        if (category == null) {
+            return "Could not retrieve a category";
+        }
         return category;
     }
 
@@ -64,14 +70,27 @@ public class Question {
     }
 
     public ArrayList<String> getOptions() {
+        if (options == null) {
+            options = new ArrayList<>();
+            options.add("Could not retrieve any options");
+            options.add("Could not retrieve any options");
+            options.add("Could not retrieve any options");
+            options.add("Could not retrieve any options");
+        }
         return options;
     }
 
     public String getCorrectOption() {
+        if (correctOption == null) {
+            return "could not find correct answer";
+        }
         return correctOption;
     }
 
     public String getPictureID() {
+        if (pictureID == null) {
+            return "Could not find pictureID";
+        }
         return pictureID;
     }
 
