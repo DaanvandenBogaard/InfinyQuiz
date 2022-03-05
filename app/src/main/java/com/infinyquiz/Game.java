@@ -2,6 +2,7 @@ package com.infinyquiz;
 
 import com.google.android.gms.common.util.ArrayUtils;
 import com.google.firebase.auth.FirebaseAuth;
+import com.infinyquiz.datarepresentation.Question;
 
 import java.util.Arrays;
 import java.util.Dictionary;

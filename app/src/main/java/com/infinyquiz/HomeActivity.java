@@ -3,6 +3,7 @@ package com.infinyquiz;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
@@ -23,5 +24,7 @@ public class HomeActivity extends AppCompatActivity {
         createQuestionBtn.setOnClickListener(new MoveToActivityOnClickListener(new CreateQuestionActivity(), this));
         Button reviewQuestionBtn = (Button) findViewById(R.id.rateQuestionBtn);
         reviewQuestionBtn.setOnClickListener(new MoveToActivityOnClickListener(new ReviewQuestionActivity(), this));
+        ImageButton profileBtn = (ImageButton) findViewById(R.id.profileBtn);
+        profileBtn.setOnClickListener( new MoveToActivityOnClickListener(new ProfileActivity(), this));
     }
 }

@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InfinyQuiz">
         <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FriendsManagement.FriendsActitivity"
+            android:exported="false" />
+        <activity
+            android:name=".FriendsManagement.SearchFriendActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -18,11 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".auth.LoginActivity"></activity>
-        <activity android:name=".auth.RegisterActivity"></activity>
-        <activity android:name=".HomeActivity"></activity>
-        <activity android:name=".userquestions.CreateQuestionActivity"></activity>
-        <activity android:name=".userquestions.ReviewQuestionActivity"></activity>
+        <activity android:name=".auth.LoginActivity" />
+        <activity android:name=".auth.RegisterActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".userquestions.CreateQuestionActivity" />
+        <activity android:name=".userquestions.ReviewQuestionActivity" />
     </application>
 
 </manifest>

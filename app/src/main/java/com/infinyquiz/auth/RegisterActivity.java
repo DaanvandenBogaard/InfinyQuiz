@@ -15,7 +15,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
 import com.infinyquiz.datarepresentation.User;
@@ -26,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Button confirmBtn;
 
     private FirebaseAuth mAuth;
+
+    boolean usernameExists;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,8 +147,37 @@ public class RegisterActivity extends AppCompatActivity {
             passwordRepeatET.requestFocus();
             return false;
         }
+        //This doesnt work since its asynchronus
+     /*   if(alreadyExists(username)){
+            usernameET.setError("Username already exists.");
+            usernameET.requestFocus();
+            return false;
+        } */
         return true;
     }
+
+   /* private boolean alreadyExists(String username) {
+        DatabaseReference mref =  FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
+        mref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    if (data.child(username).exists()) {
+                        usernameExists = true;
+                    } else {
+                        usernameExists = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return  usernameExists;
+    } */
 
     //A method used to make an account. Copied from google so no contract nor unit tests.
     //We assume google's code is correct.
