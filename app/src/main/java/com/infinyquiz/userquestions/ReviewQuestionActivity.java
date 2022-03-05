@@ -29,10 +29,11 @@ import java.util.Random;
 public class ReviewQuestionActivity extends AppCompatActivity implements View.OnClickListener {
 
     //TODO implement image of question!
+    //TODO implement FQ-06
 
     //The minimum number of votes needed before we either validate or invalidate our question.
     //Should be "50" according to our specifications (MUST).
-    private final int VALIDATION_THRESHOLD = 1; //=50; //TODO SET CORRECT VALUE
+    private final int VALIDATION_THRESHOLD = 2; //=50; //TODO SET CORRECT VALUE
 
     //The percentage (value must be in the range of [0,1]) of positive votes after which a question
     //is accepted.
