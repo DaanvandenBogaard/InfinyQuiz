@@ -2,6 +2,7 @@ package com.infinyquiz.userquestions;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,12 +22,13 @@ import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ReviewQuestionActivity extends AppCompatActivity {
+public class ReviewQuestionActivity extends AppCompatActivity implements View.OnClickListener {
 
     //TODO implement image of question!
 
     private boolean hasRetrievedQuestion = false;
     private Question question = new Question();
+    private String reference;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,11 @@ public class ReviewQuestionActivity extends AppCompatActivity {
         Button backToHomeBtn = (Button) findViewById(R.id.quitToHomeBtn);
         backToHomeBtn.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(), this));
 
+        Button positiveVoteBtn = (Button) findViewById(R.id.positiveVoteBtn);
+        Button negativeVoteBtn = (Button) findViewById(R.id.voteNegativeBtn);
+        //Set listener (this class)
+        positiveVoteBtn.setOnClickListener(this);
+        negativeVoteBtn.setOnClickListener(this);
     }
 
     //Method to get question data
@@ -56,6 +63,7 @@ public class ReviewQuestionActivity extends AppCompatActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Question question = snapshot.getValue(Question.class);
+                    question.setReference(snapshot.getKey());
                     questions.add(question);
                 }
                 //pick random question
@@ -93,6 +101,18 @@ public class ReviewQuestionActivity extends AppCompatActivity {
         optionsString = new StringBuilder(optionsString.substring(0, optionsString.length() - 1));
         optionsString.append(".");
         optionsTV.setText(optionsString.toString());
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        //If question is not yet loaded, do nothing
+        if(question.isEmpty()){
+            return; //Do nothing
+        }
+        DatabaseReference ref = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("NotValidatedQuestions");
+        ref.child(question.getReference()).child("test").push().setValue(1);
+
     }
 
 }
