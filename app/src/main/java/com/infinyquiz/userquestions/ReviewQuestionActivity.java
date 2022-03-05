@@ -142,11 +142,11 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
      */
     private void setQuestion(Question question) {
         //Get UI elements
-        TextView questionTV = (TextView) findViewById(R.id.questionTV);
-        TextView correctOptionTV = (TextView) findViewById(R.id.correctAnswerTV);
-        TextView optionsTV = (TextView) findViewById(R.id.optionsTV);
-        TextView categoryTV = (TextView) findViewById(R.id.categoryTV);
-        TextView difficultyTV = (TextView) findViewById(R.id.difficulityTV);
+        final TextView questionTV = (TextView) findViewById(R.id.questionTV);
+        final TextView correctOptionTV = (TextView) findViewById(R.id.correctAnswerTV);
+        final TextView optionsTV = (TextView) findViewById(R.id.optionsTV);
+        final TextView categoryTV = (TextView) findViewById(R.id.categoryTV);
+        final TextView difficultyTV = (TextView) findViewById(R.id.difficulityTV);
 
         //set text accordingly
         questionTV.setText(question.getQuestion());
