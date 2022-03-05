@@ -2,6 +2,7 @@ package com.infinyquiz.userquestions;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.health.SystemHealthManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,11 +30,17 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
 
     //TODO implement image of question!
 
-    //A boolean stating whether or not the question has been selected from firebase
-    private boolean hasRetrievedQuestion = false;
+    //The minimum number of votes needed before we either validate or invalidate our question.
+    //Should be "50" according to our specifications (MUST).
+    private final int VALIDATION_THRESHOLD = 1; //=50; //TODO SET CORRECT VALUE
+
+    //The percentage (value must be in the range of [0,1]) of positive votes after which a question
+    //is accepted.
+    //Should be "0.7f" according to our specifications (MUST).
+    private final float ACCEPTANCE_PERCENTAGE = 0.7f; //=0.7f;
 
     //The question under review
-    private Question question = new Question();
+    private Question question;
 
     //List of users' ID who have voted positive for this question
     private ArrayList<String> posVotes = new ArrayList<>();
@@ -41,12 +48,16 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
     //List of users' ID who have voted negative for this question
     private ArrayList<String> negVotes = new ArrayList<>();
 
+    /* Method that is called when starting this activity. It is responsible for setting buttons and
+     * calling auxiliary methods.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviewquestion);
 
-        //Set a random question in UI:
-        setQuestion(getQuestion());
+        //Set a random question in UI: (handling of UI is done via a seperate method, called withing
+        // getQuestion(), as only there we know when the data is being read).
+        getQuestion();
 
         //Set buttons
         Button backToHomeBtn = (Button) findViewById(R.id.quitToHomeBtn);
@@ -63,27 +74,32 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
      *Also sends it to setQuestion method, as
      *
      * @pre {@none}
-     * @returns {@code Question question} a question that has not been approved yet and has not
+     * @post {@code Question question} (global variable) a question that has not been approved yet and has not
      * been reviewed by the current user, i.e. the user with the ID
      * {@code FirebaseAuth.getInstance().getCurrentUser().getUid()}.
      * @modifies none
      * @throws DatabaseError if no connection could be made to the database
      */
-    private Question getQuestion() {
+    private void getQuestion(){
+        System.out.println("TEST");
+        System.out.println("GETQUESTION");
+        System.out.println("TEST");
+        Question[] returnQuestion = new Question[1];
+        returnQuestion[0] = new Question();
+
+        //Lists of possible questions which we may need to review:
+        ArrayList<Question> questions = new ArrayList<>();
+
         DatabaseReference ref = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("NotValidatedQuestions");
         // Attach a listener to read the data at our posts reference
-        ArrayList<Question> questions = new ArrayList<>();
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (hasRetrievedQuestion) {
-                    return;
-                }
-                hasRetrievedQuestion = true;
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Question question = snapshot.getValue(Question.class);
-                    question.setReference(snapshot.getKey());
+                    System.out.println("Good1");
+                    Question newQuestion = snapshot.getValue(Question.class);
+                    newQuestion.setReference(snapshot.getKey());
                     //If the current user has already voted on this question, it will not be added
                     String curUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     posVotes = new ArrayList<>();
@@ -98,14 +114,13 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
                         negVotes.add(user);
                     }
                     if (!negVotes.contains(curUserID) && !posVotes.contains(curUserID)) {
-                        questions.add(question);
+                        questions.add(newQuestion);
                     }
                 }
                 //pick random question
                 if (questions.size() == 0) {
                     question = new Question();
-                }
-                else {
+                } else {
                     question = questions.get(new Random().nextInt(questions.size()));
                 }
                 setQuestion(question);
@@ -116,7 +131,6 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
-        return question;
     }
 
     /* sets the correct question into UI;
@@ -165,15 +179,34 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
         if (question.isEmpty()) {
             return; //Do nothing
         }
-        String posOrNeg = "posVote";
+        //number of positive votes
+        int numPosVotes = posVotes.size();
+        //number of negative votes
+        int numNegVotes = negVotes.size();
+
+        //Set whether or not this was a positive vote.
+        String posOrNeg = "posVote";;
         if (view.getId() == R.id.voteNegativeBtn) {
             posOrNeg = "negVote";
+            numNegVotes++;
+        } else if (view.getId() == R.id.positiveVoteBtn){
+            posOrNeg = "posVote";
+            numPosVotes++;
         }
         DatabaseReference ref = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("NotValidatedQuestions");
         ref.child(question.getReference()).child(posOrNeg).push().setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         //Check if question must be moved to validated questions
-        //TODO implement
+        if (numPosVotes + numNegVotes >= VALIDATION_THRESHOLD) { //if threshold is exceeded
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
+            if (numPosVotes / (numNegVotes + numPosVotes) >= ACCEPTANCE_PERCENTAGE) {
+                //Move question to validated questions
+                database.getReference().child("ValidatedQuestions").push().setValue(question);
+            }
+            //Remove question from database "NotValidatedQuestions"
+            database.getReference().child("NotValidatedQuestions").child(question.getReference()).removeValue();
+
+        }
 
         startActivity(new Intent(this, ReviewQuestionActivity.class));
     }
