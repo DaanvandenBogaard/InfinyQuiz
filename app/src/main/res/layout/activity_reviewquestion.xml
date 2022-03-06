@@ -3,45 +3,94 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <Button
         android:id="@+id/quitToHomeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back to home"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="320dp"
+        android:layout_marginBottom="640dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:text="X"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/questionTV"
-        android:layout_width="224dp"
-        android:layout_height="86dp"
+        android:layout_width="241dp"
+        android:layout_height="102dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/text_border"
+        android:fontFamily="@font/buttonfont"
         android:text="Loading..."
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/staticTV" />
 
     <Button
         android:id="@+id/voteNegativeBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
-        android:text="Vote Negative"
+        android:layout_marginTop="645dp"
+        android:layout_marginBottom="38dp"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/buttonfont"
+        android:text="Dislike Question"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:icon="@drawable/dislike_icon"
+        app:iconPadding="3dp"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.626"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/positiveVoteBtn"
-        app:layout_constraintTop_toBottomOf="@+id/optionsTV" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/positiveVoteBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="644dp"
+        android:layout_marginBottom="39dp"
+        android:backgroundTint="@color/green"
+        android:fontFamily="@font/buttonfont"
+        android:text="Like Question"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:icon="@drawable/like_icon"
+        app:iconPadding="3dp"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/voteNegativeBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/staticTV5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="267dp"
+        android:fontFamily="@font/buttonfont"
         android:text="Difficulty"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/staticTV4" />
 
@@ -49,19 +98,29 @@
         android:id="@+id/StaticTV3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="85dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="268dp"
+        android:fontFamily="@font/buttonfont"
         android:text="Options:"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correctAnswerTV" />
+        app:layout_constraintTop_toBottomOf="@+id/staticTV2" />
 
     <TextView
         android:id="@+id/staticTV4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="32dp"
-        android:text="category:"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="260dp"
+        android:fontFamily="@font/buttonfont"
+        android:text="Category:"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/StaticTV3" />
 
@@ -69,43 +128,44 @@
         android:id="@+id/categoryTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="483dp"
+        android:layout_marginEnd="85dp"
+        android:fontFamily="@font/buttonfont"
         android:text="Loading..."
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.368"
         app:layout_constraintStart_toEndOf="@+id/staticTV4"
-        app:layout_constraintTop_toBottomOf="@+id/optionsTV" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/difficulityTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="124dp"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="525dp"
+        android:layout_marginEnd="85dp"
+        android:fontFamily="@font/buttonfont"
         android:text="Loading..."
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/staticTV5"
-        app:layout_constraintTop_toBottomOf="@+id/categoryTV" />
-
-    <Button
-        android:id="@+id/positiveVoteBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="184dp"
-        android:text="VotePositive"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StaticTV3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/staticTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="120dp"
         android:text="Question:"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/StaticViewPlaceHolder" />
 
@@ -113,31 +173,51 @@
         android:id="@+id/correctAnswerTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="259dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="86dp"
+        android:fontFamily="@font/buttonfont"
+        android:maxWidth="200dp"
+        android:maxHeight="44dp"
+        android:minWidth="1dp"
         android:text="Loading..."
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintStart_toEndOf="@+id/staticTV2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionTV" />
 
     <TextView
         android:id="@+id/optionsTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="442dp"
+        android:layout_marginEnd="86dp"
+        android:fontFamily="@font/buttonfont"
+        android:maxWidth="200dp"
+        android:maxHeight="44dp"
         android:text="Loading..."
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.39"
         app:layout_constraintStart_toEndOf="@+id/StaticTV3"
-        app:layout_constraintTop_toBottomOf="@+id/correctAnswerTV" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/staticTV2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="4dp"
-        android:text="Correct answer ="
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="220dp"
+        android:fontFamily="@font/buttonfont"
+        android:text="Correct answer:"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionTV" />
 
@@ -147,7 +227,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:text="Picture"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
