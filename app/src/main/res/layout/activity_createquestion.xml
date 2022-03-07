@@ -3,54 +3,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
-    <Spinner
-        android:id="@+id/questionCategorySpinner"
-        android:layout_width="0dp"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/spinner_border"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <Spinner
+            android:id="@+id/questionCategorySpinner"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:background="@color/lightBlueBtn"
+            android:contentDescription="Select Category" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/lightBlueBtn"
+            android:src="@drawable/dropdown" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="101dp"
+        android:fontFamily="@font/buttonfont"
         android:text="Submit your question!"
-        app:layout_constraintBottom_toTopOf="@+id/questionCategorySpinner"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.741" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/questionPicBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="29dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
         android:text="Add picture"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionCategorySpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <EditText
         android:id="@+id/questionTextInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_corner"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Enter question"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionPicBtn" />
 
@@ -58,81 +84,118 @@
         android:id="@+id/questionAnswerAInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/rounded_corner"
         android:ems="10"
         android:hint="enter correct answer"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionTextInput" />
 
     <EditText
         android:id="@+id/questionAnswerBInput"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/rounded_corner"
         android:ems="10"
         android:hint="enter correct answer"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/questionAnswerAInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionAnswerAInput" />
 
     <EditText
         android:id="@+id/questionAnswerCInput"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:background="@drawable/rounded_corner"
         android:ems="10"
         android:hint="enter correct answer"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/questionAnswerBInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionAnswerBInput" />
 
     <EditText
         android:id="@+id/questionAnswerDInput"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:background="@drawable/rounded_corner"
         android:ems="10"
         android:hint="enter correct answer"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/questionAnswerCInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionAnswerCInput" />
 
     <Button
         android:id="@+id/saveQuestionBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="65dp"
         android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
         android:text="Submit question"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficultySlider" />
 
-    <com.google.android.material.slider.Slider
+    <SeekBar
         android:id="@+id/difficultySlider"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:stepSize="1"
-        android:valueFrom="1"
-        android:valueTo="5"
-        android:value="3"
+        android:layout_width="323dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="19dp"
+        android:max="5"
+        android:progress="3"
+        android:progressDrawable="@drawable/slider_bar"
+        android:thumb="@drawable/slider_thumb"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionAnswerDInput" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
         android:id="@+id/quitToHomeBtn"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="320dp"
+        android:layout_marginBottom="640dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:text="X"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back to home"
+        android:layout_marginTop="14dp"
+        android:fontFamily="@font/buttonfont"
+        android:text="Set difficulty"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/questionAnswerDInput" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
