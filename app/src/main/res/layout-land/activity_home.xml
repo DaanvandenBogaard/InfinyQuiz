@@ -16,6 +16,7 @@
         android:background="@drawable/circlebutton"
         android:contentDescription="Button to profile with profile picture"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/googleg_standard_color_18" />
@@ -24,6 +25,7 @@
         android:id="@+id/homeAppnameView"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/harlowsoliditalic"
         android:text="@string/app_name"
         android:textAlignment="center"
@@ -32,21 +34,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileBtn" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/randomMatchBtn"
         android:layout_width="200dp"
         android:layout_height="64dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="@string/playNow"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintEnd_toStartOf="@+id/customMatchBtn"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeLogo"
         app:strokeColor="@color/white"
@@ -67,7 +69,7 @@
         android:id="@+id/customMatchBtn"
         android:layout_width="200dp"
         android:layout_height="64dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="@string/customMatch"
@@ -76,8 +78,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/randomMatchBtn"
+        app:layout_constraintStart_toEndOf="@+id/randomMatchBtn"
+        app:layout_constraintTop_toBottomOf="@+id/homeLogo"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
@@ -85,17 +87,16 @@
         android:id="@+id/createQuestionBtn"
         android:layout_width="200dp"
         android:layout_height="64dp"
-        android:layout_marginTop="10dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="@string/createQuestion"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintEnd_toStartOf="@+id/rateQuestionBtn"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customMatchBtn"
+        app:layout_constraintTop_toBottomOf="@+id/randomMatchBtn"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
@@ -103,7 +104,6 @@
         android:id="@+id/rateQuestionBtn"
         android:layout_width="200dp"
         android:layout_height="64dp"
-        android:layout_marginTop="10dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="@string/rateQuestion"
@@ -112,8 +112,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createQuestionBtn"
+        app:layout_constraintStart_toEndOf="@+id/createQuestionBtn"
+        app:layout_constraintTop_toBottomOf="@+id/customMatchBtn"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
@@ -121,8 +121,8 @@
         android:id="@+id/settingsBtn"
         android:layout_width="185dp"
         android:layout_height="60dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginBottom="62dp"
+        android:layout_marginTop="348dp"
+        android:layout_marginBottom="3dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:scaleType="fitXY"
@@ -136,13 +136,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rateQuestionBtn" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/logOutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="log out"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="Log out"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
