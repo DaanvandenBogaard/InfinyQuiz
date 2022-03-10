@@ -156,7 +156,7 @@
         android:id="@+id/difficultySlider"
         android:layout_width="323dp"
         android:layout_height="42dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="16dp"
         android:max="5"
         android:progress="3"
         android:progressDrawable="@drawable/slider_bar"

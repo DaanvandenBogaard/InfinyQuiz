@@ -99,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
      *
      * @returns {@result == (the input satisfies our conditions)}
      */
+    //TODO: FA-01 needs to be fixed!
     public boolean isValidInput(String[] input) {
         //Convert string array to 4 different strings.
         String username = input[0];
