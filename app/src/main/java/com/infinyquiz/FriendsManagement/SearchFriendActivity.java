@@ -78,13 +78,15 @@ public class SearchFriendActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (selectedUserEmail != null) {
-                    User reciever = getUserByMail(selectedUserEmail);
+                    String user_mail = mAuth.getCurrentUser().getEmail();
+                    Log.d("Reciever mail", selectedUserEmail);
+                    Log.d("sender Mail", user_mail);
 
                     if (sendRequestBtn.getText().equals("Send request")) {
-                        sendRequest(reciever);
+                        sendRequest(selectedUserEmail, user_mail);
                     }
                     else if (sendRequestBtn.getText().equals("Cancel request")) {
-                        cancelRequest(reciever);
+                        cancelRequest(selectedUserEmail, user_mail);
                     }
                 }
             }
@@ -116,63 +118,60 @@ public class SearchFriendActivity extends AppCompatActivity {
         });
     }
     
-    private void sendRequest(User reciever) {
+    private void sendRequest(String reciever_mail, String sender_mail) {
 
-        if(!requestIsValid(reciever)) {
-            DatabaseReference friendRequestRef =  firebaseDatabase.getReference().child("FriendRequest");
-            String id_sender = mAuth.getUid();
-            friendRequestRef.child(id_sender).child(reciever.getId()).child("RequestType").setValue("Sent")
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                friendRequestRef.child(reciever.getId()).child(id_sender).child("RequestType").setValue("received")
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    sendRequestBtn.setText("Cancel request");
-                                                }
+        DatabaseReference friendRequestRef =  firebaseDatabase.getReference().child("FriendRequest");
+        String mail_sender = mAuth.getUid();
+        friendRequestRef.child(mail_sender).child(reciever_mail).child("RequestType").setValue("Sent")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            friendRequestRef.child(reciever_mail).child(mail_sender).child("RequestType").setValue("received")
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                sendRequestBtn.setText("Cancel request");
                                             }
-                                        });
-                            }
+                                        }
+                                    });
                         }
-                    });
-        }
+                    }
+                });
+
     }
 
-    private void cancelRequest(User reciever) {
-        if(!requestIsValid(reciever)) {
-            String id_sender = mAuth.getUid();
+    private void cancelRequest(String reciever_mail, String sender_mail) {
 
-            friendRequestRef.child(id_sender).child(reciever.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
-                        requestSnapshot.getRef().removeValue();
-                    }
+        friendRequestRef.child(sender_mail).child(reciever_mail).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
+                    requestSnapshot.getRef().removeValue();
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        friendRequestRef.child(reciever_mail).child(sender_mail).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
+                    requestSnapshot.getRef().removeValue();
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
             });
 
-            friendRequestRef.child(reciever.getId()).child(id_sender).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
-                        requestSnapshot.getRef().removeValue();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
     }
 
     private boolean requestIsValid(User reciever) {
