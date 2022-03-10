@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_createquestion.xml" value="0.31354166666666666" />
+        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_home.xml" value="0.5222222222222223" />
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_login.xml" value="0.5541666666666667" />
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_matchmaker.xml" value="0.5541666666666667" />
