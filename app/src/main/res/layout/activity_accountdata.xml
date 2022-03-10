@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-
     <Button
-        android:id="@+id/toHomeBtn"
+        android:id="@+id/toProfileBtn"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="7dp"
@@ -27,59 +26,67 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageButton
-        android:id="@+id/profilePic"
-        android:layout_width="201dp"
-        android:layout_height="189dp"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/circlebutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
-
     <Button
-        android:id="@+id/changeAccountDataBtn"
+        android:id="@+id/loginDataBtn"
         android:layout_width="260dp"
         android:layout_height="70dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="142dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
-        android:text="Change account data"
+        android:text="Change Login Data"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilePic"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
     <Button
-        android:id="@+id/ManageFriendsBtn"
+        android:id="@+id/changeUsernameBtn"
         android:layout_width="260dp"
         android:layout_height="70dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
-        android:text="Manage friends"
+        android:text="Change Username"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changeAccountDataBtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginDataBtn"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/resetProfileBtn"
+        android:layout_width="260dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="139dp"
+        android:backgroundTint="@color/lightBlueBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="Reset Profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeUsernameBtn"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="99dp"
         android:fontFamily="@font/harlowsoliditalic"
-        android:text="Profile"
+        android:text="Account Data"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

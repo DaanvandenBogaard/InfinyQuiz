@@ -122,7 +122,6 @@
         android:layout_width="185dp"
         android:layout_height="60dp"
         android:layout_marginTop="38dp"
-        android:layout_marginBottom="62dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:scaleType="fitXY"
@@ -132,9 +131,23 @@
         android:textStyle="bold"
         app:icon="@drawable/settings_icon"
         app:iconTint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rateQuestionBtn" />
+
+    <Button
+        android:id="@+id/logOutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="Log out"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,6 +32,7 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".userquestions.CreateQuestionActivity" />
         <activity android:name=".userquestions.ReviewQuestionActivity" />
+        <activity android:name=".MatchMakingActivity"/>
     </application>
 
 </manifest>

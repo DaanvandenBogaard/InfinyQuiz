@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
 
     //Views where the user will be able to set values:
     private TextView questionTV, answerATV, answerBTV, answerCTV, answerDTV;
-    private Slider difficultySlider;
+    private SeekBar difficultySlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         answerBTV = (TextView) findViewById(R.id.questionAnswerBInput);
         answerCTV = (TextView) findViewById(R.id.questionAnswerCInput);
         answerDTV = (TextView) findViewById(R.id.questionAnswerDInput);
-        difficultySlider = (Slider) findViewById(R.id.difficultySlider);
+        difficultySlider = (SeekBar) findViewById(R.id.difficultySlider);
 
         //Finally, we set the submit button
         Button submitButton = (Button) findViewById(R.id.saveQuestionBtn);
@@ -101,7 +102,7 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         options.add(answerCTV.getText().toString().trim());
         options.add(answerDTV.getText().toString().trim());
         return new Question((String) questionTV.getText().toString().trim(), category,
-                (int) difficultySlider.getValue(), options, answerATV.getText().toString().trim(),
+                (int) difficultySlider.getProgress(), options, answerATV.getText().toString().trim(),
                 pictureID);
     }
 

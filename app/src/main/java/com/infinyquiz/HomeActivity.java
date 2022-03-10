@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.infinyquiz.auth.LoginActivity;
 import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
+import com.infinyquiz.onclicklistener.logOutOnClickListener;
 import com.infinyquiz.userquestions.CreateQuestionActivity;
 import com.infinyquiz.userquestions.ReviewQuestionActivity;
 
@@ -18,7 +20,10 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Set buttons:
-        //TODO set play now button
+        Button logoutBtn = (Button) findViewById(R.id.logOutBtn);
+        logoutBtn.setOnClickListener(new logOutOnClickListener(new LoginActivity(), this));
+        Button playBtn = (Button) findViewById(R.id.randomMatchBtn);
+        playBtn.setOnClickListener(new MoveToActivityOnClickListener(new MatchMakingActivity(),this));
         //TODO set custom match button
         Button createQuestionBtn = (Button) findViewById(R.id.createQuestionBtn);
         createQuestionBtn.setOnClickListener(new MoveToActivityOnClickListener(new CreateQuestionActivity(), this));
