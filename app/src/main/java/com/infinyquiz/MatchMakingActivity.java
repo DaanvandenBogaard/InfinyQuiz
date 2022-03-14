@@ -2,8 +2,10 @@ package com.infinyquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.infinyquiz.auth.LoginActivity;
 import com.infinyquiz.auth.RegisterActivity;
+import com.infinyquiz.datarepresentation.Lobby;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 /* In the matchmaker, we will find a lobby to join, either by joining an existing lobby or by
@@ -28,8 +31,12 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     //will start
     private final int WAITING_TIME = 10;
     private final MatchMaker matchMaker = new MatchMaker();
-    ;
+    private final int DELAY = 1000; //1 second
 
+    //Handler object for using delay
+    Handler handler = new Handler();
+    //Runnable object for using delay
+    Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +45,46 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         Button backToHomeBtn = (Button) findViewById(R.id.backToHomeBtn);
         backToHomeBtn.setOnClickListener(this);
 
-        Button debugBtn = (Button) findViewById(R.id.printBtn);
-        debugBtn.setOnClickListener(this);
-        //Find a lobby.
+        //Let matchmaker find a lobby
         matchMaker.lookForLobby();
-        //Wait for start match
-
-
+        //update UI after every {@code DELAY} seconds, handled in "onResume" and "onPause"
     }
 
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable = new Runnable(){
+            public void run(){
+               handler.postDelayed(runnable,DELAY);
+               //Update UI:
+                updateUI(matchMaker.getLobby());
+            }
+        },DELAY);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacks(runnable); //Stop the handler when the activity is not visible.
+        super.onPause();
+    }
+
+    /* Update the UI elements according to a given Lobby object.
+     *
+     * @param {@code Lobby lobby}
+     * @pre {@code lobby != null}
+     * @post UI is set according to "current" lobby information
+     * @throws none
+     */
+    private void updateUI(Lobby lobby){
+        if(lobby == null){
+            return;
+        }
+        //Set the list of players.
+        System.out.println(lobby);
+        TextView userListTV = (TextView) findViewById(R.id.displayUsers);
+
+        userListTV.setText(lobby.getUsers().toString().trim());
+    }
 
     //DEBUG FUNCTION TO CLEAR MATCHES
     //TODO DELETE BEFORE RELEASE!
@@ -60,9 +98,6 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         if (view.getId() == R.id.backToHomeBtn) {
             matchMaker.leaveLobby();
             startActivity(new Intent(this, HomeActivity.class));
-        } else if (view.getId() == R.id.printBtn) {
-            System.out.println(matchMaker.getLobby());
         }
-
     }
 }

@@ -45,7 +45,20 @@ public class MatchMaker {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(lobbyID != null){
+                System.out.println("TEST");
+                System.out.println("DATA CHANGE");
+                System.out.println("TEST");
+                if (lobbyID != null && lobby != null) {
+                    //update lobby data:
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        Lobby curLobby = data.getValue(Lobby.class);
+                        if(curLobby.getId() == lobbyID) {
+                            lobby = curLobby;
+                            System.out.println("TEST");
+                            System.out.println("UPDATED DATA");
+                            System.out.println("TEST");
+                        }
+                    }
                     return;
                 }
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
@@ -76,7 +89,7 @@ public class MatchMaker {
 
     }
 
-    private void makeNewLobby(){
+    private void makeNewLobby() {
         lobby = new Lobby();
         lobby.addUser(userID);
         DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies");
@@ -85,12 +98,12 @@ public class MatchMaker {
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).setValue(lobby);
     }
 
-    public Lobby getLobby(){
+    public Lobby getLobby() {
         return lobby;
     }
 
-    public void leaveLobby(){
-        if(lobby == null){
+    public void leaveLobby() {
+        if (lobby == null) {
             return;
         }
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobby.getId()).child("users").child(String.valueOf(lobby.getUsers().indexOf(userID))).removeValue();

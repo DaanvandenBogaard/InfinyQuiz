@@ -1,6 +1,7 @@
 package com.infinyquiz.datarepresentation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Lobby {
 
@@ -21,13 +22,16 @@ public class Lobby {
 
     public void addUser(String id){
         users.add(id);
+        users.removeAll(Collections.singleton(null));
     }
 
     public ArrayList<String> getUsers(){
+        users.removeAll(Collections.singleton(null));
         return users;
     }
 
     public int lobbySize(){
+        users.removeAll(Collections.singleton(null));
         return users.size();
     }
 
