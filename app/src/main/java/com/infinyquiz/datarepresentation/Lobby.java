@@ -6,7 +6,7 @@ import java.util.Collections;
 public class Lobby {
 
     //Constant: maximal number of people in lobby
-    public static final int MAX_PEOPLE = 6;
+    public static final int MAX_PEOPLE = 2;
 
     //Constant: minimal number of people to start game
     public static final int MIN_PEOPLE = 2;
@@ -30,7 +30,7 @@ public class Lobby {
         return users;
     }
 
-    public int lobbySize(){
+    public int getLobbySize(){
         users.removeAll(Collections.singleton(null));
         return users.size();
     }

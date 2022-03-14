@@ -45,18 +45,12 @@ public class MatchMaker {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println("TEST");
-                System.out.println("DATA CHANGE");
-                System.out.println("TEST");
                 if (lobbyID != null && lobby != null) {
                     //update lobby data:
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         Lobby curLobby = data.getValue(Lobby.class);
                         if(curLobby.getId() == lobbyID) {
                             lobby = curLobby;
-                            System.out.println("TEST");
-                            System.out.println("UPDATED DATA");
-                            System.out.println("TEST");
                         }
                     }
                     return;
@@ -65,7 +59,7 @@ public class MatchMaker {
                     //Count size of lobby
                     Lobby curLobby = data.getValue(Lobby.class);
 
-                    if (curLobby.lobbySize() <= Lobby.MAX_PEOPLE) { //Add user to this lobby
+                    if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE) { //Add user to this lobby
                         lobby = curLobby;
                         curLobby.setID(data.getKey());
                         lobbyID = curLobby.getId();

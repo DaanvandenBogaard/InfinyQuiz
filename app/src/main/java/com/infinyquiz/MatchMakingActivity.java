@@ -3,6 +3,7 @@ package com.infinyquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -57,9 +58,27 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
                handler.postDelayed(runnable,DELAY);
                //Update UI:
                 updateUI(matchMaker.getLobby());
+                //Check if game can be started
+                if(matchMaker.getLobby() != null){
+                    Lobby lobby = matchMaker.getLobby();
+                    if(lobby.getLobbySize() == Lobby.MAX_PEOPLE){ //TODO add timer at minimal starting people
+                        //Intent
+                        startNewGameActivity();
+                    }
+                }
             }
         },DELAY);
         super.onResume();
+    }
+
+    //Put this in a seperate class to be able to access from onResume
+    private void startNewGameActivity(){
+        Intent intent = new Intent(this, GameActivity.class);
+        Lobby lobby = matchMaker.getLobby();
+        //Add values to intent
+        intent.putExtra("lobby", lobby.getUsers());
+        intent.putExtra("lobbyID", lobby.getId());
+        startActivity(intent);
     }
 
     @Override
