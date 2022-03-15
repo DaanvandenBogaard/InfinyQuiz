@@ -61,8 +61,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
                 //Check if game can be started
                 if(matchMaker.getLobby() != null){
                     Lobby lobby = matchMaker.getLobby();
-                    if(lobby.getLobbySize() == Lobby.MAX_PEOPLE){ //TODO add timer at minimal starting people
-                        //Intent
+                    if(lobby.getLobbySize() == Lobby.MAX_PEOPLE){
                         startNewGameActivity();
                     }
                 }

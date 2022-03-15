@@ -6,18 +6,16 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.infinyquiz.datarepresentation.Game;
 import com.infinyquiz.datarepresentation.Lobby;
-import com.infinyquiz.datarepresentation.Question;
+import com.infinyquiz.datarepresentation.RandomGame;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class MatchMaker {
@@ -27,6 +25,7 @@ public class MatchMaker {
 
     //A reference to the lobby that has been found
     private String lobbyID = null;
+    private String gameID;
     private Lobby lobby;
     //Index at which user is stored
     private int userIndex;
@@ -89,7 +88,17 @@ public class MatchMaker {
         DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies");
         lobby.setID(ref.push().getKey());
         lobbyID = lobby.getId();
+
+        //Add ID of game
+        RandomGame game = new RandomGame(lobby);
+        DatabaseReference gameRef = database.getReference().child("Lobbies").child("gameLobbies");
+        gameID = gameRef.push().getKey();
+        game.setGameID(gameID);
+        lobby.setGameID(game.getGameID());
+        //Upload lobby:
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).setValue(lobby);
+        //upload game:
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).setValue(game);
     }
 
     public Lobby getLobby() {

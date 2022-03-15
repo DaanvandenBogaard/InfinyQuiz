@@ -14,6 +14,9 @@ public class Lobby {
     //The ID of this lobby (firebase reference ID)
     private String ID;
 
+    //The ID of the place where the game will take place
+    private String gameID;
+
     //List of users (by ID).
     private ArrayList<String> users = new ArrayList<>();
 
@@ -41,5 +44,13 @@ public class Lobby {
 
     public void setID(String id){
         ID = id;
+    }
+
+    public void setGameID(String id){
+        gameID = id;
+    }
+
+    public String getGameID(){
+        return gameID;
     }
 }
