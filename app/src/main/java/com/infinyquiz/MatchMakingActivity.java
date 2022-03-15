@@ -61,7 +61,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
                 //Check if game can be started
                 if(matchMaker.getLobby() != null){
                     Lobby lobby = matchMaker.getLobby();
-                    if(lobby.getLobbySize() == Lobby.MAX_PEOPLE){
+                    if(lobby.getLobbySize() == Lobby.MAX_PEOPLE || lobby.gameHasStarted()){
                         startNewGameActivity();
                     }
                 }
@@ -74,9 +74,10 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     private void startNewGameActivity(){
         Intent intent = new Intent(this, GameActivity.class);
         Lobby lobby = matchMaker.getLobby();
+        matchMaker.startGame();
         //Add values to intent
-        intent.putExtra("lobby", lobby.getUsers());
         intent.putExtra("lobbyID", lobby.getId());
+        intent.putExtra("gameID", lobby.getGameID());
         startActivity(intent);
     }
 

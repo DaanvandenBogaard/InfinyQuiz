@@ -20,6 +20,9 @@ public class Lobby {
     //List of users (by ID).
     private ArrayList<String> users = new ArrayList<>();
 
+    //Boolean saying whether the game has started.
+    private boolean gameHasStarted = false;
+
     //Constructor
     public Lobby(){ }
 
@@ -52,5 +55,13 @@ public class Lobby {
 
     public String getGameID(){
         return gameID;
+    }
+
+    public boolean gameHasStarted(){
+        return gameHasStarted;
+    }
+
+    public void shutDownLobby(){
+        gameHasStarted = true;
     }
 }

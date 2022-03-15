@@ -27,6 +27,7 @@ public class MatchMaker {
     private String lobbyID = null;
     private String gameID;
     private Lobby lobby;
+    private Game game;
     //Index at which user is stored
     private int userIndex;
 
@@ -63,7 +64,7 @@ public class MatchMaker {
                         curLobby.setID(data.getKey());
                         lobbyID = curLobby.getId();
                         curLobby.addUser(userID);
-                        ref.child(lobbyID).setValue(lobby);
+                        updateFirebaseLobby(lobby);
                         break;
                     }
                 }
@@ -82,6 +83,11 @@ public class MatchMaker {
 
     }
 
+    private void updateFirebaseLobby(Lobby lobby){
+        DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID);
+        ref.setValue(lobby);
+    }
+
     private void makeNewLobby() {
         lobby = new Lobby();
         lobby.addUser(userID);
@@ -96,13 +102,22 @@ public class MatchMaker {
         game.setGameID(gameID);
         lobby.setGameID(game.getGameID());
         //Upload lobby:
-        database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).setValue(lobby);
+        updateFirebaseLobby(lobby);
         //upload game:
         database.getReference().child("Lobbies").child("gameLobbies").child(gameID).setValue(game);
     }
 
+    public void startGame(){
+        lobby.shutDownLobby();
+        updateFirebaseLobby(lobby);
+    }
+
     public Lobby getLobby() {
         return lobby;
+    }
+
+    public void removeLobby(){
+        database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).removeValue();
     }
 
     public void leaveLobby() {
