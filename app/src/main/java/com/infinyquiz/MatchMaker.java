@@ -92,7 +92,7 @@ public class MatchMaker {
                 System.out.println("Lobby data changed");
                 System.out.println("TEST");
 
-                Lobby lobby = dataSnapshot.getValue(Lobby.class);
+                lobby = dataSnapshot.getValue(Lobby.class);
 
                 System.out.println("TEST");
                 System.out.println("Updated lobby data");

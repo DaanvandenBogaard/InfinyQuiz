@@ -56,6 +56,9 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         handler.postDelayed(runnable = new Runnable(){
             public void run(){
                handler.postDelayed(runnable,DELAY);
+               if(matchMaker.getLobby() != null) {
+                   System.out.println("onResume()" + matchMaker.getLobby().getUsers().toString());
+               }
                Lobby lobby = matchMaker.getLobby();
                //Update UI:
                 updateUI(lobby);
@@ -81,7 +84,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("gameID", lobby.getGameID());
         matchMaker.closeLobby();
         matchMaker.updateFirebaseLobby(matchMaker.getLobby());
-        //startActivity(intent);
+        startActivity(intent);
     }
 
     @Override
