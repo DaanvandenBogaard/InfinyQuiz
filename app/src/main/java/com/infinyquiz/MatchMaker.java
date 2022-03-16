@@ -45,38 +45,39 @@ public class MatchMaker {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                System.out.println("TEST");
                 System.out.println("DataChanged!");
+                System.out.println("TEST");
 
-                if (lobbyID == null) {
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        Lobby curLobby = data.getValue(Lobby.class);
 
-                        if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE & curLobby.getId() != null) { //Add user to this lobby
-                            lobby = curLobby;
-                            curLobby.setID(data.getKey());
-                            lobbyID = curLobby.getId();
-                            curLobby.addUser(userID);
-                            updateFirebaseLobby(lobby);
-                            return;
-                        }
-                    }
-
-                    //If no good lobby was found, make a new lobby:
-                    if (lobbyID == null) {
-                        makeNewLobby();
-                    }
-                }
-                //update lobby data:
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Lobby curLobby = data.getValue(Lobby.class);
-                    if (curLobby.getId() == lobbyID) {
+
+                    if (lobby!= null & lobby.getId() == data.getKey()) { //Add user to this lobby
                         lobby = curLobby;
                         System.out.println("TEST");
                         System.out.println("Updated Lobby");
                         System.out.println("TEST");
                         return;
+                    } else if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE & curLobby.getId() != null & lobbyID == null & lobby == null) {
+                        lobby = curLobby;
+                        curLobby.setID(data.getKey());
+                        lobbyID = curLobby.getId();
+                        curLobby.addUser(userID);
+                        updateFirebaseLobby(lobby);
+                        return;
                     }
                 }
+
+                //If no good lobby was found, make a new lobby:
+                if (lobbyID == null) {
+                    makeNewLobby();
+                }
+
+                System.out.println("TEST");
+                System.out.println("lobby ID =" + lobbyID);
+                System.out.println("TEST");
+
             }
 
             @Override

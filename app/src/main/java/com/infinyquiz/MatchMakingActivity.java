@@ -81,7 +81,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("gameID", lobby.getGameID());
         matchMaker.closeLobby();
         matchMaker.updateFirebaseLobby(matchMaker.getLobby());
-        startActivity(intent);
+        //startActivity(intent);
     }
 
     @Override
