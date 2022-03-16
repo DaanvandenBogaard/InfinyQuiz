@@ -116,8 +116,6 @@ public class MatchMaker {
         //move lobby to "closedLobbies"
         database.getReference().child("Lobbies").child("ClosedLobbies").child(lobbyID).setValue(lobby);
 
-        //Remove Lobby from "openLobbies"
-        database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).removeValue();
     }
 
     public Lobby getLobby() {
