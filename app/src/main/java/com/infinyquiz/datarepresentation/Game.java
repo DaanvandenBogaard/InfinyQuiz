@@ -4,6 +4,7 @@ import com.google.android.gms.common.util.ArrayUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.infinyquiz.datarepresentation.Question;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.List;
@@ -14,6 +15,8 @@ public abstract class Game {
     private int questionCounter;
     private Question currentQuestion;
     private Lobby lobby;
+    //A list with the IDs of all players who have made the transition to the game.
+    private List<String> joinedPlayers = new ArrayList<>();
     //TODO: add scoreboard
 
     //ID to game:
@@ -48,5 +51,9 @@ public abstract class Game {
 
     public String getGameID(){
         return gameID;
+    }
+
+    public Boolean allPlayersJoined(){
+        return lobby.getLobbySize() == joinedPlayers.size();
     }
 }

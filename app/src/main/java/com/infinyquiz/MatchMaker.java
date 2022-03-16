@@ -83,6 +83,10 @@ public class MatchMaker {
 
     }
 
+    public Boolean gameHasStarted(){
+        return lobby.gameHasStarted();
+    }
+
     private void updateFirebaseLobby(Lobby lobby){
         DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID);
         ref.setValue(lobby);
@@ -120,10 +124,6 @@ public class MatchMaker {
 
     public Lobby getLobby() {
         return lobby;
-    }
-
-    public void removeLobby(){
-        database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).removeValue();
     }
 
     public void leaveLobby() {
