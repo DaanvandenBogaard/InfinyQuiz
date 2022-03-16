@@ -51,12 +51,12 @@ public class MatchMaker {
                         Lobby curLobby = data.getValue(Lobby.class);
                         if(curLobby.getId() == lobbyID) {
                             lobby = curLobby;
+                            return;
                         }
                     }
                     return;
                 }
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    //Count size of lobby
                     Lobby curLobby = data.getValue(Lobby.class);
 
                     if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE) { //Add user to this lobby
@@ -65,7 +65,7 @@ public class MatchMaker {
                         lobbyID = curLobby.getId();
                         curLobby.addUser(userID);
                         updateFirebaseLobby(lobby);
-                        break;
+                        return;
                     }
                 }
                 //If no good lobby was found, make a new lobby:
@@ -81,6 +81,10 @@ public class MatchMaker {
         });
 
 
+    }
+
+    public void updateLobby(){
+        database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).setValue(lobby);
     }
 
     public Boolean gameHasStarted(){

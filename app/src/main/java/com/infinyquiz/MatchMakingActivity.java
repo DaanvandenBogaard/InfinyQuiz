@@ -56,11 +56,12 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         handler.postDelayed(runnable = new Runnable(){
             public void run(){
                handler.postDelayed(runnable,DELAY);
+               Lobby lobby = matchMaker.getLobby();
                //Update UI:
-                updateUI(matchMaker.getLobby());
+                updateUI(lobby);
                 //Check if game can be started
-                if(matchMaker.getLobby() != null){
-                    Lobby lobby = matchMaker.getLobby();
+                if(lobby != null){
+                    //Check if match can start.
                     if(lobby.getLobbySize() == Lobby.MAX_PEOPLE || matchMaker.gameHasStarted()){
                         startNewGameActivity();
                     }
@@ -79,6 +80,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("lobbyID", lobby.getId());
         intent.putExtra("gameID", lobby.getGameID());
         matchMaker.closeLobby();
+        matchMaker.updateLobby();
         startActivity(intent);
     }
 
