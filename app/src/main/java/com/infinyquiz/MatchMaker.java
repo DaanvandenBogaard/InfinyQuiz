@@ -52,6 +52,9 @@ public class MatchMaker {
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Lobby curLobby = data.getValue(Lobby.class);
+                    if(curLobby == null){
+                        continue;
+                    }
 
                     if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE ) {
                         lobby = curLobby;
@@ -66,6 +69,7 @@ public class MatchMaker {
                 if (lobbyID == null) {
                     makeNewLobby();
                 }
+                setListenerToLobby();
 
             }
 
@@ -75,6 +79,9 @@ public class MatchMaker {
             }
         });
 
+    }
+
+    private void setListenerToLobby(){
         //Now lobby is set, we will set listener to
         DatabaseReference refToLobby = database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID);
         refToLobby.addValueEventListener(new ValueEventListener() {
@@ -89,6 +96,7 @@ public class MatchMaker {
 
                 System.out.println("TEST");
                 System.out.println("Updated lobby data");
+                System.out.println(lobby.getUsers().toString());
                 System.out.println("TEST");
             }
 
