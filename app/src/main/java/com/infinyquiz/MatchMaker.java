@@ -45,32 +45,37 @@ public class MatchMaker {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (lobbyID != null && lobby != null) {
-                    //update lobby data:
+                System.out.println("DataChanged!");
+
+                if (lobbyID == null) {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         Lobby curLobby = data.getValue(Lobby.class);
-                        if(curLobby.getId() == lobbyID) {
+
+                        if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE & curLobby.getId() != null) { //Add user to this lobby
                             lobby = curLobby;
+                            curLobby.setID(data.getKey());
+                            lobbyID = curLobby.getId();
+                            curLobby.addUser(userID);
+                            updateFirebaseLobby(lobby);
                             return;
                         }
                     }
-                    return;
-                }
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Lobby curLobby = data.getValue(Lobby.class);
 
-                    if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE) { //Add user to this lobby
-                        lobby = curLobby;
-                        curLobby.setID(data.getKey());
-                        lobbyID = curLobby.getId();
-                        curLobby.addUser(userID);
-                        updateFirebaseLobby(lobby);
-                        return;
+                    //If no good lobby was found, make a new lobby:
+                    if (lobbyID == null) {
+                        makeNewLobby();
                     }
                 }
-                //If no good lobby was found, make a new lobby:
-                if (lobbyID == null) {
-                    makeNewLobby();
+                //update lobby data:
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    Lobby curLobby = data.getValue(Lobby.class);
+                    if (curLobby.getId() == lobbyID) {
+                        lobby = curLobby;
+                        System.out.println("TEST");
+                        System.out.println("Updated Lobby");
+                        System.out.println("TEST");
+                        return;
+                    }
                 }
             }
 
@@ -79,19 +84,13 @@ public class MatchMaker {
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
-
-
     }
 
-    public void updateLobby(){
-        database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).setValue(lobby);
-    }
-
-    public Boolean gameHasStarted(){
+    public Boolean gameHasStarted() {
         return lobby.gameHasStarted();
     }
 
-    private void updateFirebaseLobby(Lobby lobby){
+    void updateFirebaseLobby(Lobby lobby) {
         DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID);
         ref.setValue(lobby);
     }
@@ -115,15 +114,15 @@ public class MatchMaker {
         database.getReference().child("Lobbies").child("gameLobbies").child(gameID).setValue(game);
     }
 
-    public void startGame(){
+    public void startGame() {
         lobby.shutDownLobby();
         updateFirebaseLobby(lobby);
     }
 
-    public void closeLobby(){
+    public void closeLobby() {
         //move lobby to "closedLobbies"
         database.getReference().child("Lobbies").child("ClosedLobbies").child(lobbyID).setValue(lobby);
-
+        updateFirebaseLobby(lobby);
     }
 
     public Lobby getLobby() {

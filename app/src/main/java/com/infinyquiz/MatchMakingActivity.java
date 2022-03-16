@@ -80,7 +80,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("lobbyID", lobby.getId());
         intent.putExtra("gameID", lobby.getGameID());
         matchMaker.closeLobby();
-        matchMaker.updateLobby();
+        matchMaker.updateFirebaseLobby(matchMaker.getLobby());
         startActivity(intent);
     }
 
@@ -101,8 +101,6 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         if(lobby == null){
             return;
         }
-        //Set the list of players.
-        System.out.println(lobby);
         TextView userListTV = (TextView) findViewById(R.id.displayUsers);
 
         userListTV.setText(lobby.getUsers().toString().trim());
