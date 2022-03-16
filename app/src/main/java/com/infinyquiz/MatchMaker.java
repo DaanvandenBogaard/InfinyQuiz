@@ -41,7 +41,7 @@ public class MatchMaker {
 
     public void lookForLobby() {
         DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -53,13 +53,7 @@ public class MatchMaker {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Lobby curLobby = data.getValue(Lobby.class);
 
-                    if (lobby!= null & lobby.getId() == data.getKey()) { //Add user to this lobby
-                        lobby = curLobby;
-                        System.out.println("TEST");
-                        System.out.println("Updated Lobby");
-                        System.out.println("TEST");
-                        return;
-                    } else if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE & curLobby.getId() != null & lobbyID == null & lobby == null) {
+                    if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE ) {
                         lobby = curLobby;
                         curLobby.setID(data.getKey());
                         lobbyID = curLobby.getId();
@@ -68,16 +62,34 @@ public class MatchMaker {
                         return;
                     }
                 }
-
                 //If no good lobby was found, make a new lobby:
                 if (lobbyID == null) {
                     makeNewLobby();
                 }
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("could not read data", "The read failed: " + databaseError.getCode());
+            }
+        });
+
+        //Now lobby is set, we will set listener to
+        DatabaseReference refToLobby = database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID);
+        refToLobby.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 System.out.println("TEST");
-                System.out.println("lobby ID =" + lobbyID);
+                System.out.println("Lobby data changed");
                 System.out.println("TEST");
 
+                Lobby lobby = dataSnapshot.getValue(Lobby.class);
+
+                System.out.println("TEST");
+                System.out.println("Updated lobby data");
+                System.out.println("TEST");
             }
 
             @Override
