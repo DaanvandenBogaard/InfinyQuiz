@@ -78,6 +78,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         //Add values to intent
         intent.putExtra("lobbyID", lobby.getId());
         intent.putExtra("gameID", lobby.getGameID());
+        matchMaker.closeLobby();
         startActivity(intent);
     }
 

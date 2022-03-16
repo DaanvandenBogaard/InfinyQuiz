@@ -112,6 +112,14 @@ public class MatchMaker {
         updateFirebaseLobby(lobby);
     }
 
+    public void closeLobby(){
+        //move lobby to "closedLobbies"
+        database.getReference().child("Lobbies").child("ClosedLobbies").child(lobbyID).setValue(lobby);
+
+        //Remove Lobby from "openLobbies"
+        database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).removeValue();
+    }
+
     public Lobby getLobby() {
         return lobby;
     }
