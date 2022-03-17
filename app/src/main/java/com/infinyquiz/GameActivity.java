@@ -176,6 +176,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //Check if we are comming from ScoreBoardActivity:
                 if (game.haveAllPlayersAnswered()) {
                     game.clearAnsweredPlayers();
+                    updateFirebaseGame(game);
                     //see if question must be incremented:
                     if (curIndex != game.index) {
                         game.incrementQuestionIndex();
@@ -358,8 +359,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("category", getIntent().getStringExtra("category"));
         intent.putExtra("index", curIndex + 1);
         game.addPlayerToAnswered(userID);
-        timer.cancel();
         updateFirebaseGame(game);
+        timer.cancel();
         startActivity(intent);
     }
 }
