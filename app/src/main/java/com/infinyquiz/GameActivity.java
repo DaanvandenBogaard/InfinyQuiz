@@ -66,7 +66,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private boolean hasAnsweredQuestion = true;
 
     //Time of delay
-    private float DELAY = 100;
+    private float DELAY = 1000;
 
     //Index of question
     private int curIndex;
@@ -356,9 +356,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
         intent.putExtra("index", curIndex + 1);
-        System.out.println("test");
-        System.out.println("moving from game to score");
-        System.out.println("test");
         game.addPlayerToAnswered(userID);
         updateFirebaseGame();
         startActivity(intent);

@@ -23,7 +23,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
 
-    private long DELAY = 100;
+    private long DELAY = 1000;
 
     private Game game;
 
