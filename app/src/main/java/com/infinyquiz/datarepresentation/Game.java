@@ -16,13 +16,13 @@ public abstract class Game {
 
     public ArrayList<Question> questions;
     private int questionCounter;
-    private Question currentQuestion;
     private Lobby lobby;
     //A list with the IDs of all players who have made the transition to the game.
     private ArrayList<String> joinedPlayers = new ArrayList<>();
     private ArrayList<String> answeredPlayers = new ArrayList<>();
     private Map<String, Integer> scoreboard = new HashMap<>();
     private ArrayList<String> categoryVotes = new ArrayList<>();
+    public int index = 0;
 
     //the number of questions, according to requirements, must be 10
     public static int NUMBER_OF_QUESTIONS = 2; // 10; //TODO set requirement
@@ -31,10 +31,11 @@ public abstract class Game {
     private String gameID;
 
     public Question getCurrentQuestion(){
-        if(currentQuestion == null || questions == null || currentQuestion.equals(new Question())){
-            currentQuestion = new Question();
-        }
-        return currentQuestion;
+        return questions.get(index);
+    }
+
+    public void incrementQuestionIndex(){
+        index++;
     }
 
     public ArrayList<Question> getQuestions(){
@@ -69,19 +70,6 @@ public abstract class Game {
 
     public void setScore(String userId, int score){
         scoreboard.put(userId, score);
-    }
-
-    public Question getNextQuestion() {
-        if(questions == null || questions.size() == 0){
-            currentQuestion = new Question();
-        }
-        else if(currentQuestion == null || currentQuestion.equals(new Question()) || questions.size() == 1) {
-            currentQuestion = questions.get(0);
-        } else{
-            questions.remove(0);
-            currentQuestion = questions.get(0);
-        }
-        return currentQuestion;
     }
 
     public void addVote(String vote){

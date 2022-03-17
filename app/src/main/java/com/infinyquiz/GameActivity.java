@@ -68,6 +68,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     //Time of delay
     private float DELAY = 15000;
 
+    //Index of question
+    private int curIndex;
+
     private Map<String, ArrayList<Question>> questionData = new HashMap<>();
 
     @Override
@@ -98,6 +101,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameID = getIntent().getStringExtra("gameID");
         lobbyID = getIntent().getStringExtra("lobbyID");
         vote = getIntent().getStringExtra("category");
+        curIndex = getIntent().getIntExtra("index", 0);
     }
 
     /* A function which ads this user to the list of users who have joined.
@@ -176,9 +180,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 //Check if we are comming from ScoreBoardActivity:
-                if(game.haveAllPlayersAnswered()){
+                if (game.haveAllPlayersAnswered()) {
                     game.clearAnsweredPlayers();
-                    curQuestion = game.getNextQuestion();
+                    //see if question must be incremented:
+                    if(curIndex != game.index){
+                        game.incrementQuestionIndex();
+                    }
+                    curQuestion = game.getCurrentQuestion();
                     updateFirebaseGame();
                 }
 
@@ -196,7 +204,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         allQuestions.remove(j);
                     }
                     game.setQuestions(chosenQuestions);
-                    curQuestion = game.getNextQuestion();
+                    //see if question must be incremented:
+                    if(curIndex != game.index){
+                        game.incrementQuestionIndex();
+                    }
+                    curQuestion = game.getCurrentQuestion();
                     hasAnsweredQuestion = false;
                     updateFirebaseGame();
                 } else {
@@ -293,15 +305,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        try {
-                            moveToScoreBoard();
-                        }
-                        catch(Exception e){
-                            e.printStackTrace();
-                            System.out.println("TEST");
-                            System.out.println(e.getCause());
-                            System.out.println("TEST");
-                        }
+                        moveToScoreBoard();
                     }
                 },
                 (long) DELAY
@@ -344,6 +348,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
+        intent.putExtra("index", curIndex + 1);
         game.addPlayerToAnswered(userID);
         updateFirebaseGame();
         startActivity(intent);

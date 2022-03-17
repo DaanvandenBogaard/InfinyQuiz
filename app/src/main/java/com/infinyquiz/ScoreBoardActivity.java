@@ -92,6 +92,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
+        intent.putExtra("index" , getIntent().getIntExtra("index",0));
         startActivity(intent);
     }
 
