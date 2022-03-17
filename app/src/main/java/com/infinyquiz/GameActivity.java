@@ -107,7 +107,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void registerUserToGame() {
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
         //database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(userID);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 game = dataSnapshot.getValue(RandomGame.class);
@@ -116,7 +116,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     game.addVote(vote);
                     updateFirebaseGame();
                 }
-                getQuestions();
             }
 
             @Override
@@ -124,7 +123,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
-
+        getQuestions();
     }
 
     /* A function that retrieves the questions
