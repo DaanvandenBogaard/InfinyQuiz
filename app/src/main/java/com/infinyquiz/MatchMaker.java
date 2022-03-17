@@ -62,6 +62,7 @@ public class MatchMaker {
                         lobby = curLobby;
                         curLobby.setID(data.getKey());
                         lobbyID = curLobby.getId();
+                        gameID = curLobby.getGameID();
                         curLobby.addUser(userID);
                         updateFirebaseLobby(lobby);
                         return;
