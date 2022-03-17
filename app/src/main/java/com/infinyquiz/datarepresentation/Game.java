@@ -31,6 +31,9 @@ public abstract class Game {
     private String gameID;
 
     public Question getCurrentQuestion(){
+        if(questions == null){
+            return new Question();
+        }
         return questions.get(index);
     }
 
