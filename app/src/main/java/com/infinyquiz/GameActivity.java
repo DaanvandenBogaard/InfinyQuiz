@@ -114,7 +114,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Update the list of joined users
                 ArrayList<String> joinedUsers = dataSnapshot.getValue(new ArrayList<String>().getClass());
-                joinedUsers.add(userID);
+                if(joinedUsers == null){
+                    joinedUsers = new ArrayList<>();
+                }else{
+                    joinedUsers.add(userID);
+                }
+
                 database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(joinedUsers);
                 getQuestions();
             }
