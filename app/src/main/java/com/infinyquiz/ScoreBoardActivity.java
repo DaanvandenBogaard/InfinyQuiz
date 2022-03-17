@@ -89,6 +89,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private void moveToGameActivity(){
         Intent intent = new Intent(this, GameActivity.class);
+        System.out.println("test");
+        System.out.println("moving from score to game");
+        System.out.println("test");
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));

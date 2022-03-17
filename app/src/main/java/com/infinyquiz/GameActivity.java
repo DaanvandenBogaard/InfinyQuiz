@@ -71,6 +71,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     //Index of question
     private int curIndex;
 
+    //see if timer has been set
+    private boolean timerHasBeenSet = false;
+
     private Map<String, ArrayList<Question>> questionData = new HashMap<>();
 
     @Override
@@ -301,6 +304,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      *
      */
     private void setTimerForQuestion() {
+        if(timerHasBeenSet){
+            return;
+        }
+        timerHasBeenSet = true;
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
@@ -349,6 +356,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
         intent.putExtra("index", curIndex + 1);
+        System.out.println("test");
+        System.out.println("moving from game to score");
+        System.out.println("test");
         game.addPlayerToAnswered(userID);
         updateFirebaseGame();
         startActivity(intent);
