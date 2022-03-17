@@ -108,16 +108,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * @post in the database, the userID has been added to joined users.
      */
     private void registerUserToGame() {
-        DatabaseReference ref =   database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers");
+        DatabaseReference ref =   database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayersList").child(userID);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Update the list of joined users
-                ArrayList<String> joinedUsers = dataSnapshot.getValue(new ArrayList<String>().getClass());
-                if(joinedUsers == null){
-                    joinedUsers = new ArrayList<>();
-                }else{
-                    joinedUsers.add(userID);
+                joinedUsers = new ArrayList<>();
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    joinedUsers.add(data.getKey());
                 }
 
                 database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(joinedUsers);
@@ -129,7 +127,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
-
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayersList").child(userID).setValue(userID);
     }
 
     /* A function that retrieves the questions
