@@ -72,7 +72,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
                 //Check if game can be started
                 if(lobby != null){
                     //Check if match can start.
-                    if(lobby.getLobbySize() == Lobby.MAX_PEOPLE || matchMaker.gameHasStarted()){
+                    if(lobby.getLobbySize() >= Lobby.MAX_PEOPLE || matchMaker.gameHasStarted()){
                         startNewGameActivity();
                     }
                 }

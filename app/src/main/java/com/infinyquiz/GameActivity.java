@@ -42,6 +42,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     //The game object we are playing
     private Game game;
 
+    //The question currently being discussed
+    private Question curQuestion = new Question();
+
     //The vote for the category
     private String vote;
 
@@ -53,6 +56,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     //Buttons of options
     private Button optionA,optionB,optionC,optionD;
+
+    //boolean to know if current question has been answered.
+    private boolean hasAnsweredQuestion = true;
+
+    //Time of delay
+    private float DELAY = 15000;
 
     private Map<String, ArrayList<Question>> questionData = new HashMap<>();
 
@@ -176,11 +185,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         allQuestions.remove(j);
                     }
                     game.setQuestions(chosenQuestions);
-                    game.getNextQuestion();
+                    curQuestion = game.getNextQuestion();
+                    hasAnsweredQuestion = false;
                     updateFirebaseGame();
                 } else {
+                    if(hasAnsweredQuestion){
+                        return;
+                    }
                     //Run game behaviour
+                    curQuestion = game.getCurrentQuestion();
                     updateUI();
+                    //wait for {@code DELAY}
+                    setTimerForQuestion();
                 }
             }
 
@@ -200,6 +216,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void removeOpenLobby() {
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).removeValue();
     }
+
+
 
     /* Updates game in firebase
      *
@@ -257,8 +275,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return votedCategory;
     }
 
+    /* This function will set a timer for when we start a question. Once this timer is over, we move the users
+     *
+     */
+    private void setTimerForQuestion(){
+
+    }
+
     @Override
     public void onClick(View view) {
+        //if we have not moved to next question, do nothing
+        if(hasAnsweredQuestion){
+            return;
+        }
+        hasAnsweredQuestion = true;
+
         Button clickedButton = (Button) view;
         String answer = clickedButton.getText().toString().trim();
         //TODO IMPLEMENT TIME WITH POINTS
@@ -271,8 +302,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //Answered incorrectly
             points = -10;
         }
-        //upload points
+        //Set points (will be updated when moving to next question).
+        if(!game.getScoreboard().containsKey(userID)){
+            game.setScore(userID, 0);
+        }
         game.setScore(userID, game.getScore(userID) + points);
+        game.addPlayerToAnswered(userID);
         updateFirebaseGame();
+
+        //Move to scoreboard.
     }
 }
