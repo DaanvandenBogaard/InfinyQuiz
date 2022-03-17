@@ -175,6 +175,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     removeOpenLobby();
                 }
 
+                //Check if we are comming from ScoreBoardActivity:
+                if(game.haveAllPlayersAnswered()){
+                    game.clearAnsweredPlayers();
+                    curQuestion = game.getNextQuestion();
+                    updateFirebaseGame();
+                }
+
                 //If the game has not been set yet, we will set it. A game is not set if the
                 //questions have yet to be set.
                 if (game.getQuestions() == null || game.getQuestions().size() == 0) {

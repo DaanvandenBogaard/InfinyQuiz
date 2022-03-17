@@ -88,10 +88,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
     }
 
     private void moveToGameActivity(){
-        if (true) {
-
-
-        }
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
