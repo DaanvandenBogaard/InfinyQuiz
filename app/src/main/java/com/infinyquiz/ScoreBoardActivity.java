@@ -23,7 +23,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
 
-    private long DELAY = 5000;
+    private long DELAY = 100;
 
     private Game game;
 
@@ -48,9 +48,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 game = snapshot.getValue(RandomGame.class);
-                if(game.haveAllPlayersAnswered()){
+                //if(game.haveAllPlayersAnswered()){
                     startTimer();
-                }
+                //}
                 //set UI
                 setUI(game);
             }

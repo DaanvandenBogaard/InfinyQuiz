@@ -19,7 +19,7 @@ public abstract class Game {
     private Lobby lobby;
     //A list with the IDs of all players who have made the transition to the game.
     private ArrayList<String> joinedPlayers = new ArrayList<>();
-    private ArrayList<String> answeredPlayers = new ArrayList<>();
+    public ArrayList<String> answeredPlayers = new ArrayList<>();
     private Map<String, Integer> scoreboard = new HashMap<>();
     private ArrayList<String> categoryVotes = new ArrayList<>();
     public int index = 0;

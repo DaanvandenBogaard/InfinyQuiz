@@ -66,7 +66,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private boolean hasAnsweredQuestion = true;
 
     //Time of delay
-    private float DELAY = 15000;
+    private float DELAY = 100;
 
     //Index of question
     private int curIndex;
