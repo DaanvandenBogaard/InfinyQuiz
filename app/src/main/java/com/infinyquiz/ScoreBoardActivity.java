@@ -1,5 +1,6 @@
 package com.infinyquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -22,6 +23,10 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
 
+    private long DELAY = 5000;
+
+    private Game game;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +45,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Game game = snapshot.getValue(RandomGame.class);
+                game = snapshot.getValue(RandomGame.class);
                 if(game.haveAllPlayersAnswered()){
                     startTimer();
                 }
@@ -58,7 +63,15 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     //A function to start a timer to return to the GameActivity
     private void startTimer(){
-
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        moveToGameActivity();
+                    }
+                },
+                DELAY
+        );
     }
 
     //A function to set the UI accordingly
@@ -72,6 +85,18 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
         TextView scoreBoardTV = (TextView) findViewById(R.id.scoreboardTV);
         scoreBoardTV.setText(game.getScoreboard().toString().trim());
+    }
+
+    private void moveToGameActivity(){
+        if (true) {
+
+
+        }
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
+        intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
+        intent.putExtra("category", getIntent().getStringExtra("category"));
+        startActivity(intent);
     }
 
 }

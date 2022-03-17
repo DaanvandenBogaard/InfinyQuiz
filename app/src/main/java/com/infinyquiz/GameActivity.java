@@ -283,14 +283,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void setTimerForQuestion() {
         new java.util.Timer().schedule(
-
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
                         moveToScoreBoard();
                     }
                 },
-                5000
+                (long) DELAY
         );
     }
 
@@ -331,6 +330,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
+        game.addPlayerToAnswered(userID);
+        updateFirebaseGame();
         startActivity(intent);
     }
 }
