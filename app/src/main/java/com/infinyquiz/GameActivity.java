@@ -318,7 +318,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         Button clickedButton = (Button) view;
         String answer = clickedButton.getText().toString().trim();
-        //TODO IMPLEMENT TIME WITH POINTS
         int points = 0;
         if (answer.equals(game.getCurrentQuestion().getCorrectOption().trim())) {
             //Answered correctly

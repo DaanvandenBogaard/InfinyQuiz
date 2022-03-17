@@ -75,7 +75,7 @@ public abstract class Game {
         if(questions == null || questions.size() == 0){
             currentQuestion = new Question();
         }
-        else if(currentQuestion == null || currentQuestion.equals(new Question())) {
+        else if(currentQuestion == null || currentQuestion.equals(new Question()) || questions.size() == 1) {
             currentQuestion = questions.get(0);
         } else{
             questions.remove(0);
