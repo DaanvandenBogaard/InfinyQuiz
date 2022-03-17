@@ -81,7 +81,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        database.getReference().child("Lobbies").child("gameLobbies").child(gameID + "votes").child(vote).setValue(userID);
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("votes").child(vote).setValue(userID);
         System.out.println("arrrr");
     }
 
@@ -113,7 +113,7 @@ public class GameActivity extends AppCompatActivity {
                 if (game.getQuestions() == null) {
                     //find highest rated category
 
-                    game.setQuestions(vote);//CHANGE TO NEW CATEGORY TODO
+                    game.setQuestions(vote);
                     updateFirebaseGame();
                 } else {
                     //Run game behaviour

@@ -32,6 +32,7 @@ public class MatchMaker {
     //Index at which user is stored
     private int userIndex;
     private String userSelectedCategory;
+    private boolean stopMatchmaking = false;
 
     //The current user ID
     final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -47,10 +48,10 @@ public class MatchMaker {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println("TEST");
-                System.out.println("DataChanged!");
-                System.out.println("TEST");
 
+                if(stopMatchmaking){
+                    return;
+                }
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Lobby curLobby = data.getValue(Lobby.class);
@@ -136,8 +137,7 @@ public class MatchMaker {
     }
 
     public void closeLobby() {
-        //move lobby to "closedLobbies"
-        //database.getReference().child("Lobbies").child("ClosedLobbies").child(lobbyID).setValue(lobby);
+        stopMatchmaking = true;
         updateFirebaseLobby(lobby);
     }
 
