@@ -1,5 +1,7 @@
 package com.infinyquiz;
 
+import android.content.Intent;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,7 +60,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private String[] categories;
 
     //Buttons of options
-    private Button optionA,optionB,optionC,optionD;
+    private Button optionA, optionB, optionC, optionD;
 
     //boolean to know if current question has been answered.
     private boolean hasAnsweredQuestion = true;
@@ -189,7 +194,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     hasAnsweredQuestion = false;
                     updateFirebaseGame();
                 } else {
-                    if(hasAnsweredQuestion){
+                    if (hasAnsweredQuestion) {
                         return;
                     }
                     //Run game behaviour
@@ -218,7 +223,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     /* Updates game in firebase
      *
      * @pre {@code database != null}
@@ -232,7 +236,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /* updates to UI according to game
      *
      */
-    private void updateUI(){
+    private void updateUI() {
         TextView questionTV = (TextView) findViewById(R.id.questionTV);
         Question question = game.getCurrentQuestion();
         questionTV.setText(question.getQuestion());
@@ -278,14 +282,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /* This function will set a timer for when we start a question. Once this timer is over, we move the users
      *
      */
-    private void setTimerForQuestion(){
+    private void setTimerForQuestion() {
+        new java.util.Timer().schedule(
 
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        moveToScoreBoard();
+                    }
+                },
+                5000
+        );
     }
 
     @Override
     public void onClick(View view) {
         //if we have not moved to next question, do nothing
-        if(hasAnsweredQuestion){
+        if (hasAnsweredQuestion) {
             return;
         }
         hasAnsweredQuestion = true;
@@ -294,16 +307,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String answer = clickedButton.getText().toString().trim();
         //TODO IMPLEMENT TIME WITH POINTS
         int points = 0;
-        if(answer.equals(game.getCurrentQuestion().getCorrectOption().trim())){
+        if (answer.equals(game.getCurrentQuestion().getCorrectOption().trim())) {
             //Answered correctly
             points = 100;
-        }
-        else{
+        } else {
             //Answered incorrectly
             points = -10;
         }
         //Set points (will be updated when moving to next question).
-        if(!game.getScoreboard().containsKey(userID)){
+        if (!game.getScoreboard().containsKey(userID)) {
             game.setScore(userID, 0);
         }
         game.setScore(userID, game.getScore(userID) + points);
@@ -311,5 +323,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         updateFirebaseGame();
 
         //Move to scoreboard.
+        moveToScoreBoard();
+    }
+
+    //Temporarily move to the scoreboard activity and then come back.
+    private void moveToScoreBoard() {
+        Intent intent = new Intent(this, ScoreBoardActivity.class);
+        intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
+        intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
+        intent.putExtra("category", getIntent().getStringExtra("category"));
+        startActivity(intent);
     }
 }

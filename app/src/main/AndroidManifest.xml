@@ -34,6 +34,7 @@
         <activity android:name=".userquestions.ReviewQuestionActivity" />
         <activity android:name=".MatchMakingActivity"/>
         <activity android:name=".GameActivity"/>
+        <activity android:name=".ScoreBoardActivity"/>
     </application>
 
 </manifest>
