@@ -63,10 +63,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button optionA, optionB, optionC, optionD;
 
     //boolean to know if current question has been answered.
-    private boolean hasAnsweredQuestion = true;
+    private boolean hasAnsweredQuestion = false;
 
     //Time of delay
-    private float DELAY = 1000;
+    private float DELAY = 10000;
 
     //Index of question
     private int curIndex;
@@ -121,8 +121,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (!game.hasPlayerJoined(userID)) {
                     game.joinPlayer(userID);
                     game.addVote(vote);
-                    updateFirebaseGame();
                 }
+                updateFirebaseGame();
             }
 
             @Override
@@ -173,7 +173,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 game = dataSnapshot.getValue(RandomGame.class);
-
+                if (hasAnsweredQuestion) {
+                    return;
+                }
                 //If not all players have joined, we wait:
                 if (!game.allPlayersJoined()) {
                     System.out.println("not all players have joined yet, wait!");
@@ -184,7 +186,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 //Check if we are comming from ScoreBoardActivity:
                 if (game.haveAllPlayersAnswered()) {
-                    game.clearAnsweredPlayers();
+                    //game.clearAnsweredPlayers();
+                    System.out.println("NOOOOOOOOOOOOOOOOO");
+                    System.out.println("TEST");
                     //see if question must be incremented:
                     if(curIndex != game.index){
                         game.incrementQuestionIndex();
@@ -195,7 +199,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 //If the game has not been set yet, we will set it. A game is not set if the
                 //questions have yet to be set.
-                if (game.getQuestions() == null || game.getQuestions().size() == 0) {
+                if (game.getQuestions() == null) {
                     //find highest rated category
                     String votedCategory = mostPopularCategory();
                     ArrayList<Question> allQuestions = questionData.get(votedCategory);
@@ -215,9 +219,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     hasAnsweredQuestion = false;
                     updateFirebaseGame();
                 } else {
-                    if (hasAnsweredQuestion) {
-                        return;
-                    }
                     //Run game behaviour
                     curQuestion = game.getCurrentQuestion();
                     updateUI();
@@ -303,12 +304,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /* This function will set a timer for when we start a question. Once this timer is over, we move the users
      *
      */
+
+    Timer timer;
     private void setTimerForQuestion() {
         if(timerHasBeenSet){
             return;
         }
         timerHasBeenSet = true;
-        new java.util.Timer().schedule(
+        timer = new java.util.Timer();
+        timer.schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
@@ -342,7 +346,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             game.setScore(userID, 0);
         }
         game.setScore(userID, game.getScore(userID) + points);
-        game.addPlayerToAnswered(userID);
         updateFirebaseGame();
 
         //Move to scoreboard.
@@ -356,7 +359,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
         intent.putExtra("index", curIndex + 1);
-        game.addPlayerToAnswered(userID);
+        //game.addPlayerToAnswered(userID);
+        timer.cancel();
         updateFirebaseGame();
         startActivity(intent);
     }

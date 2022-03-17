@@ -94,7 +94,7 @@ public abstract class Game {
     }
 
     public boolean haveAllPlayersAnswered(){
-        return joinedPlayers.size() == answeredPlayers.size();
+        return lobby.getLobbySize() == answeredPlayers.size();
     }
 
     public void addPlayerToAnswered(String playerID){
