@@ -90,16 +90,7 @@ public class MatchMaker {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println("TEST");
-                System.out.println("Lobby data changed");
-                System.out.println("TEST");
-
                 lobby = dataSnapshot.getValue(Lobby.class);
-
-                System.out.println("TEST");
-                System.out.println("Updated lobby data");
-                System.out.println(lobby.getUsers().toString());
-                System.out.println("TEST");
             }
 
             @Override
@@ -116,6 +107,7 @@ public class MatchMaker {
     void updateFirebaseLobby(Lobby lobby) {
         DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID);
         ref.setValue(lobby);
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("lobby").setValue(lobby);
     }
 
     private void makeNewLobby() {
@@ -144,7 +136,7 @@ public class MatchMaker {
 
     public void closeLobby() {
         //move lobby to "closedLobbies"
-        database.getReference().child("Lobbies").child("ClosedLobbies").child(lobbyID).setValue(lobby);
+        //database.getReference().child("Lobbies").child("ClosedLobbies").child(lobbyID).setValue(lobby);
         updateFirebaseLobby(lobby);
     }
 
@@ -161,17 +153,6 @@ public class MatchMaker {
 
     public String getUserSelectedCategory(){
         return userSelectedCategory;
-    }
-
-    public void setUserSelectedCategory(String newCategory){
-
-        Map<String, Integer> votes = lobby.getCategoryVotes();
-        if(userSelectedCategory != null){
-            votes.put(userSelectedCategory, votes.get(userSelectedCategory) - 1);
-        }
-        votes.put(newCategory, votes.get(newCategory) + 1);
-        updateFirebaseLobby(lobby);
-        userSelectedCategory = newCategory;
     }
 
 

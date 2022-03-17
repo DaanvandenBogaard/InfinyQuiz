@@ -16,7 +16,7 @@ public abstract class Game {
     private Question currentQuestion;
     private Lobby lobby;
     //A list with the IDs of all players who have made the transition to the game.
-    private List<String> joinedPlayers = new ArrayList<>();
+    private ArrayList<String> joinedPlayers = new ArrayList<>();
     //TODO: add scoreboard
 
     //the number of questions, according to requirements, must be 10
@@ -33,6 +33,10 @@ public abstract class Game {
 
     public List<String> getUsers() {
         return lobby.getUsers();
+    }
+
+    public ArrayList<String> getJoinedPlayers(){
+        return joinedPlayers;
     }
 
     public Lobby getLobby(){
@@ -55,6 +59,7 @@ public abstract class Game {
     public String getGameID(){
         return gameID;
     }
+
 
     public List<Question> getQuestions(){
         return questions;

@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.datarepresentation.Game;
 import com.infinyquiz.datarepresentation.Lobby;
+import com.infinyquiz.datarepresentation.RandomGame;
 
 import java.util.Map;
 
@@ -31,6 +32,9 @@ public class GameActivity extends AppCompatActivity {
 
     //The game object we are playing
     private Game game;
+
+    //The vote for the category
+    private String vote;
 
     //The current user ID
     final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -50,6 +54,7 @@ public class GameActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
         gameID = getIntent().getStringExtra("gameID");
         lobbyID = getIntent().getStringExtra("lobbyID");
+        vote = getIntent().getStringExtra("category");
     }
 
     /* A function which ads this user to the list of users who have joined.
@@ -62,9 +67,11 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                game = dataSnapshot.getValue(Game.class);
+                game = dataSnapshot.getValue(RandomGame.class);
                 if (!game.hasPlayerJoined(userID)) {
                     game.joinPlayer(userID);
+                    updateFirebaseGame();
+                    //Set category preference
                 }
             }
 
@@ -73,6 +80,9 @@ public class GameActivity extends AppCompatActivity {
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
+
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID + "votes").child(vote).setValue(userID);
+        System.out.println("arrrr");
     }
 
     /* sets the listener to the game data, where we will
@@ -88,29 +98,25 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                game = dataSnapshot.getValue(Game.class);
+                game = dataSnapshot.getValue(RandomGame.class);
+
+                //If not all players have joined, we wait:
+                if (!game.allPlayersJoined()) {
+                    System.out.println("not all players have joined yet, wait!");
+                    return;
+                } else {
+                    removeOpenLobby();
+                }
 
                 //If the game has not been set yet, we will set it. A game is not set if the
                 //questions have yet to be set.
                 if (game.getQuestions() == null) {
                     //find highest rated category
-                    Map<String, Integer> votes = game.getLobby().getCategoryVotes();
-                    String selectedCategory = getResources().getStringArray(R.array.categories)[0];
-                    int maxVotes = 0;
-                    for(Map.Entry<String, Integer> entry : votes.entrySet()){
-                        if(entry.getValue() >= maxVotes){
-                            maxVotes = entry.getValue();
-                            selectedCategory = entry.getKey();
-                        }
-                    }
-                    game.setQuestions(selectedCategory);
+
+                    game.setQuestions(vote);//CHANGE TO NEW CATEGORY TODO
                     updateFirebaseGame();
-                }
-                else{
-                    if(game.allPlayersJoined()){
-                        removeOpenLobby();
-                    }
-                    //behaviour
+                } else {
+                    //Run game behaviour
                 }
             }
 
@@ -127,11 +133,14 @@ public class GameActivity extends AppCompatActivity {
      * @post the lobby is removed from the open lobbies.
      * @modifies firebase real time database.
      */
-    private void removeOpenLobby(){
+    private void removeOpenLobby() {
+        System.out.println("TEST");
+        System.out.println("Trying to remove lobby");
+        System.out.println("TEST");
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).removeValue();
     }
 
-    private void updateFirebaseGame(){
+    private void updateFirebaseGame() {
         database.getReference().child("Lobbies").child("gameLobbies").child(gameID).setValue(game);
     }
 }

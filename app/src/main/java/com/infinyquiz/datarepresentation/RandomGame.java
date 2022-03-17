@@ -7,6 +7,10 @@ public class RandomGame extends Game{
         super(lobby);
     }
 
+    //Constructor for firebase
+    public RandomGame(){
+        super();
+    }
 
     @Override
     public void setQuestions(String category) {

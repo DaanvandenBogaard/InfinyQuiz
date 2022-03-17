@@ -9,7 +9,7 @@ import java.util.Map;
 public class Lobby {
 
     //Constant: maximal number of people in lobby
-    public static final int MAX_PEOPLE = 3;
+    public static final int MAX_PEOPLE = 2;
 
     //Constant: minimal number of people to start game
     public static final int MIN_PEOPLE = 2;
@@ -26,11 +26,9 @@ public class Lobby {
     //Boolean saying whether the game has started.
     private boolean gameHasStarted = false;
 
-    private Map<String, Integer> categoryVotes = new HashMap<String, Integer>();
-
     //Constructor
     public Lobby(){
-        categoryVotes = new HashMap<String, Integer>();
+
     }
 
     public void addUser(String id){
@@ -70,14 +68,6 @@ public class Lobby {
 
     public void shutDownLobby(){
         gameHasStarted = true;
-    }
-
-    public void setCategoryVotes(Map<String, Integer> dictionary){
-        categoryVotes = dictionary;
-    }
-
-    public Map<String, Integer> getCategoryVotes(){
-        return categoryVotes;
     }
 
 }

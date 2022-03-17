@@ -36,6 +36,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     private final int WAITING_TIME = 10;
     private final MatchMaker matchMaker = new MatchMaker();
     private final int DELAY = 1000; //1 second
+    private String selectedCategory;
 
     //Handler object for using delay
     Handler handler = new Handler();
@@ -88,6 +89,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         //Add values to intent
         intent.putExtra("lobbyID", lobby.getId());
         intent.putExtra("gameID", lobby.getGameID());
+        intent.putExtra("category", selectedCategory);
         matchMaker.closeLobby();
         matchMaker.updateFirebaseLobby(matchMaker.getLobby());
         startActivity(intent);
@@ -113,13 +115,13 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     //Overiding methods for spinner:
     @Override //Method for OnItemSelectedListener
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        matchMaker.setUserSelectedCategory(adapterView.getItemAtPosition(i).toString()); //update category
+        selectedCategory = adapterView.getItemAtPosition(i).toString(); //update category
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         String[] arr = getResources().getStringArray(R.array.categories);
-        matchMaker.setUserSelectedCategory(arr[0]);
+        selectedCategory = arr[0];
     }
 
     /* Update the UI elements according to a given Lobby object.
