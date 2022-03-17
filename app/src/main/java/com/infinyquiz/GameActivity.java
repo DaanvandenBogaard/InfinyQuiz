@@ -106,15 +106,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void registerUserToGame() {
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(userID);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 game = dataSnapshot.getValue(RandomGame.class);
                 if (!game.hasPlayerJoined(userID)) {
-                    game.joinPlayer(userID);
-                    game.addVote(vote);
-                    updateFirebaseGame();
+                    //game.joinPlayer(userID);
+                    //game.addVote(vote);
+                    //updateFirebaseGame();
                 }
                 getQuestions();
             }

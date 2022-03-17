@@ -27,7 +27,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
 
-        Button leaveGameBtn = (Button) findViewById(R.id.leaveGameBtn);
+        Button leaveGameBtn = (Button) findViewById(R.id.leaveMatchBtn);
         leaveGameBtn.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(), this));
 
         startDataBaseRead();
