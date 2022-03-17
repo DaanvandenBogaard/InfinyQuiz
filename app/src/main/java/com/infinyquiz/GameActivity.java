@@ -108,17 +108,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * @post in the database, the userID has been added to joined users.
      */
     private void registerUserToGame() {
-        DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayersList").child(userID);
+        DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
+        //database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(userID);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //Update the list of joined users
-                joinedUsers = new ArrayList<>();
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    joinedUsers.add(data.getKey());
+                game = dataSnapshot.getValue(RandomGame.class);
+                if (!game.hasPlayerJoined(userID)) {
+                    game.joinPlayer(userID);
+                    game.addVote(vote);
+                    updateFirebaseGame();
                 }
-
-                database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(joinedUsers);
                 getQuestions();
             }
 
@@ -127,7 +127,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
-        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayersList").child(userID).setValue(userID);
     }
 
     /* A function that retrieves the questions
