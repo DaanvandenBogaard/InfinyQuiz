@@ -72,13 +72,14 @@ public abstract class Game {
     }
 
     public Question getNextQuestion() {
-        if(questions == null){
+        if(questions == null || questions.size() == 0){
             currentQuestion = new Question();
         }
         else if(currentQuestion == null || currentQuestion.equals(new Question())) {
             currentQuestion = questions.get(0);
         } else{
-            currentQuestion = questions.get(questions.indexOf(currentQuestion) + 1);
+            questions.remove(0);
+            currentQuestion = questions.get(0);
         }
         return currentQuestion;
     }

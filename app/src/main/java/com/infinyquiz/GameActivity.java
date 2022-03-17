@@ -293,7 +293,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        moveToScoreBoard();
+                        try {
+                            moveToScoreBoard();
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                            System.out.println("TEST");
+                            System.out.println(e.getCause());
+                            System.out.println("TEST");
+                        }
                     }
                 },
                 (long) DELAY
