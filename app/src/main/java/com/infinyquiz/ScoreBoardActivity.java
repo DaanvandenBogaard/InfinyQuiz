@@ -27,6 +27,8 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private Game game;
 
+    private boolean timerHasBeenSet = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,10 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     //A function to start a timer to return to the GameActivity
     private void startTimer(){
+        if(timerHasBeenSet){
+            return;
+        }
+        timerHasBeenSet = true;
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
