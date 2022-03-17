@@ -35,9 +35,6 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //List of joined users made by database calls (no bookkeeping in game object).
-    private ArrayList<String> joinedUsers;
-
     //The ID of the game
     private String gameID;
 
@@ -110,7 +107,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void registerUserToGame() {
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
         //database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(userID);
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 game = dataSnapshot.getValue(RandomGame.class);
@@ -127,6 +124,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
+
     }
 
     /* A function that retrieves the questions
