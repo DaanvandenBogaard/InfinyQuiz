@@ -35,6 +35,9 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //List of joined users made by database calls (no bookkeeping in game object).
+    private ArrayList<String> joinedUsers;
+
     //The ID of the game
     private String gameID;
 
@@ -105,17 +108,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * @post in the database, the userID has been added to joined users.
      */
     private void registerUserToGame() {
-        DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
-        //database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(userID);
+        DatabaseReference ref =   database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayersSingle");
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayersSingle").child(userID).setValue(userID);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                game = dataSnapshot.getValue(RandomGame.class);
-                if (!game.hasPlayerJoined(userID)) {
-                    game.joinPlayer(userID);
-                    game.addVote(vote);
-                    updateFirebaseGame();
+                //Update the list of joined users
+                ArrayList<String> joinedUsers = new ArrayList<>();
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    joinedUsers.add(data.getKey());
                 }
+                database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(joinedUsers);
                 getQuestions();
             }
 
