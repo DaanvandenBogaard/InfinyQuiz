@@ -38,7 +38,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
         leaveGameBtn.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(), this));
 
         startDataBaseRead();
-        startTimer();
     }
 
     private void startDataBaseRead(){
@@ -49,9 +48,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 game = snapshot.getValue(RandomGame.class);
-                //if(game.haveAllPlayersAnswered()){
-                    //startTimer();
-                //}
+                if(game.haveAllPlayersAnswered()){
+                    startTimer();
+                }
                 //set UI
                 setUI(game);
             }

@@ -121,8 +121,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (!game.hasPlayerJoined(userID)) {
                     game.joinPlayer(userID);
                     game.addVote(vote);
+                    updateFirebaseGame(game);
                 }
-                updateFirebaseGame();
             }
 
             @Override
@@ -172,7 +172,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                game = dataSnapshot.getValue(RandomGame.class);
+
+                //Check if we are comming from ScoreBoardActivity:
+                if (game.haveAllPlayersAnswered()) {
+                    game.clearAnsweredPlayers();
+                    //see if question must be incremented:
+                    if (curIndex != game.index) {
+                        game.incrementQuestionIndex();
+                    }
+                    curQuestion = game.getCurrentQuestion();
+                }
+
                 if (hasAnsweredQuestion) {
                     return;
                 }
@@ -184,18 +194,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     removeOpenLobby();
                 }
 
-                //Check if we are comming from ScoreBoardActivity:
-                if (game.haveAllPlayersAnswered()) {
-                    //game.clearAnsweredPlayers();
-                    System.out.println("NOOOOOOOOOOOOOOOOO");
-                    System.out.println("TEST");
-                    //see if question must be incremented:
-                    if(curIndex != game.index){
-                        game.incrementQuestionIndex();
-                    }
-                    curQuestion = game.getCurrentQuestion();
-                    updateFirebaseGame();
-                }
 
                 //If the game has not been set yet, we will set it. A game is not set if the
                 //questions have yet to be set.
@@ -211,20 +209,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         allQuestions.remove(j);
                     }
                     game.setQuestions(chosenQuestions);
-                    //see if question must be incremented:
-                    if(curIndex != game.index){
-                        game.incrementQuestionIndex();
-                    }
-                    curQuestion = game.getCurrentQuestion();
-                    hasAnsweredQuestion = false;
-                    updateFirebaseGame();
-                } else {
-                    //Run game behaviour
-                    curQuestion = game.getCurrentQuestion();
-                    updateUI();
-                    //wait for {@code DELAY}
-                    setTimerForQuestion();
+                    updateFirebaseGame(game);
+                    return;
                 }
+                //see if question must be incremented:
+                if(curIndex != game.index){
+                    game.incrementQuestionIndex();
+                }
+                curQuestion = game.getCurrentQuestion();
+                hasAnsweredQuestion = false;
+                updateUI();
+                //wait for {@code DELAY}
+                setTimerForQuestion();
+                updateFirebaseGame(game);
             }
 
             @Override
@@ -251,8 +248,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * @post updated the game in firebase
      * @modifies firebase database
      */
-    private void updateFirebaseGame() {
-        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).setValue(game);
+    private void updateFirebaseGame(Game _game) {
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).setValue(_game);
     }
 
     /* updates to UI according to game
@@ -306,8 +303,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      */
 
     Timer timer;
+
     private void setTimerForQuestion() {
-        if(timerHasBeenSet){
+        if (timerHasBeenSet) {
             return;
         }
         timerHasBeenSet = true;
@@ -346,7 +344,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             game.setScore(userID, 0);
         }
         game.setScore(userID, game.getScore(userID) + points);
-        updateFirebaseGame();
+        updateFirebaseGame(game);
 
         //Move to scoreboard.
         moveToScoreBoard();
@@ -359,9 +357,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
         intent.putExtra("index", curIndex + 1);
-        //game.addPlayerToAnswered(userID);
+        game.addPlayerToAnswered(userID);
         timer.cancel();
-        updateFirebaseGame();
+        updateFirebaseGame(game);
         startActivity(intent);
     }
 }
