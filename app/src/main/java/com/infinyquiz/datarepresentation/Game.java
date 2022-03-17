@@ -8,7 +8,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Game {
 
@@ -18,7 +20,7 @@ public abstract class Game {
     private Lobby lobby;
     //A list with the IDs of all players who have made the transition to the game.
     private ArrayList<String> joinedPlayers = new ArrayList<>();
-    //TODO: add scoreboard
+    private Map<String, Integer> scoreboard = new HashMap<>();
     private ArrayList<String> categoryVotes = new ArrayList<>();
 
     //the number of questions, according to requirements, must be 10
@@ -54,6 +56,18 @@ public abstract class Game {
 
     public Lobby getLobby(){
         return lobby;
+    }
+
+    public int getScore(String userId){
+       return scoreboard.get(userId);
+    }
+
+    public Map<String, Integer> getScoreboard(){
+        return scoreboard;
+    }
+
+    public void setScore(String userId, int score){
+        scoreboard.put(userId, score);
     }
 
     public Question getNextQuestion() {
@@ -115,6 +129,7 @@ public abstract class Game {
      * @modifies {@code joinedPlayers}
      */
     public void joinPlayer(String playerID){
+        scoreboard.put(playerID, 0);
         joinedPlayers.add(playerID);
     }
 }

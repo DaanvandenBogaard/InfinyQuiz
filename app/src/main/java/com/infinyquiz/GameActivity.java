@@ -2,6 +2,7 @@ package com.infinyquiz;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     //The ID of the game
     private String gameID;
@@ -68,6 +69,10 @@ public class GameActivity extends AppCompatActivity {
         optionB = (Button) findViewById(R.id.optionBBtn);
         optionC = (Button) findViewById(R.id.optionCBtn);
         optionD = (Button) findViewById(R.id.optionDBtn);
+        optionA.setOnClickListener(this);
+        optionB.setOnClickListener(this);
+        optionC.setOnClickListener(this);
+        optionD.setOnClickListener(this);
 
         setUpFirebase();
         registerUserToGame();
@@ -250,5 +255,24 @@ public class GameActivity extends AppCompatActivity {
         }
 
         return votedCategory;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Button clickedButton = (Button) view;
+        String answer = clickedButton.getText().toString().trim();
+        //TODO IMPLEMENT TIME WITH POINTS
+        int points = 0;
+        if(answer.equals(game.getCurrentQuestion().getCorrectOption().trim())){
+            //Answered correctly
+            points = 100;
+        }
+        else{
+            //Answered incorrectly
+            points = -10;
+        }
+        //upload points
+        game.setScore(userID, game.getScore(userID) + points);
+        updateFirebaseGame();
     }
 }
