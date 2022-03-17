@@ -27,6 +27,13 @@ public abstract class Game {
     //ID to game:
     private String gameID;
 
+    public Question getCurrentQuestion(){
+        if(currentQuestion == null || questions == null || currentQuestion.equals(new Question())){
+            currentQuestion = new Question();
+        }
+        return currentQuestion;
+    }
+
     public ArrayList<Question> getQuestions(){
         return questions;
     }
@@ -51,9 +58,14 @@ public abstract class Game {
 
     public Question getNextQuestion() {
         if(questions == null){
-            return new Question();
+            currentQuestion = new Question();
         }
-        return questions.get(questions.indexOf(currentQuestion) + 1);
+        else if(currentQuestion == null || currentQuestion.equals(new Question())) {
+            currentQuestion = questions.get(0);
+        } else{
+            currentQuestion = questions.get(questions.indexOf(currentQuestion) + 1);
+        }
+        return currentQuestion;
     }
 
     public void addVote(String vote){

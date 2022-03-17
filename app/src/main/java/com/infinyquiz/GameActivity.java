@@ -3,6 +3,7 @@ package com.infinyquiz;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +18,11 @@ import com.infinyquiz.datarepresentation.Game;
 import com.infinyquiz.datarepresentation.Lobby;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.datarepresentation.RandomGame;
+import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -47,6 +50,9 @@ public class GameActivity extends AppCompatActivity {
     //list of cateogries
     private String[] categories;
 
+    //Buttons of options
+    private Button optionA,optionB,optionC,optionD;
+
     private Map<String, ArrayList<Question>> questionData = new HashMap<>();
 
     @Override
@@ -54,6 +60,14 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         categories = getResources().getStringArray(R.array.categories);
+
+        Button leaveGameBtn = (Button) findViewById(R.id.leaveGameBtn);
+        leaveGameBtn.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(), this));
+
+        optionA = (Button) findViewById(R.id.optionABtn);
+        optionB = (Button) findViewById(R.id.optionBBtn);
+        optionC = (Button) findViewById(R.id.optionCBtn);
+        optionD = (Button) findViewById(R.id.optionDBtn);
 
         setUpFirebase();
         registerUserToGame();
@@ -110,7 +124,6 @@ public class GameActivity extends AppCompatActivity {
                     }
                     questionData.put(data.getKey(), questions);
                 }
-
                 setDataListener();
             }
 
@@ -158,9 +171,11 @@ public class GameActivity extends AppCompatActivity {
                         allQuestions.remove(j);
                     }
                     game.setQuestions(chosenQuestions);
+                    game.getNextQuestion();
                     updateFirebaseGame();
                 } else {
                     //Run game behaviour
+                    updateUI();
                 }
             }
 
@@ -181,8 +196,31 @@ public class GameActivity extends AppCompatActivity {
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).removeValue();
     }
 
+    /* Updates game in firebase
+     *
+     * @pre {@code database != null}
+     * @post updated the game in firebase
+     * @modifies firebase database
+     */
     private void updateFirebaseGame() {
         database.getReference().child("Lobbies").child("gameLobbies").child(gameID).setValue(game);
+    }
+
+    /* updates to UI according to game
+     *
+     */
+    private void updateUI(){
+        TextView questionTV = (TextView) findViewById(R.id.questionTV);
+        Question question = game.getCurrentQuestion();
+        questionTV.setText(question.getQuestion());
+
+        //get options
+        ArrayList<String> options = question.getOptions();
+        Collections.shuffle(options); //We get a random shuffle to make sure the correct answer does not stay in one point
+        optionA.setText(options.get(0));
+        optionB.setText(options.get(1));
+        optionC.setText(options.get(2));
+        optionD.setText(options.get(3));
     }
 
     /* Returns the most common category in the votes
