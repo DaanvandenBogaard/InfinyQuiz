@@ -67,7 +67,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         TextView questionTV = (TextView) findViewById(R.id.questionTV);
         questionTV.setText(question.getQuestion().trim());
 
-        TextView correctOption = (TextView) findViewById(R.id.createQuestionBtn);
+        TextView correctOption = (TextView) findViewById(R.id.correctOptionTV);
         correctOption.setText(question.getCorrectOption().trim());
 
         TextView scoreBoardTV = (TextView) findViewById(R.id.scoreboardTV);

@@ -108,16 +108,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * @post in the database, the userID has been added to joined users.
      */
     private void registerUserToGame() {
-        DatabaseReference ref =   database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayersSingle");
-        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayersSingle").child(userID).setValue(userID);
+        DatabaseReference ref =   database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Update the list of joined users
-                ArrayList<String> joinedUsers = new ArrayList<>();
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    joinedUsers.add(data.getKey());
-                }
+                ArrayList<String> joinedUsers = dataSnapshot.getValue(new ArrayList<String>().getClass());
+                joinedUsers.add(userID);
                 database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("joinedPlayers").setValue(joinedUsers);
                 getQuestions();
             }
