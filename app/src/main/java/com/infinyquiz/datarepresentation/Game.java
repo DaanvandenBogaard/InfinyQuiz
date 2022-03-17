@@ -12,7 +12,7 @@ import java.util.List;
 
 public abstract class Game {
 
-    private List<Question> questions;
+    public ArrayList<Question> questions;
     private int questionCounter;
     private Question currentQuestion;
     private Lobby lobby;
@@ -26,6 +26,10 @@ public abstract class Game {
 
     //ID to game:
     private String gameID;
+
+    public ArrayList<Question> getQuestions(){
+        return questions;
+    }
 
     public Game(){};
 
@@ -60,7 +64,7 @@ public abstract class Game {
         return categoryVotes;
     }
 
-    public abstract void setQuestions(String category);
+    public abstract void setQuestions(ArrayList<Question> questions);
 
     public void setGameID(String id){
         gameID = id;
@@ -68,11 +72,6 @@ public abstract class Game {
 
     public String getGameID(){
         return gameID;
-    }
-
-
-    public List<Question> getQuestions(){
-        return questions;
     }
 
     /* A boolean value to see if all players have joined

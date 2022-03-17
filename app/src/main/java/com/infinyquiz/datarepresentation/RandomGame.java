@@ -1,5 +1,7 @@
 package com.infinyquiz.datarepresentation;
 
+import java.util.ArrayList;
+
 public class RandomGame extends Game{
 
 
@@ -13,7 +15,7 @@ public class RandomGame extends Game{
     }
 
     @Override
-    public void setQuestions(String category) {
-
+    public void setQuestions(ArrayList<Question> _questions) {
+        questions = _questions;
     }
 }

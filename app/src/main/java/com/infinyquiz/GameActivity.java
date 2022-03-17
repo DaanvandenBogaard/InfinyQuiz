@@ -15,9 +15,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.datarepresentation.Game;
 import com.infinyquiz.datarepresentation.Lobby;
+import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.datarepresentation.RandomGame;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -39,14 +44,19 @@ public class GameActivity extends AppCompatActivity {
     //The current user ID
     final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+    //list of cateogries
+    private String[] categories;
+
+    private Map<String, ArrayList<Question>> questionData = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        categories = getResources().getStringArray(R.array.categories);
 
         setUpFirebase();
         registerUserToGame();
-        setDataListener();
     }
 
     //Sets the value of the database, gameID and lobbyID variables.
@@ -73,6 +83,7 @@ public class GameActivity extends AppCompatActivity {
                     game.addVote(vote);
                     updateFirebaseGame();
                 }
+                getQuestions();
             }
 
             @Override
@@ -81,6 +92,33 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /* A function that retrieves the questions
+     *
+     */
+    private void getQuestions() {
+        DatabaseReference ref = database.getReference().child("ValidatedQuestions");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    ArrayList<Question> questions = new ArrayList<>();
+                    for (DataSnapshot question : data.getChildren()) {
+                        questions.add(question.getValue(Question.class));
+                    }
+                    questionData.put(data.getKey(), questions);
+                }
+
+                setDataListener();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("could not read data", "The read failed: " + databaseError.getCode());
+            }
+        });
     }
 
     /* sets the listener to the game data, where we will
@@ -108,10 +146,18 @@ public class GameActivity extends AppCompatActivity {
 
                 //If the game has not been set yet, we will set it. A game is not set if the
                 //questions have yet to be set.
-                if (game.getQuestions() == null) {
+                if (game.getQuestions() == null || game.getQuestions().size() == 0) {
                     //find highest rated category
-
-                    game.setQuestions(vote);
+                    String votedCategory = mostPopularCategory();
+                    ArrayList<Question> allQuestions = questionData.get(votedCategory);
+                    ArrayList<Question> chosenQuestions = new ArrayList<>();
+                    for (int i = 0; i < Game.NUMBER_OF_QUESTIONS; i++) {
+                        Random rand = new Random();
+                        int j = rand.nextInt(allQuestions.size());
+                        chosenQuestions.add(allQuestions.get(j));
+                        allQuestions.remove(j);
+                    }
+                    game.setQuestions(chosenQuestions);
                     updateFirebaseGame();
                 } else {
                     //Run game behaviour
@@ -137,5 +183,34 @@ public class GameActivity extends AppCompatActivity {
 
     private void updateFirebaseGame() {
         database.getReference().child("Lobbies").child("gameLobbies").child(gameID).setValue(game);
+    }
+
+    /* Returns the most common category in the votes
+     *
+     * @pre {@code game.getCategoryVotes() != null}
+     * @returns the most common element in {@code game.getCategoryVotes}
+     */
+    private String mostPopularCategory() {
+        ArrayList<String> votes = game.getCategoryVotes();
+        Map<String, Integer> votesCount = new HashMap<>();
+        for (String category : categories) {
+            votesCount.put(category, 0);
+        }
+        for (String vote : votes) {
+            votesCount.put(vote, votesCount.get(vote) + 1);
+        }
+
+        //Find highest number
+        int max = 0;
+        String votedCategory = "";
+
+        for (Map.Entry<String, Integer> entry : votesCount.entrySet()) {
+            if (entry.getValue() >= max) {
+                max = entry.getValue();
+                votedCategory = entry.getKey();
+            }
+        }
+
+        return votedCategory;
     }
 }
