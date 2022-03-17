@@ -4,6 +4,7 @@ import com.google.android.gms.common.util.ArrayUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.infinyquiz.datarepresentation.Question;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
@@ -18,6 +19,7 @@ public abstract class Game {
     //A list with the IDs of all players who have made the transition to the game.
     private ArrayList<String> joinedPlayers = new ArrayList<>();
     //TODO: add scoreboard
+    private ArrayList<String> categoryVotes = new ArrayList<>();
 
     //the number of questions, according to requirements, must be 10
     public static int NUMBER_OF_QUESTIONS = 2; // 10; //TODO set requirement
@@ -48,6 +50,14 @@ public abstract class Game {
             return new Question();
         }
         return questions.get(questions.indexOf(currentQuestion) + 1);
+    }
+
+    public void addVote(String vote){
+        categoryVotes.add(vote);
+    }
+
+    public ArrayList<String> getCategoryVotes(){
+        return categoryVotes;
     }
 
     public abstract void setQuestions(String category);

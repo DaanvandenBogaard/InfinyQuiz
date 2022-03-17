@@ -70,8 +70,8 @@ public class GameActivity extends AppCompatActivity {
                 game = dataSnapshot.getValue(RandomGame.class);
                 if (!game.hasPlayerJoined(userID)) {
                     game.joinPlayer(userID);
+                    game.addVote(vote);
                     updateFirebaseGame();
-                    //Set category preference
                 }
             }
 
@@ -81,8 +81,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("votes").child(vote).setValue(userID);
-        System.out.println("arrrr");
     }
 
     /* sets the listener to the game data, where we will
@@ -134,9 +132,6 @@ public class GameActivity extends AppCompatActivity {
      * @modifies firebase real time database.
      */
     private void removeOpenLobby() {
-        System.out.println("TEST");
-        System.out.println("Trying to remove lobby");
-        System.out.println("TEST");
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).removeValue();
     }
 
