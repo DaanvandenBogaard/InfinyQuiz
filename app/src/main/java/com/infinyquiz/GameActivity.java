@@ -68,9 +68,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     //Time of delay
     private float DELAY = 10000;
 
-    //Index of question
-    private int curIndex;
-
     //see if timer has been set
     private boolean timerHasBeenSet = false;
 
@@ -104,7 +101,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameID = getIntent().getStringExtra("gameID");
         lobbyID = getIntent().getStringExtra("lobbyID");
         vote = getIntent().getStringExtra("category");
-        curIndex = getIntent().getIntExtra("index", 0);
     }
 
     /* A function which ads this user to the list of users who have joined.
@@ -172,33 +168,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //Check if we are comming from ScoreBoardActivity:
-                if (game.haveAllPlayersAnswered()) {
-                    game.clearAnsweredPlayers();
-                    updateFirebaseGame(game);
-                    //see if question must be incremented:
-                    if (curIndex != game.index) {
-                        game.incrementQuestionIndex();
-                    }
-                    curQuestion = game.getCurrentQuestion();
-                }
-
-                if (hasAnsweredQuestion) {
+                if(hasAnsweredQuestion || !game.allPlayersJoined()){
                     return;
                 }
-                //If not all players have joined, we wait:
-                if (!game.allPlayersJoined()) {
-                    System.out.println("not all players have joined yet, wait!");
-                    return;
-                } else {
-                    removeOpenLobby();
-                }
-
-
-                //If the game has not been set yet, we will set it. A game is not set if the
-                //questions have yet to be set.
-                if (game.getQuestions() == null) {
+                //Will only be executed once
+                if(game.getQuestions() == null){
+                    //set questions
                     //find highest rated category
                     String votedCategory = mostPopularCategory();
                     ArrayList<Question> allQuestions = questionData.get(votedCategory);
@@ -210,19 +185,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         allQuestions.remove(j);
                     }
                     game.setQuestions(chosenQuestions);
+                    curQuestion = game.getCurrentQuestion();
                     updateFirebaseGame(game);
-                    return;
                 }
-                //see if question must be incremented:
-                if(curIndex != game.index){
+                if(game.haveAllPlayersAnswered()){
+                    game.clearAnsweredPlayers();
                     game.incrementQuestionIndex();
+                    curQuestion = game.getCurrentQuestion();
+                    updateFirebaseGame(game);
                 }
-                curQuestion = game.getCurrentQuestion();
-                hasAnsweredQuestion = false;
                 updateUI();
-                //wait for {@code DELAY}
                 setTimerForQuestion();
-                updateFirebaseGame(game);
             }
 
             @Override
@@ -353,14 +326,46 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     //Temporarily move to the scoreboard activity and then come back.
     private void moveToScoreBoard() {
+        if(game.index == game.NUMBER_OF_QUESTIONS - 1){
+            //GO TO FINAL SCREEN
+        }
+
         Intent intent = new Intent(this, ScoreBoardActivity.class);
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
-        intent.putExtra("index", curIndex + 1);
-        game.addPlayerToAnswered(userID);
-        updateFirebaseGame(game);
+        setUserToAnswered();
         timer.cancel();
         startActivity(intent);
+    }
+
+    private boolean oneTimeUse = false;
+
+    private void setUserToAnswered(){
+        DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!hasAnsweredQuestion || oneTimeUse){
+                    return;
+                }
+                oneTimeUse = true;
+                System.out.println("NMOOO");
+                System.out.println("NMOadwdawOO");
+                System.out.println("NMOadwdawOO123123");
+                game = dataSnapshot.getValue(RandomGame.class);
+                if (!game.getAnsweredPlayers().contains(userID)) {
+                    game.addPlayerToAnswered(userID);
+                    updateFirebaseGame(game);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("could not read data", "The read failed: " + databaseError.getCode());
+            }
+        });
     }
 }
