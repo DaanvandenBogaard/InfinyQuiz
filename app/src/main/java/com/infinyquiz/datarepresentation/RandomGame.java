@@ -9,7 +9,7 @@ public class RandomGame extends Game{
 
 
     @Override
-    public void setQuestions() {
+    public void setQuestions(String category) {
 
     }
 }

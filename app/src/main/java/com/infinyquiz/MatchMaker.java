@@ -16,6 +16,7 @@ import com.infinyquiz.datarepresentation.Game;
 import com.infinyquiz.datarepresentation.Lobby;
 import com.infinyquiz.datarepresentation.RandomGame;
 
+import java.util.Map;
 import java.util.Random;
 
 public class MatchMaker {
@@ -30,6 +31,7 @@ public class MatchMaker {
     private Game game;
     //Index at which user is stored
     private int userIndex;
+    private String userSelectedCategory;
 
     //The current user ID
     final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -156,5 +158,21 @@ public class MatchMaker {
         }
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobby.getId()).child("users").child(String.valueOf(lobby.getUsers().indexOf(userID))).removeValue();
     }
+
+    public String getUserSelectedCategory(){
+        return userSelectedCategory;
+    }
+
+    public void setUserSelectedCategory(String newCategory){
+
+        Map<String, Integer> votes = lobby.getCategoryVotes();
+        if(userSelectedCategory != null){
+            votes.put(userSelectedCategory, votes.get(userSelectedCategory) - 1);
+        }
+        votes.put(newCategory, votes.get(newCategory) + 1);
+        updateFirebaseLobby(lobby);
+        userSelectedCategory = newCategory;
+    }
+
 
 }

@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.slider.Slider;
 import com.google.firebase.database.FirebaseDatabase;
 import com.infinyquiz.HomeActivity;
 import com.infinyquiz.R;
@@ -70,7 +69,7 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
     //Got this method from API https://developer.android.com/guide/topics/ui/controls/spinner#java
     private void setSpinner() {
         //Start by finding spinner
-        Spinner spinner = (Spinner) findViewById(R.id.questionCategorySpinner);
+        Spinner spinner = (Spinner) findViewById(R.id.selectedCategory);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);

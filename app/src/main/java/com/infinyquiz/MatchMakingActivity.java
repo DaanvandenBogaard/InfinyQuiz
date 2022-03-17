@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +29,7 @@ import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
  * This matchmaker activity is only for global matchmaking games. Custom matches (i.e. matches with
  * groups of friends) will be added via a separate mechanic.
  */
-public class MatchMakingActivity extends AppCompatActivity implements View.OnClickListener {
+public class MatchMakingActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     //Constant: amount of seconds after which a lobby which has the minimal number of people
     //will start
@@ -45,6 +48,9 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
 
         Button backToHomeBtn = (Button) findViewById(R.id.backToHomeBtn);
         backToHomeBtn.setOnClickListener(this);
+
+        //Set UI for spinner
+        setSpinner();
 
         //Let matchmaker find a lobby
         matchMaker.lookForLobby();
@@ -93,6 +99,29 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         super.onPause();
     }
 
+    //A method to set the values of our spinner (drop down menu for categories)
+    //Got this method from API https://developer.android.com/guide/topics/ui/controls/spinner#java
+    private void setSpinner() {
+        //Start by finding spinner
+        Spinner spinner = (Spinner) findViewById(R.id.selectedCategory);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    //Overiding methods for spinner:
+    @Override //Method for OnItemSelectedListener
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        matchMaker.setUserSelectedCategory(adapterView.getItemAtPosition(i).toString()); //update category
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        String[] arr = getResources().getStringArray(R.array.categories);
+        matchMaker.setUserSelectedCategory(arr[0]);
+    }
+
     /* Update the UI elements according to a given Lobby object.
      *
      * @param {@code Lobby lobby}
@@ -107,13 +136,6 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         TextView userListTV = (TextView) findViewById(R.id.displayUsers);
 
         userListTV.setText(lobby.getUsers().toString().trim());
-    }
-
-    //DEBUG FUNCTION TO CLEAR MATCHES
-    //TODO DELETE BEFORE RELEASE!
-    private void Clearmatches() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
-        database.getReference().child("Lobbies").removeValue();
     }
 
     @Override
