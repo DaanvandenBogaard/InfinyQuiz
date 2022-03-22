@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.datarepresentation.Game;
+import com.infinyquiz.datarepresentation.RandomGame;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 import java.lang.reflect.Array;
@@ -74,7 +75,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                game = dataSnapshot.getValue(Game.class);
+                game = dataSnapshot.getValue(RandomGame.class);
                 updateUI();
             }
 
