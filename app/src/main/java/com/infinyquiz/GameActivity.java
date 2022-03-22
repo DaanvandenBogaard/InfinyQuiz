@@ -326,11 +326,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     //Temporarily move to the scoreboard activity and then come back.
     private void moveToScoreBoard() {
+        Intent intent;
         if(game.index == game.NUMBER_OF_QUESTIONS - 1){
             //GO TO FINAL SCREEN
+            intent = new Intent(this,finalScoreBoardActivity.class);
+            //Add data to Intent
+        } else {
+            intent = new Intent(this, ScoreBoardActivity.class);
         }
-
-        Intent intent = new Intent(this, ScoreBoardActivity.class);
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
@@ -351,9 +354,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 oneTimeUse = true;
-                System.out.println("NMOOO");
-                System.out.println("NMOadwdawOO");
-                System.out.println("NMOadwdawOO123123");
                 game = dataSnapshot.getValue(RandomGame.class);
                 if (!game.getAnsweredPlayers().contains(userID)) {
                     game.addPlayerToAnswered(userID);
