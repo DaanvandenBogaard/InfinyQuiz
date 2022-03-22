@@ -10,7 +10,7 @@
         android:id="@+id/cat1Toggle3"
         android:layout_width="250dp"
         android:layout_height="65dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/togglebtn_background"
         android:fontFamily="@font/buttonfont"
         android:text="ToggleButton"
@@ -20,7 +20,7 @@
         android:textOff="@string/cat3"
         android:textOn="@string/cat3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cat1Toggle2" />
 
@@ -28,7 +28,7 @@
         android:id="@+id/cat1Toggle2"
         android:layout_width="250dp"
         android:layout_height="65dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/togglebtn_background"
         android:fontFamily="@font/buttonfont"
         android:text="ToggleButton"
@@ -38,14 +38,14 @@
         android:textOff="@string/cat2"
         android:textOn="@string/cat2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cat1Toggle" />
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="216dp"
-        android:layout_height="119dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/harlowsoliditalic"
         android:text="Select Categories"
@@ -75,7 +75,7 @@
         android:id="@+id/cat1Toggle"
         android:layout_width="250dp"
         android:layout_height="65dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/togglebtn_background"
         android:fontFamily="@font/buttonfont"
         android:text="ToggleButton"
