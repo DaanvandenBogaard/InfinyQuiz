@@ -99,7 +99,6 @@ public class RegisterActivity extends AppCompatActivity {
      *
      * @returns {@result == (the input satisfies our conditions)}
      */
-    //TODO: FA-01 needs to be fixed!
     public boolean isValidInput(String[] input) {
         //Convert string array to 4 different strings.
         String username = input[0];
@@ -138,6 +137,13 @@ public class RegisterActivity extends AppCompatActivity {
         //check for minimal password length
         if (password.length() < 6) {
             passwordET.setError("A password of at least 6 characters is required.");
+            passwordET.requestFocus();
+            return false;
+        }
+
+        //check for maximal password length
+        if (password.length() > 15) {
+            passwordET.setError("A password of at most 15 characters is required.");
             passwordET.requestFocus();
             return false;
         }

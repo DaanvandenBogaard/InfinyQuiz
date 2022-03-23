@@ -24,7 +24,6 @@ public class HomeActivity extends AppCompatActivity {
         logoutBtn.setOnClickListener(new logOutOnClickListener(new LoginActivity(), this));
         Button playBtn = (Button) findViewById(R.id.randomMatchBtn);
         playBtn.setOnClickListener(new MoveToActivityOnClickListener(new MatchMakingActivity(),this));
-        //TODO set custom match button
         Button createQuestionBtn = (Button) findViewById(R.id.createQuestionBtn);
         createQuestionBtn.setOnClickListener(new MoveToActivityOnClickListener(new CreateQuestionActivity(), this));
         Button reviewQuestionBtn = (Button) findViewById(R.id.rateQuestionBtn);
