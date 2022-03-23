@@ -3,9 +3,11 @@ package com.infinyquiz;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,7 +73,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     //see if timer has been set
     private boolean timerHasBeenSet = false;
 
+    //The progress bar UI element
+    private ProgressBar timerPB;
+
     private Map<String, ArrayList<Question>> questionData = new HashMap<>();
+
+    //Handler object for using delay
+    Handler handler = new Handler();
+    //Runnable object for using delay
+    Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         Button leaveGameBtn = (Button) findViewById(R.id.leaveGameBtn);
         leaveGameBtn.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(), this));
+
+        timerPB = (ProgressBar) findViewById(R.id.timerPB);
 
         optionA = (Button) findViewById(R.id.optionABtn);
         optionB = (Button) findViewById(R.id.optionBBtn);
@@ -295,6 +307,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         );
     }
 
+    //Functions to start timer
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable = new Runnable(){
+            public void run(){
+                handler.postDelayed(runnable,(long) DELAY/100);
+                timerPB.incrementProgressBy(1);
+            }
+        },(long) DELAY/100);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacks(runnable); //Stop the handler when the activity is not visible.
+        super.onPause();
+    }
+
     @Override
     public void onClick(View view) {
         //if we have not moved to next question, do nothing
@@ -330,7 +360,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if(game.index == game.NUMBER_OF_QUESTIONS - 1){
             //GO TO FINAL SCREEN
             intent = new Intent(this,finalScoreBoardActivity.class);
-            //Add data to Intent
         } else {
             intent = new Intent(this, ScoreBoardActivity.class);
         }
