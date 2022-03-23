@@ -183,6 +183,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if(hasAnsweredQuestion || !game.allPlayersJoined()){
                     return;
                 }
+                if(game.allPlayersJoined()){
+                    removeOpenLobby();
+                }
                 //Will only be executed once
                 if(game.getQuestions() == null){
                     //set questions
@@ -358,6 +361,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     //Temporarily move to the scoreboard activity and then come back.
     private void moveToScoreBoard() {
+        hasAnsweredQuestion = true;
         Intent thisIntent;
         if(game.index == game.NUMBER_OF_QUESTIONS - 1){
             //GO TO FINAL SCREEN

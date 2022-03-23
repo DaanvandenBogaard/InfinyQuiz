@@ -102,7 +102,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
         intent.putExtra("index" , getIntent().getIntExtra("index",0));
-        game.resetJoinedUsers();
         startActivity(intent);
     }
 
