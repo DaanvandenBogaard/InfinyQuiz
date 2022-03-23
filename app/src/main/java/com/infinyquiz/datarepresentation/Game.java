@@ -101,6 +101,10 @@ public abstract class Game {
         return lobby.getLobbySize() == answeredPlayers.size();
     }
 
+    public void resetJoinedUsers(){
+        joinedPlayers = new ArrayList<>();
+    }
+
     public void addPlayerToAnswered(String playerID){
         answeredPlayers.add(playerID);
     }
