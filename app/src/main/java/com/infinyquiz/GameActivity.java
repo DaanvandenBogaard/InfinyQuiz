@@ -301,6 +301,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
+                        System.out.println("CALLED MOVESCOREBOARD");
                         moveToScoreBoard();
                     }
                 },
@@ -357,30 +358,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     //Temporarily move to the scoreboard activity and then come back.
     private void moveToScoreBoard() {
-        Intent intent;
+        Intent thisIntent;
         if(game.index == game.NUMBER_OF_QUESTIONS - 1){
             //GO TO FINAL SCREEN
-            intent = new Intent(this,finalScoreBoardActivity.class);
+            thisIntent = new Intent(this,finalScoreBoardActivity.class);
         } else {
-            intent = new Intent(this, ScoreBoardActivity.class);
+            thisIntent = new Intent(this, ScoreBoardActivity.class);
         }
-        intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
-        intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
-        intent.putExtra("category", getIntent().getStringExtra("category"));
-        setUserToAnswered(intent);
+        thisIntent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
+        thisIntent.putExtra("gameID", getIntent().getStringExtra("gameID"));
+        thisIntent.putExtra("category", getIntent().getStringExtra("category"));
+        setUserToAnswered(thisIntent);
         timer.cancel();
 
     }
 
     private boolean oneTimeUse = false;
 
-    private void setUserToAnswered(Intent intent){
+    private void setUserToAnswered(Intent thisIntent){
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!hasAnsweredQuestion || oneTimeUse){
+                if(oneTimeUse){
                     return;
                 }
                 oneTimeUse = true;
@@ -389,7 +390,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     game.addPlayerToAnswered(userID);
                     updateFirebaseGame(game);
                 }
-                startActivity(intent);
+                startActivity(thisIntent);
             }
 
             @Override
