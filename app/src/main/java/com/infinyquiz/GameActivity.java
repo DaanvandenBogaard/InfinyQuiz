@@ -294,6 +294,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (timerHasBeenSet) {
             return;
         }
+        timerPB.setProgress(0);
         timerHasBeenSet = true;
         timer = new java.util.Timer();
         timer.schedule(
@@ -366,14 +367,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
-        setUserToAnswered();
+        setUserToAnswered(intent);
         timer.cancel();
-        startActivity(intent);
+
     }
 
     private boolean oneTimeUse = false;
 
-    private void setUserToAnswered(){
+    private void setUserToAnswered(Intent intent){
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -388,7 +389,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     game.addPlayerToAnswered(userID);
                     updateFirebaseGame(game);
                 }
-
+                startActivity(intent);
             }
 
             @Override
