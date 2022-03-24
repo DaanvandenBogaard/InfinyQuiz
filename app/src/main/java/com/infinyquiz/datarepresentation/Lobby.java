@@ -9,7 +9,7 @@ import java.util.Map;
 public class Lobby {
 
     //Constant: maximal number of people in lobby
-    public static final int MAX_PEOPLE = 2;
+    public static final int MAX_PEOPLE = 6;
 
     //Constant: minimal number of people to start game
     public static final int MIN_PEOPLE = 2;

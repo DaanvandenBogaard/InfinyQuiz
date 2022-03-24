@@ -20,6 +20,8 @@ import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.datarepresentation.Lobby;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
+import java.util.Timer;
+
 /* In the matchmaker, we will find a lobby to join, either by joining an existing lobby or by
  * creating one.
  * Furthermore, once a lobby has enough players to start ({@code Lobby.MIN_PEOPLE}) we start a counter of
@@ -36,6 +38,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     private final int WAITING_TIME = 10;
     private final MatchMaker matchMaker = new MatchMaker();
     private final int DELAY = 1000; //1 second
+    private final int WAIT_TO_START_MATCH = 3000; //3seconds
     private String selectedCategory;
 
     //Handler object for using delay
@@ -72,6 +75,19 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
                 //Check if game can be started
                 if(lobby != null){
                     //Check if match can start.
+                    if(lobby.getLobbySize() >= Lobby.MIN_PEOPLE){
+                        Timer timer;
+                        timer = new java.util.Timer();
+                        timer.schedule(
+                                new java.util.TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        startNewGameActivity();
+                                    }
+                                },
+                                (long) WAIT_TO_START_MATCH
+                        );
+                    }
                     if(lobby.getLobbySize() >= Lobby.MAX_PEOPLE || matchMaker.gameHasStarted()){
                         startNewGameActivity();
                     }
