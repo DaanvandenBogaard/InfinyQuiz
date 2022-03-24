@@ -45,6 +45,10 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     Handler handler = new Handler();
     //Runnable object for using delay
     Runnable runnable;
+    //Timer object
+    Timer timer = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,42 +67,44 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     protected void onResume() {
-        handler.postDelayed(runnable = new Runnable(){
-            public void run(){
-               handler.postDelayed(runnable,DELAY);
-               if(matchMaker.getLobby() != null) {
-                   System.out.println("onResume()" + matchMaker.getLobby().getUsers().toString());
-               }
-               Lobby lobby = matchMaker.getLobby();
-               //Update UI:
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, DELAY);
+                if (matchMaker.getLobby() != null) {
+                    System.out.println("onResume()" + matchMaker.getLobby().getUsers().toString());
+                }
+                Lobby lobby = matchMaker.getLobby();
+                //Update UI:
                 updateUI(lobby);
                 //Check if game can be started
-                if(lobby != null){
+                if (lobby != null) {
                     //Check if match can start.
-                    if(lobby.getLobbySize() >= Lobby.MIN_PEOPLE){
-                        Timer timer;
-                        timer = new java.util.Timer();
-                        timer.schedule(
-                                new java.util.TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        startNewGameActivity();
-                                    }
-                                },
-                                (long) WAIT_TO_START_MATCH
-                        );
+                    if (lobby.getLobbySize() >= Lobby.MIN_PEOPLE) {
+                        if (timer == null) {
+                            timer = new java.util.Timer();
+                            timer.schedule(
+                                    new java.util.TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            startNewGameActivity();
+                                        }
+                                    },
+                                    (long) WAIT_TO_START_MATCH
+                            );
+                        }
                     }
-                    if(lobby.getLobbySize() >= Lobby.MAX_PEOPLE || matchMaker.gameHasStarted()){
+                    if (lobby.getLobbySize() >= Lobby.MAX_PEOPLE || matchMaker.gameHasStarted()) {
+                        timer.cancel();
                         startNewGameActivity();
                     }
                 }
             }
-        },DELAY);
+        }, DELAY);
         super.onResume();
     }
 
     //Put this in a seperate class to be able to access from onResume
-    private void startNewGameActivity(){
+    private void startNewGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
         Lobby lobby = matchMaker.getLobby();
         matchMaker.startGame();
@@ -147,8 +153,8 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
      * @post UI is set according to "current" lobby information
      * @throws none
      */
-    private void updateUI(Lobby lobby){
-        if(lobby == null){
+    private void updateUI(Lobby lobby) {
+        if (lobby == null) {
             return;
         }
         TextView userListTV = (TextView) findViewById(R.id.displayUsers);
@@ -160,6 +166,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         if (view.getId() == R.id.backToHomeBtn) {
             matchMaker.leaveLobby();
+            timer.cancel();
             startActivity(new Intent(this, HomeActivity.class));
         }
     }
