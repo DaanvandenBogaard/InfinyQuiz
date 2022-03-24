@@ -25,6 +25,6 @@
     <string-array name="categories">
         <item>History</item>
         <item>Science</item>
-        <item>category3</item>
+        <item>Music</item>
     </string-array>
 </resources>
