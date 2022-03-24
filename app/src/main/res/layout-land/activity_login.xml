@@ -10,7 +10,6 @@
         android:id="@+id/toRegister"
         android:layout_width="250dp"
         android:layout_height="70dp"
-        android:layout_marginStart="416dp"
         android:layout_marginTop="47dp"
         android:layout_marginEnd="65dp"
         android:layout_marginBottom="46dp"
@@ -21,7 +20,8 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/LoginInputBtn"
         app:layout_constraintTop_toBottomOf="@+id/loginPasswordInput" />
 
     <Button
@@ -30,7 +30,6 @@
         android:layout_height="70dp"
         android:layout_marginStart="66dp"
         android:layout_marginTop="47dp"
-        android:layout_marginEnd="415dp"
         android:layout_marginBottom="46dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
@@ -38,7 +37,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/toRegister"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginEmailInput" />
 
@@ -47,12 +47,12 @@
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginStart="66dp"
-        android:layout_marginEnd="415dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/loginPasswordInput"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginEmailView" />
 
@@ -60,16 +60,14 @@
         android:id="@+id/loginPasswordInput"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginStart="416dp"
         android:layout_marginEnd="66dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.998"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/loginEmailInput"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginPasswordView" />
 
     <TextView
@@ -101,9 +99,9 @@
         android:id="@+id/loginEmailView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="159dp"
+        android:layout_marginStart="192dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="511dp"
+        android:layout_marginEnd="478dp"
         android:text="@string/email"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
@@ -115,15 +113,13 @@
         android:id="@+id/loginPasswordView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="269dp"
+        android:layout_marginStart="452dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="144dp"
+        android:layout_marginEnd="180dp"
         android:text="@string/password"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/loginEmailView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginTextView" />
 

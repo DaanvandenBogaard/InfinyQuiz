@@ -13,9 +13,7 @@ import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.userquestions.CreateQuestionActivity;
 
 public class MainActivity extends AppCompatActivity {
-    /* TODO:
-     * Check requirements to see other things main screen must do.
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

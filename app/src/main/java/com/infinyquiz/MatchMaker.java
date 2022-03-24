@@ -6,18 +6,17 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.infinyquiz.datarepresentation.Game;
 import com.infinyquiz.datarepresentation.Lobby;
-import com.infinyquiz.datarepresentation.Question;
+import com.infinyquiz.datarepresentation.RandomGame;
 
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 public class MatchMaker {
@@ -27,9 +26,13 @@ public class MatchMaker {
 
     //A reference to the lobby that has been found
     private String lobbyID = null;
+    private String gameID;
     private Lobby lobby;
+    private Game game;
     //Index at which user is stored
     private int userIndex;
+    private String userSelectedCategory;
+    private boolean stopMatchmaking = false;
 
     //The current user ID
     final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -41,43 +44,37 @@ public class MatchMaker {
 
     public void lookForLobby() {
         DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println("TEST");
-                System.out.println("DATA CHANGE");
-                System.out.println("TEST");
-                if (lobbyID != null && lobby != null) {
-                    //update lobby data:
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        Lobby curLobby = data.getValue(Lobby.class);
-                        if(curLobby.getId() == lobbyID) {
-                            lobby = curLobby;
-                            System.out.println("TEST");
-                            System.out.println("UPDATED DATA");
-                            System.out.println("TEST");
-                        }
-                    }
+
+                if(stopMatchmaking){
                     return;
                 }
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    //Count size of lobby
-                    Lobby curLobby = data.getValue(Lobby.class);
 
-                    if (curLobby.lobbySize() <= Lobby.MAX_PEOPLE) { //Add user to this lobby
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    Lobby curLobby = data.getValue(Lobby.class);
+                    if(curLobby == null){
+                        continue;
+                    }
+
+                    if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE ) {
                         lobby = curLobby;
                         curLobby.setID(data.getKey());
                         lobbyID = curLobby.getId();
+                        gameID = curLobby.getGameID();
                         curLobby.addUser(userID);
-                        ref.child(lobbyID).setValue(lobby);
-                        break;
+                        updateFirebaseLobby(lobby);
+                        return;
                     }
                 }
                 //If no good lobby was found, make a new lobby:
                 if (lobbyID == null) {
                     makeNewLobby();
                 }
+                setListenerToLobby();
+
             }
 
             @Override
@@ -86,7 +83,33 @@ public class MatchMaker {
             }
         });
 
+    }
 
+    private void setListenerToLobby(){
+        //Now lobby is set, we will set listener to
+        DatabaseReference refToLobby = database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID);
+        refToLobby.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                lobby = dataSnapshot.getValue(Lobby.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("could not read data", "The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    public Boolean gameHasStarted() {
+        return lobby.gameHasStarted();
+    }
+
+    void updateFirebaseLobby(Lobby lobby) {
+        DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID);
+        ref.setValue(lobby);
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).child("lobby").setValue(lobby);
     }
 
     private void makeNewLobby() {
@@ -95,7 +118,27 @@ public class MatchMaker {
         DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies");
         lobby.setID(ref.push().getKey());
         lobbyID = lobby.getId();
-        database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID).setValue(lobby);
+
+        //Add ID of game
+        RandomGame game = new RandomGame(lobby);
+        DatabaseReference gameRef = database.getReference().child("Lobbies").child("gameLobbies");
+        gameID = gameRef.push().getKey();
+        game.setGameID(gameID);
+        lobby.setGameID(game.getGameID());
+        //Upload lobby:
+        updateFirebaseLobby(lobby);
+        //upload game:
+        database.getReference().child("Lobbies").child("gameLobbies").child(gameID).setValue(game);
+    }
+
+    public void startGame() {
+        lobby.shutDownLobby();
+        updateFirebaseLobby(lobby);
+    }
+
+    public void closeLobby() {
+        stopMatchmaking = true;
+        updateFirebaseLobby(lobby);
     }
 
     public Lobby getLobby() {
@@ -108,5 +151,10 @@ public class MatchMaker {
         }
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobby.getId()).child("users").child(String.valueOf(lobby.getUsers().indexOf(userID))).removeValue();
     }
+
+    public String getUserSelectedCategory(){
+        return userSelectedCategory;
+    }
+
 
 }

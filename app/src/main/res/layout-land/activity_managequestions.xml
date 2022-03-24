@@ -10,10 +10,10 @@
         android:id="@+id/toHomeBtn"
         android:layout_width="71dp"
         android:layout_height="71dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="314dp"
-        android:layout_marginBottom="635dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="646dp"
+        android:layout_marginBottom="326dp"
         android:backgroundTint="@color/yellowBtn"
         android:textSize="14sp"
         app:icon="@drawable/back_icon"
@@ -21,16 +21,13 @@
         app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/submitQuestionBtn"
         android:layout_width="152dp"
         android:layout_height="58dp"
-        android:layout_marginTop="60dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:text="Submit"
@@ -44,9 +41,9 @@
 
     <ListView
         android:id="@+id/questionList"
-        android:layout_width="287dp"
-        android:layout_height="445dp"
-        android:layout_marginTop="9dp"
+        android:layout_width="508dp"
+        android:layout_height="223dp"
+        android:layout_marginTop="6dp"
         android:background="@drawable/text_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -57,12 +54,13 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/harlowsoliditalic"
         android:text="My Questions"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,7 +68,6 @@
         android:id="@+id/deleteQuestionBtn"
         android:layout_width="152dp"
         android:layout_height="58dp"
-        android:layout_marginTop="60dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:text="Delete"

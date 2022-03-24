@@ -2,6 +2,9 @@ package com.infinyquiz.datarepresentation;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Lobby {
 
@@ -14,11 +17,19 @@ public class Lobby {
     //The ID of this lobby (firebase reference ID)
     private String ID;
 
+    //The ID of the place where the game will take place
+    private String gameID;
+
     //List of users (by ID).
     private ArrayList<String> users = new ArrayList<>();
 
+    //Boolean saying whether the game has started.
+    private boolean gameHasStarted = false;
+
     //Constructor
-    public Lobby(){ }
+    public Lobby(){
+
+    }
 
     public void addUser(String id){
         users.add(id);
@@ -30,7 +41,7 @@ public class Lobby {
         return users;
     }
 
-    public int lobbySize(){
+    public int getLobbySize(){
         users.removeAll(Collections.singleton(null));
         return users.size();
     }
@@ -42,4 +53,21 @@ public class Lobby {
     public void setID(String id){
         ID = id;
     }
+
+    public void setGameID(String id){
+        gameID = id;
+    }
+
+    public String getGameID(){
+        return gameID;
+    }
+
+    public boolean gameHasStarted(){
+        return gameHasStarted;
+    }
+
+    public void shutDownLobby(){
+        gameHasStarted = true;
+    }
+
 }

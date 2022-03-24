@@ -9,8 +9,8 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/spinner_border"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,15 +38,14 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="63dp"
-        android:layout_marginEnd="101dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/buttonfont"
         android:text="Submit your question!"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,23 +53,26 @@
         android:id="@+id/questionPicBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
+        android:layout_marginStart="583dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="332dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:text="Add picture"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/questionTextInput"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
         android:gravity="start|top"
@@ -79,18 +81,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionPicBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <EditText
         android:id="@+id/questionAnswerAInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="17dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
         android:hint="enter correct answer"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/questionAnswerBInput"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionTextInput" />
@@ -98,71 +100,71 @@
     <EditText
         android:id="@+id/questionAnswerBInput"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="17dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
         android:hint="enter correct answer"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/questionAnswerAInput"
+        app:layout_constraintTop_toBottomOf="@+id/questionTextInput" />
+
+    <EditText
+        android:id="@+id/questionAnswerCInput"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:hint="enter correct answer"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/questionAnswerDInput"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionAnswerAInput" />
 
     <EditText
-        android:id="@+id/questionAnswerCInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/rounded_corner"
-        android:ems="10"
-        android:hint="enter correct answer"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionAnswerBInput" />
-
-    <EditText
         android:id="@+id/questionAnswerDInput"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
         android:hint="enter correct answer"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionAnswerCInput" />
+        app:layout_constraintStart_toEndOf="@+id/questionAnswerCInput"
+        app:layout_constraintTop_toBottomOf="@+id/questionAnswerBInput" />
 
     <Button
         android:id="@+id/saveQuestionBtn"
         android:layout_width="250dp"
-        android:layout_height="65dp"
-        android:layout_marginBottom="40dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="9dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:text="Submit question"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficultySlider" />
 
     <SeekBar
         android:id="@+id/difficultySlider"
         android:layout_width="323dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
         android:max="5"
         android:progress="3"
         android:progressDrawable="@drawable/slider_bar"
         android:thumb="@drawable/slider_thumb"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -172,24 +174,22 @@
         android:layout_height="75dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="320dp"
-        android:layout_marginBottom="640dp"
+        android:layout_marginEnd="640dp"
+        android:layout_marginBottom="320dp"
         android:backgroundTint="@color/yellowBtn"
         android:text="X"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="21dp"
         android:fontFamily="@font/buttonfont"
         android:text="Set difficulty"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -197,6 +197,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionAnswerDInput" />
+        app:layout_constraintTop_toBottomOf="@+id/questionAnswerCInput" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
