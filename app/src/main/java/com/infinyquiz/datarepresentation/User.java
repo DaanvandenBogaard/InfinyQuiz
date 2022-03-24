@@ -9,7 +9,7 @@ public class User {
 
     public String username, mail, id;
     public List<String> friendList;
-    public long profilePictureID;
+    public String imageUrl;
 
     //This empty constructor is necessary for Firebase to work
     public User() {
@@ -42,11 +42,11 @@ public class User {
         friendList.remove(friendID);
     }
 
-    public void setProfilePicture(long profilePictureID) {
-        this.profilePictureID = profilePictureID;
+    public void setProfilePicture(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public long getProfilePictureID() {
-        return profilePictureID;
+    public String getProfilePictureID() {
+        return imageUrl;
     }
 }

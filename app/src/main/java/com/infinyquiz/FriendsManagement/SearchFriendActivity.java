@@ -121,13 +121,15 @@ public class SearchFriendActivity extends AppCompatActivity {
     private void sendRequest(String reciever_mail, String sender_mail) {
 
         DatabaseReference friendRequestRef =  firebaseDatabase.getReference().child("FriendRequest");
-        String mail_sender = mAuth.getUid();
-        friendRequestRef.child(mail_sender).child(reciever_mail).child("RequestType").setValue("Sent")
+        String id_sender = mAuth.getUid();
+
+        String id_receiver = getUserByMail(reciever_mail).getId();
+        friendRequestRef.child(id_sender).child(id_receiver).child("RequestType").push().setValue("Sent")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            friendRequestRef.child(reciever_mail).child(mail_sender).child("RequestType").setValue("received")
+                            friendRequestRef.child(id_receiver).child(id_sender).child("RequestType").setValue("received")
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -174,7 +176,7 @@ public class SearchFriendActivity extends AppCompatActivity {
 
     }
 
-    private boolean requestIsValid(User reciever) {
+    private boolean requestIsValid(@NonNull User reciever) {
         if (getUserByMail(mAuth.getCurrentUser().getEmail()).friendList.contains(reciever.getId())) {
             Toast.makeText(SearchFriendActivity.this, "Already friends with user!", Toast.LENGTH_LONG).show();
             return false;
@@ -185,12 +187,12 @@ public class SearchFriendActivity extends AppCompatActivity {
 
     private User getUserByMail(String selectedUserEmail) {
         DatabaseReference mRef =  firebaseDatabase.getReference();
-        mRef.child("Users").orderByChild("mail").equalTo(selectedUserEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child("Users").orderByChild("mail").equalTo(selectedUserEmail).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> updatedQuery = new ArrayList<String>();
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     selectedUser = userSnapshot.getValue(User.class);
+                    Log.d("test", selectedUser + "");
                 }
             }
             @Override

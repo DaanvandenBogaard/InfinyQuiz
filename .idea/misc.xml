@@ -3,32 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_createquestion.xml" value="0.31354166666666666" />
-        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_home.xml" value="0.5222222222222223" />
-        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_login.xml" value="0.5541666666666667" />
-        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
-        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_matchmaker.xml" value="0.25" />
+        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_home.xml" value="0.22407407407407406" />
+        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_register.xml" value="0.5541666666666667" />
-        <entry key="..\:/InfinyQuiz/app/src/main/res/layout/activity_reviewquestion.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/20202482/StudioProjects/InfinyQuiz/app/src/main/res/layout-land/activity_home.xml" value="0.21516754850088182" />
+        <entry key="..\:/Users/20202482/StudioProjects/InfinyQuiz/app/src/main/res/layout-land/activity_login.xml" value="0.264" />
+        <entry key="..\:/Users/20202482/StudioProjects/InfinyQuiz/app/src/main/res/layout/activity_home.xml" value="0.264" />
+        <entry key="..\:/Users/20202482/StudioProjects/InfinyQuiz/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/20202482/StudioProjects/InfinyQuiz/app/src/main/res/layout/activity_main.xml" value="0.24547101449275363" />
+        <entry key="..\:/Users/20202482/StudioProjects/InfinyQuiz/app/src/main/res/layout/activity_register.xml" value="0.24365942028985507" />
+        <entry key="..\:/Users/20202482/StudioProjects/InfinyQuiz/app/src/main/res/layout/activity_start.xml" value="0.24547101449275363" />
+        <entry key="..\:/Users/Mike/StudioProjects/InfinyQuiz/app/src/main/res/layout/activity_accountdata.xml" value="0.3009833262077811" />
+        <entry key="..\:/Users/Mike/StudioProjects/InfinyQuiz/app/src/main/res/layout/activity_profile.xml" value="0.33" />
+        <entry key="..\:/Users/Mike/StudioProjects/InfinyQuiz/app/src/main/res/layout/content_account.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/drawable/circlebutton.xml" value="0.4025" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/drawable/light_blue_btn.xml" value="0.4415" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/drawable/rounded_corner.xml" value="0.178" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/drawable/spinner_border.xml" value="0.4985" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/drawable/text_border.xml" value="0.4985" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_home.xml" value="0.4691358024691358" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_login.xml" value="0.4691358024691358" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_accountdata.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_createquestion.xml" value="0.33" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_friends_actitivity.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_home.xml" value="0.5" />
+        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_home.xml" value="0.5471014492753623" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_login.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_main.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_managequestions.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_profile.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_register.xml" value="0.5" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_reviewquestion.xml" value="0.5541666666666667" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_search_friend.xml" value="0.5471014492753623" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_settings.xml" value="0.5471014492753623" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_start.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.4415" />
       </map>
