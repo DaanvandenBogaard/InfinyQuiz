@@ -59,8 +59,6 @@ public class ProfileActivity extends AppCompatActivity {
         Button manageFriendsBtn = (Button) findViewById(R.id.ManageFriendsBtn);
         manageFriendsBtn.setOnClickListener(new MoveToActivityOnClickListener(new FriendsActitivity(), this));
 
-        Button changeAccountDataBtn = (Button) findViewById(R.id.changeAccountDataBtn);
-
         //When clicked on profilepicture Image button the camera will be opened
         profilePicture = (ImageButton) findViewById(R.id.profilePic);
         profilePicture.setOnClickListener(new View.OnClickListener() {

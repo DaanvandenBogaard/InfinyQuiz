@@ -80,33 +80,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addFriendsBtn" />
 
-    <Button
-        android:id="@+id/inviteFriendBtn"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
-        android:backgroundTint="@color/yellowBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="Invite Friend"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/friendProfileBtn"
-        app:layout_constraintTop_toBottomOf="@+id/friendList" />
-
-    <Button
-        android:id="@+id/friendProfileBtn"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
-        android:backgroundTint="@color/yellowBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="Show Profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/inviteFriendBtn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/friendList" />
 </androidx.constraintlayout.widget.ConstraintLayout>

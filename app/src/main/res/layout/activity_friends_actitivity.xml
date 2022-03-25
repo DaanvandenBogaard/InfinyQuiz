@@ -28,29 +28,12 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/ViewRequestBtn"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="229dp"
-        android:layout_marginTop="90dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="@color/yellowBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="View Request"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/addFriendsBtn"
         android:layout_width="152dp"
         android:layout_height="58dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="90dp"
-        android:layout_marginEnd="229dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="131dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:text="Add friends"
@@ -58,6 +41,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,44 +61,15 @@
 
     <ListView
         android:id="@+id/friendList"
-        android:layout_width="275dp"
-        android:layout_height="356dp"
+        android:layout_width="281dp"
+        android:layout_height="487dp"
         android:layout_marginTop="23dp"
+        android:layout_marginBottom="233dp"
         android:background="@drawable/text_border"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addFriendsBtn" />
 
-    <Button
-        android:id="@+id/inviteFriendBtn"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="60dp"
-        android:backgroundTint="@color/yellowBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="Invite Friend"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/friendProfileBtn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/friendList" />
-
-    <Button
-        android:id="@+id/friendProfileBtn"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="60dp"
-        android:backgroundTint="@color/yellowBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="Show Profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/inviteFriendBtn"
-        app:layout_constraintTop_toBottomOf="@+id/friendList" />
 </androidx.constraintlayout.widget.ConstraintLayout>
