@@ -3,7 +3,6 @@ package com.infinyquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,12 +12,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.infinyquiz.auth.LoginActivity;
-import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.datarepresentation.Lobby;
-import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
+import com.infinyquiz.datarepresentation.UserDataConverter;
 
 import java.util.Timer;
 
@@ -48,6 +43,8 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     //Timer object
     Timer timer = null;
 
+    //Object to convert user ids to usernames
+    final private UserDataConverter converter = new UserDataConverter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +61,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         matchMaker.lookForLobby();
         //update UI after every {@code DELAY} seconds, handled in "onResume" and "onPause"
     }
+
 
     @Override
     protected void onResume() {
@@ -102,6 +100,8 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         }, DELAY);
         super.onResume();
     }
+
+
 
     //Put this in a seperate class to be able to access from onResume
     private void startNewGameActivity() {
@@ -154,13 +154,14 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
      * @throws none
      */
     private void updateUI(Lobby lobby) {
-        if (lobby == null) {
+        if (lobby == null || !converter.isReady()) {
             return;
         }
         TextView userListTV = (TextView) findViewById(R.id.displayUsers);
 
-        userListTV.setText(lobby.getUsers().toString().trim());
+        userListTV.setText(converter.getUsernames(lobby.getUsers()).toString().trim());
     }
+
 
     @Override
     public void onClick(View view) {

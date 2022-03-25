@@ -16,10 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.datarepresentation.Game;
 import com.infinyquiz.datarepresentation.RandomGame;
+import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +39,9 @@ public class finalScoreBoardActivity extends AppCompatActivity {
     private TextView top3TV;
 
     private Button leaveMatchBtn;
+
+    //Object to convert userIDs to usernames
+    final private UserDataConverter converter = new UserDataConverter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,9 @@ public class finalScoreBoardActivity extends AppCompatActivity {
         }
 
         finalMessageTv.setText(message);
-        top3TV.setText(top3.toString().trim());
+        if(converter.isReady()){
+            top3TV.setText(top3.toString().trim());
+        }
     }
 
     /* Returns an array containing the top 3 scored people
@@ -125,7 +129,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
         for(int i = 0; i< top3.length; i++) {
             String highScoreID = findHighestScore(scoreboard, users);
             users.remove(highScoreID);
-            top3[i] = highScoreID;
+            top3[i] = converter.getUserName(highScoreID);
 
             if(users.size() == 0){
                 break;
