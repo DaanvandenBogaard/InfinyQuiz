@@ -79,14 +79,9 @@ public class SearchFriendActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (selectedUserEmail != null) {
                     String user_mail = mAuth.getCurrentUser().getEmail();
-                    Log.d("Reciever mail", selectedUserEmail);
-                    Log.d("sender Mail", user_mail);
 
                     if (sendRequestBtn.getText().equals("Send request")) {
                         sendRequest(selectedUserEmail, user_mail);
-                    }
-                    else if (sendRequestBtn.getText().equals("Cancel request")) {
-                        cancelRequest(selectedUserEmail, user_mail);
                     }
                 }
             }
@@ -144,37 +139,6 @@ public class SearchFriendActivity extends AppCompatActivity {
 
     }
 
-    private void cancelRequest(String reciever_mail, String sender_mail) {
-
-        friendRequestRef.child(sender_mail).child(reciever_mail).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
-                    requestSnapshot.getRef().removeValue();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        friendRequestRef.child(reciever_mail).child(sender_mail).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
-                    requestSnapshot.getRef().removeValue();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-            });
-
-    }
 
     private boolean requestIsValid(@NonNull User reciever) {
         if (getUserByMail(mAuth.getCurrentUser().getEmail()).friendList.contains(reciever.getId())) {
