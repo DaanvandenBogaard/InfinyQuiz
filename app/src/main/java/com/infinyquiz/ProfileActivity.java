@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,8 +36,9 @@ public class ProfileActivity extends AppCompatActivity {
     //firebase database
     private DatabaseReference databaseReference;
 
-    //int for requesting image capture
+    //int for requesting image capture and selectior
     private static final int REQUEST_IMAGE_CAPTURE = 111;
+    private static final int SELECT_IMAGE = 222;
 
     //Image button containing profile picture
     private ImageButton profilePicture;
@@ -49,8 +51,12 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        //instantiate the firebase database and authentication
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+
+        //set profile picture
+        profilePicture = (ImageButton) findViewById(R.id.profilePic);
 
         //retrieves image from firebase and updates profile picture
         updateImage();
@@ -59,16 +65,24 @@ public class ProfileActivity extends AppCompatActivity {
         Button manageFriendsBtn = (Button) findViewById(R.id.ManageFriendsBtn);
         manageFriendsBtn.setOnClickListener(new MoveToActivityOnClickListener(new FriendsActitivity(), this));
 
-        //When clicked on profilepicture Image button the camera will be opened
-        profilePicture = (ImageButton) findViewById(R.id.profilePic);
-        profilePicture.setOnClickListener(new View.OnClickListener() {
+        //When clicked on button the gallery will be opened
+        Button galleryBtn = (Button) findViewById(R.id.galleryBtn);
+        galleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchGallery();
+            }
+        });
+
+        //When clicked on button the camera will be opened
+        Button cameraBtn = (Button) findViewById(R.id.cameraBtn);
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
             }
         });
 
-        //TODO: Change account data Activity and set button.
         //TODO: Add log out etc.
     }
 
@@ -81,6 +95,17 @@ public class ProfileActivity extends AppCompatActivity {
             profilePicture.setImageBitmap(imageBitmap);
             uploadToFirebase(imageBitmap);
         }
+        if (requestCode == SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                profilePicture.setImageBitmap(bitmap);
+                uploadToFirebase(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /* A function that launches the camera
@@ -92,6 +117,19 @@ public class ProfileActivity extends AppCompatActivity {
     public void launchCamera() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+    }
+
+    /* A function that launches the gallery
+     *
+     * @pre none
+     * @modifies none
+     * @post gallery is launched
+     */
+    public void launchGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
     }
 
     /* A function that uploads the encoded image to firebase
