@@ -24,10 +24,13 @@ public class UserDataConverter {
 
     private Map<String, String> idToUsername = null;
 
-    private boolean isReady = false;
-
     //Map from ID to users
-    private Map<String, User> idToUser = new HashMap<>();
+    private Map<String, User> idToUser = null;
+
+    private Map<String, String> emailToID = null;
+
+    //Wheter or not firebase has been loaded
+    private boolean isReady = false;
 
     //constructor:
     public UserDataConverter() {
@@ -49,10 +52,13 @@ public class UserDataConverter {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 idToUsername = new HashMap<String, String>();
+                idToUser = new HashMap<String, User>();
+                emailToID = new HashMap<String,String>();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     User thisUser = data.getValue(User.class);
                     idToUsername.put(data.getKey(), thisUser.getUsername());
                     idToUser.put(data.getKey(),thisUser);
+                    emailToID.put(thisUser.getMail(), data.getKey());
                 }
                 isReady = true;
             }
@@ -128,6 +134,19 @@ public class UserDataConverter {
             return new User(); //return empty user.
         }
         return idToUser.get(id);
+    }
+
+    /* A function to convert an email adress to an ID
+     *
+     * @param {@code String email} the email adress who'se user ID we want to retrieve.
+     * @pre {@code emailToID != null}
+     * @post {@code emailToID.get(email)}
+     */
+    public String getID(String email){
+        if(emailToID == null){
+            return "";
+        }
+        return emailToID.get(email);
     }
 
 }
