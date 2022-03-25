@@ -36,6 +36,7 @@
         <activity android:name=".GameActivity"/>
         <activity android:name=".ScoreBoardActivity"/>
         <activity android:name=".finalScoreBoardActivity"/>
+        <activity android:name=".auth.ResetPasswordActivity"/>
     </application>
 
 </manifest>

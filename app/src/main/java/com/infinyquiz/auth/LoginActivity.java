@@ -52,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Set button to reset password
+        Button resetPasswordBtn = (Button) findViewById(R.id.forgotPasswordBtn);
+        resetPasswordBtn.setOnClickListener(new MoveToActivityOnClickListener(new ResetPasswordActivity(), this));
+
         setOldValues();
     }
 
@@ -167,4 +171,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
 }
