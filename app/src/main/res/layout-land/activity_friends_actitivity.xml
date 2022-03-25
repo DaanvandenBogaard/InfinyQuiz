@@ -26,25 +26,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/ViewRequestBtn"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="4dp"
-        android:backgroundTint="@color/yellowBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="View Request"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/addFriendsBtn"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <Button
         android:id="@+id/addFriendsBtn"
         android:layout_width="152dp"
         android:layout_height="58dp"
+        android:layout_marginStart="372dp"
         android:layout_marginTop="4dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
@@ -52,8 +37,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/ViewRequestBtn"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 

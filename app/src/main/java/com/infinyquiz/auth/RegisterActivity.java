@@ -163,29 +163,6 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-   /* private boolean alreadyExists(String username) {
-        DatabaseReference mref =  FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
-        mref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    if (data.child(username).exists()) {
-                        usernameExists = true;
-                    } else {
-                        usernameExists = false;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return  usernameExists;
-    } */
-
     //A method used to make an account. Copied from google so no contract nor unit tests.
     //We assume google's code is correct.
     public void createAccount(String email, String password, User user) {
