@@ -26,6 +26,9 @@ public class UserDataConverter {
 
     private boolean isReady = false;
 
+    //Map from ID to users
+    private Map<String, User> idToUser = new HashMap<>();
+
     //constructor:
     public UserDataConverter() {
         getUsersInfo();
@@ -49,6 +52,7 @@ public class UserDataConverter {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     User thisUser = data.getValue(User.class);
                     idToUsername.put(data.getKey(), thisUser.getUsername());
+                    idToUser.put(data.getKey(),thisUser);
                 }
                 isReady = true;
             }
@@ -111,6 +115,19 @@ public class UserDataConverter {
     //Returns whether or not the user data has been loaded from firebase
     public boolean isReady() {
         return isReady;
+    }
+
+    /* A function to convert one userID to a user object
+     *
+     * @param {@code String id} the user's id.
+     * @pre {@code idToUser != null}
+     * @returns {@code idToUser.get(id)}
+     */
+    public User getUser(String id){
+        if(idToUser == null){
+            return new User(); //return empty user.
+        }
+        return idToUser.get(id);
     }
 
 }
