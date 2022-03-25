@@ -119,8 +119,8 @@ public class ProfileActivity extends AppCompatActivity {
         databaseReference.child("Users").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String image = dataSnapshot.child("imageUrl").getValue().toString();
-                if (image != null) {
+                if (dataSnapshot.child("imageUrl").getValue() != null) {
+                    String image = dataSnapshot.child("imageUrl").getValue().toString();
                     Bitmap imageBitmap = decodeImage(image);
                     profilePicture.setImageBitmap(imageBitmap);
                 }
