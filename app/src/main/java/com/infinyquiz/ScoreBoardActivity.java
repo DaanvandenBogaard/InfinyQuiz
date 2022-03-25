@@ -29,6 +29,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private boolean timerHasBeenSet = false;
 
+    //Object to convert userIDs to usernames
+    final private UserDataConverter converter = new UserDataConverter();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +43,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         startDataBaseRead();
     }
 
-    private void startDataBaseRead(){
+    private void startDataBaseRead() {
         String gameID = getIntent().getStringExtra("gameID");
         database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
@@ -48,7 +51,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 game = snapshot.getValue(RandomGame.class);
-                if(game.haveAllPlayersAnswered()){
+                if (game.haveAllPlayersAnswered()) {
                     startTimer();
                 }
                 //set UI
@@ -64,8 +67,8 @@ public class ScoreBoardActivity extends AppCompatActivity {
     }
 
     //A function to start a timer to return to the GameActivity
-    private void startTimer(){
-        if(timerHasBeenSet){
+    private void startTimer() {
+        if (timerHasBeenSet) {
             return;
         }
         timerHasBeenSet = true;
@@ -81,7 +84,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     }
 
     //A function to set the UI accordingly
-    private void setUI(Game game){
+    private void setUI(Game game) {
         Question question = game.getCurrentQuestion();
         TextView questionTV = (TextView) findViewById(R.id.questionTV);
         questionTV.setText(question.getQuestion().trim());
@@ -90,10 +93,13 @@ public class ScoreBoardActivity extends AppCompatActivity {
         correctOption.setText(question.getCorrectOption().trim());
 
         TextView scoreBoardTV = (TextView) findViewById(R.id.scoreboardTV);
-        scoreBoardTV.setText(game.getScoreboard().toString().trim());
+        //Make new scoreboard with usernames:
+        if(converter.isReady()) {
+            scoreBoardTV.setText(converter.convertScoreBoard(game.getScoreboard()).toString().trim());
+        }
     }
 
-    private void moveToGameActivity(){
+    private void moveToGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
         System.out.println("test");
         System.out.println("moving from score to game");
@@ -101,7 +107,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));
-        intent.putExtra("index" , getIntent().getIntExtra("index",0));
+        intent.putExtra("index", getIntent().getIntExtra("index", 0));
         startActivity(intent);
     }
 

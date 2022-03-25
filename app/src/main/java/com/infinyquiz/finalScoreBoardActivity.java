@@ -41,6 +41,9 @@ public class finalScoreBoardActivity extends AppCompatActivity {
 
     private Button leaveMatchBtn;
 
+    //Object to convert userIDs to usernames
+    final private UserDataConverter converter = new UserDataConverter();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +103,9 @@ public class finalScoreBoardActivity extends AppCompatActivity {
         }
 
         finalMessageTv.setText(message);
-        top3TV.setText(top3.toString().trim());
+        if(converter.isReady()){
+            top3TV.setText(top3.toString().trim());
+        }
     }
 
     /* Returns an array containing the top 3 scored people
@@ -125,7 +130,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
         for(int i = 0; i< top3.length; i++) {
             String highScoreID = findHighestScore(scoreboard, users);
             users.remove(highScoreID);
-            top3[i] = highScoreID;
+            top3[i] = converter.getUserName(highScoreID);
 
             if(users.size() == 0){
                 break;

@@ -27,7 +27,7 @@ public class UserDataConverter {
     private boolean isReady = false;
 
     //constructor:
-    public UserDataConverter(){
+    public UserDataConverter() {
         getUsersInfo();
     }
 
@@ -46,7 +46,7 @@ public class UserDataConverter {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 idToUsername = new HashMap<String, String>();
-                for(DataSnapshot data : dataSnapshot.getChildren()){
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     User thisUser = data.getValue(User.class);
                     idToUsername.put(data.getKey(), thisUser.getUsername());
                 }
@@ -68,17 +68,48 @@ public class UserDataConverter {
      * @modifies none
      * @throws none
      */
-    public ArrayList<String> getUsernames(List<String> ids){
+    public ArrayList<String> getUsernames(List<String> ids) {
         ArrayList<String> usernames = new ArrayList<>();
-        if(idToUsername != null){
-            for(String id : ids){
+        if (idToUsername != null) {
+            for (String id : ids) {
                 usernames.add(idToUsername.get(id));
             }
         }
         return usernames;
     }
 
-    public boolean isReady(){
+    /* A function to convert the keys of a map (which are userId's) to a map where the keys are the
+     * corresponding usernames.
+     *
+     * @pre{@code idToUsername != null}
+     * @returns {@code convertedMap} a map where the keys have been converted
+     * @modifies none
+     * @throws none
+     */
+    public HashMap<String, Integer> convertScoreBoard(Map<String, Integer> map) {
+        HashMap<String, Integer> convertedMap = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            convertedMap.put(idToUsername.get(entry.getKey()), entry.getValue());
+        }
+        return convertedMap;
+    }
+
+    /* A function to convert one userID to a username
+     *
+     * @param {@code String id} the user's id.
+     * @pre {@code idToUsername != null}
+     * @returns {@code idToUsername.get(id)}
+     */
+    public String getUserName(String id){
+        if(idToUsername == null){
+            return "";
+        }
+        return idToUsername.get(id);
+    }
+
+
+    //Returns whether or not the user data has been loaded from firebase
+    public boolean isReady() {
         return isReady;
     }
 
