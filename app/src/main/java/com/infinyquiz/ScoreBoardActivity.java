@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.datarepresentation.Game;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.datarepresentation.RandomGame;
+import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 public class ScoreBoardActivity extends AppCompatActivity {

@@ -3,8 +3,6 @@ package com.infinyquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,25 +10,11 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.infinyquiz.auth.LoginActivity;
-import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.datarepresentation.Lobby;
-import com.infinyquiz.datarepresentation.User;
-import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
+import com.infinyquiz.datarepresentation.UserDataConverter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 
 /* In the matchmaker, we will find a lobby to join, either by joining an existing lobby or by

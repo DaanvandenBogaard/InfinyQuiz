@@ -304,7 +304,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        System.out.println("CALLED MOVESCOREBOARD");
                         moveToScoreBoard();
                     }
                 },
@@ -343,7 +342,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int points = 0;
         if (answer.equals(game.getCurrentQuestion().getCorrectOption().trim())) {
             //Answered correctly
-            points = 100;
+            points = 100 - timerPB.getProgress();
         } else {
             //Answered incorrectly
             points = -10;

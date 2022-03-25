@@ -1,4 +1,4 @@
-package com.infinyquiz;
+package com.infinyquiz.datarepresentation;
 
 import android.service.autofill.UserData;
 import android.util.Log;
