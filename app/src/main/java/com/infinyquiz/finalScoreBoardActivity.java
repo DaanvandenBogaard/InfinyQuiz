@@ -19,6 +19,8 @@ import com.infinyquiz.datarepresentation.RandomGame;
 import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +38,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
 
     //UI elements:
     private TextView finalMessageTv;
-    private TextView top3TV;
+    private TextView number1TV, number2TV, number3TV, number3StaticTV;
 
     private Button leaveMatchBtn;
 
@@ -61,24 +63,28 @@ public class finalScoreBoardActivity extends AppCompatActivity {
      * @modifies all UI related global elements of this class
      * @throws none
      */
-    private void setUIElements(){
+    private void setUIElements() {
         finalMessageTv = (TextView) findViewById(R.id.finalMessageTV);
-        top3TV = (TextView) findViewById(R.id.top3TV);
+        number1TV = (TextView) findViewById(R.id.numberOneTV);
+        number2TV = (TextView) findViewById(R.id.numberTwoTV);
+        number3TV = (TextView) findViewById(R.id.numberThreeTV);
+        number3StaticTV = (TextView) findViewById(R.id.thirdPlaceStaticTV);
 
         leaveMatchBtn = (Button) findViewById(R.id.leaveMatchBtn);
     }
 
     //Sets the {@code Game game} global variable using firebase real time database.
     //
-    private void getGame(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");;
+    private void getGame() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
+        ;
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(getIntent().getStringExtra("gameID"));
         ref.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 game = dataSnapshot.getValue(RandomGame.class);
-                if(game.haveAllPlayersAnswered()){
+                if (game.haveAllPlayersAnswered()) {
                     updateUI();
                 }
             }
@@ -91,19 +97,25 @@ public class finalScoreBoardActivity extends AppCompatActivity {
     }
 
     //A function to set the UI elements appropriately.
-    private void updateUI(){
+    private void updateUI() {
         String[] top3 = getTop3();
         String message;
         if (top3[0].equals(userID)) {
             message = congratzMessage;
-        }
-        else{
+        } else {
             message = loseMessage;
         }
 
         finalMessageTv.setText(message);
-        if(converter.isReady()){
-            top3TV.setText(top3.toString().trim());
+        if (converter.isReady()) {
+            number1TV.setText(converter.getUserName(top3[0].trim()) + ": " + game.getScore(top3[0]));
+            number2TV.setText(converter.getUserName(top3[1].trim()) + ": " + game.getScore(top3[0]));
+            if(top3[2] == null || top3[2] == ""){
+                number3StaticTV.setText("");
+                number3TV.setText("");
+            } else{
+                number3TV.setText(converter.getUserName(top3[2].trim()) + ": " + game.getScore(top3[0]));
+            }
         }
     }
 
@@ -118,20 +130,20 @@ public class finalScoreBoardActivity extends AppCompatActivity {
      * @modifies none
      *
      */
-    private String[] getTop3(){
+    private String[] getTop3() {
         String[] top3 = new String[3];
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             top3[i] = null;
         }
         Map<String, Integer> scoreboard = game.getScoreboard();
         List<String> users = game.getUsers();
         //iterate over all players, find largest value 3 times.
-        for(int i = 0; i< top3.length; i++) {
+        for (int i = 0; i < top3.length; i++) {
             String highScoreID = findHighestScore(scoreboard, users);
             users.remove(highScoreID);
-            top3[i] = converter.getUserName(highScoreID);
+            top3[i] = highScoreID;
 
-            if(users.size() == 0){
+            if (users.size() == 0) {
                 break;
             }
         }
@@ -139,11 +151,11 @@ public class finalScoreBoardActivity extends AppCompatActivity {
         return top3;
     }
 
-    private String findHighestScore(Map<String, Integer> dictionary, List<String> users){
+    private String findHighestScore(Map<String, Integer> dictionary, List<String> users) {
         int maxScore = 0;
         String highestUser = ""; //initialise to empty string so compiler won't complain
-        for(String user : users){
-            if( maxScore < dictionary.get(user)) {
+        for (String user : users) {
+            if (maxScore < dictionary.get(user)) {
                 highestUser = user;
                 maxScore = dictionary.get(user);
             }

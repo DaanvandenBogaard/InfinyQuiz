@@ -17,17 +17,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/top3TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:text="loading..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/finalMessageTV" />
-
-    <TextView
         android:id="@+id/scoreboardTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,5 +33,65 @@
         android:text="Leave game"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/staticview1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="64dp"
+        android:text="Winner:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finalMessageTV" />
+
+    <TextView
+        android:id="@+id/staticview2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
+        android:text="Second place:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/staticview1" />
+
+    <TextView
+        android:id="@+id/thirdPlaceStaticTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
+        android:text="Third place"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/staticview2" />
+
+    <TextView
+        android:id="@+id/numberOneTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="64dp"
+        android:text="Loading..."
+        app:layout_constraintStart_toEndOf="@+id/staticview1"
+        app:layout_constraintTop_toBottomOf="@+id/finalMessageTV" />
+
+    <TextView
+        android:id="@+id/numberTwoTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:text="Loading..."
+        app:layout_constraintStart_toEndOf="@+id/staticview2"
+        app:layout_constraintTop_toBottomOf="@+id/numberOneTV" />
+
+    <TextView
+        android:id="@+id/numberThreeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Loading..."
+        app:layout_constraintStart_toEndOf="@+id/thirdPlaceStaticTV"
+        app:layout_constraintTop_toBottomOf="@+id/numberTwoTV" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
