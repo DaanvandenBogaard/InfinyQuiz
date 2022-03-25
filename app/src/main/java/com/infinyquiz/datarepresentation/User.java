@@ -49,4 +49,8 @@ public class User {
     public String getProfilePictureID() {
         return imageUrl;
     }
+
+    public void setUsername(String newUsername){
+        username = newUsername;
+    }
 }

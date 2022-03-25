@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.FriendsManagement.FriendsActitivity;
+import com.infinyquiz.auth.ChangeUsernameActivity;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.datarepresentation.User;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
@@ -49,6 +50,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+
+        Button changeUsernameBtn = (Button) findViewById(R.id.changeUsernameBtn);
+        changeUsernameBtn.setOnClickListener(new MoveToActivityOnClickListener(new ChangeUsernameActivity() , this));
 
         //retrieves image from firebase and updates profile picture
         updateImage();
