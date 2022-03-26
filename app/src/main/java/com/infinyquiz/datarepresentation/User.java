@@ -18,4 +18,16 @@ public class User {
         this.username = username;
         this.mail = mail;
     }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public void setUsername(String newUsername){
+        username = newUsername;
+    }
 }
