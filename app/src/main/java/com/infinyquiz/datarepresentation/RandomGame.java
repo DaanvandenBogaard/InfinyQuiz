@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * This class is used to represent a game which came to be due to random matchmaking.
  */
-public class RandomGame extends Game{
+public class RandomGame extends Game {
 
     //Constructor
     public RandomGame(Lobby lobby) {
@@ -22,7 +22,7 @@ public class RandomGame extends Game{
     }
 
     //Constructor for firebase (needs to be empty)
-    public RandomGame(){
+    public RandomGame() {
         super();
     }
 

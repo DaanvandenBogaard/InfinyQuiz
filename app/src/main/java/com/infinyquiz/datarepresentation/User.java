@@ -1,17 +1,17 @@
 package com.infinyquiz.datarepresentation;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.List;
-
+/* A class representing a user. This class is used to store data on our users
+ * in firebase real time database.
+ *
+ * We store a username, email address and sometimes also a profile picture
+ * (profile picture not incorporated into this class).
+ */
 public class User {
 
     public String username, mail;
 
     //This empty constructor is necessary for Firebase to work
     public User() {
-
     }
 
     public User(String username, String mail) {
@@ -23,11 +23,11 @@ public class User {
         return mail;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String newUsername){
+    public void setUsername(String newUsername) {
         username = newUsername;
     }
 }

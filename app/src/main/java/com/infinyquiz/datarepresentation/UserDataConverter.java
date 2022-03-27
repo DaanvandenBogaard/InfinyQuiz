@@ -1,32 +1,33 @@
 package com.infinyquiz.datarepresentation;
 
-import android.service.autofill.UserData;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.infinyquiz.datarepresentation.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /* A class to convert user data
- * Supports an operation to convert a list of integers to a list of
+ *
+ * We start by retrieving our set of users, which we then modify in to a few
+ * maps in order to easily access the correct data easily.
  */
 public class UserDataConverter {
 
+    //A map to convert user's ids to user's usernames.
     private Map<String, String> idToUsername = null;
 
     //Map from ID to users
     private Map<String, User> idToUser = null;
 
+    //A map from a user's email to a user's ID
+    //Note that emails are unique in our set up of firebase and so this does not cause
+    //issues when using a map.
     private Map<String, String> emailToID = null;
 
     //Wheter or not firebase has been loaded

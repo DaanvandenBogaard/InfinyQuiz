@@ -56,22 +56,25 @@ public abstract class Game {
      * @returns {@code question} where this is the question in the right index. If questions
      * is null, give an empty question.
      */
-    public Question getCurrentQuestion(){
-        if(questions == null){
+    public Question getCurrentQuestion() {
+        if (questions == null) {
             return new Question();
         }
         return questions.get(index);
     }
 
-    public void incrementQuestionIndex(){
+    public void incrementQuestionIndex() {
         index++;
     }
 
-    public ArrayList<Question> getQuestions(){
+    public ArrayList<Question> getQuestions() {
         return questions;
     }
 
-    public Game(){};
+    public Game() {
+    }
+
+    ;
 
     public Game(Lobby lobby) {
         this.lobby = lobby;
@@ -81,57 +84,57 @@ public abstract class Game {
         return lobby.getUsers();
     }
 
-    public ArrayList<String> getJoinedPlayers(){
+    public ArrayList<String> getJoinedPlayers() {
         return joinedPlayers;
     }
 
-    public Lobby getLobby(){
+    public Lobby getLobby() {
         return lobby;
     }
 
-    public int getScore(String userId){
-       return scoreboard.get(userId);
+    public int getScore(String userId) {
+        return scoreboard.get(userId);
     }
 
-    public Map<String, Integer> getScoreboard(){
+    public Map<String, Integer> getScoreboard() {
         return scoreboard;
     }
 
-    public void setScore(String userId, int score){
+    public void setScore(String userId, int score) {
         scoreboard.put(userId, score);
     }
 
-    public void addVote(String vote){
+    public void addVote(String vote) {
         categoryVotes.add(vote);
     }
 
-    public ArrayList<String> getCategoryVotes(){
+    public ArrayList<String> getCategoryVotes() {
         return categoryVotes;
     }
 
     public abstract void setQuestions(ArrayList<Question> questions);
 
-    public void setGameID(String id){
+    public void setGameID(String id) {
         gameID = id;
     }
 
-    public void clearAnsweredPlayers(){
+    public void clearAnsweredPlayers() {
         answeredPlayers = new ArrayList<>();
     }
 
-    public boolean haveAllPlayersAnswered(){
+    public boolean haveAllPlayersAnswered() {
         return lobby.getLobbySize() == answeredPlayers.size();
     }
 
-    public void resetJoinedUsers(){
+    public void resetJoinedUsers() {
         joinedPlayers = new ArrayList<>();
     }
 
-    public void addPlayerToAnswered(String playerID){
+    public void addPlayerToAnswered(String playerID) {
         answeredPlayers.add(playerID);
     }
 
-    public String getGameID(){
+    public String getGameID() {
         return gameID;
     }
 
@@ -141,7 +144,7 @@ public abstract class Game {
      * @return {@code lobby.getLobbySize() <= joinedPlayers.size()}
      * @modifies none
      */
-    public Boolean allPlayersJoined(){
+    public Boolean allPlayersJoined() {
         return lobby.getLobbySize() <= joinedPlayers.size();
     }
 
@@ -152,7 +155,7 @@ public abstract class Game {
      * @returns {@code joinedPlayers.contains(playerId)}
      * @modifies none
      */
-    public boolean hasPlayerJoined(String playerId){
+    public boolean hasPlayerJoined(String playerId) {
         return joinedPlayers.contains(playerId);
     }
 
@@ -163,7 +166,7 @@ public abstract class Game {
      * @post {@code joinedPlayers.contains(playerID)}
      * @modifies {@code joinedPlayers}
      */
-    public void joinPlayer(String playerID){
+    public void joinPlayer(String playerID) {
         scoreboard.put(playerID, 0);
         joinedPlayers.add(playerID);
     }
