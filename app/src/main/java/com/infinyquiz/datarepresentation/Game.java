@@ -1,27 +1,38 @@
 package com.infinyquiz.datarepresentation;
 
-import com.google.android.gms.common.util.ArrayUtils;
-import com.google.firebase.auth.FirebaseAuth;
-import com.infinyquiz.datarepresentation.Question;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/* An abstract class to represent a currently going on game
+ * This class is implemented by {@code RandomGame} and {@code CustomGame} (please note that due to
+ * time limitations, we have not been able to also implement {@code CustomGame}).
+ *
+ * This class stores the questions, the lobby, the joined players, the players that have answered
+ * and many more.
+ */
 public abstract class Game {
 
+    //The list of questions that will be asked during this game.
     public ArrayList<Question> questions;
-    private int questionCounter;
+
+    //The Lobby of which this game originated
     private Lobby lobby;
+
     //A list with the IDs of all players who have made the transition to the game.
     private ArrayList<String> joinedPlayers = new ArrayList<>();
+
+    //A list with the IDs of all players that made the transition to the scoreboard
     private ArrayList<String> answeredPlayers = new ArrayList<>();
+
+    //A map that maps IDs of users to their respective scores
     private Map<String, Integer> scoreboard = new HashMap<>();
+
+    //A list of votes for categories
     private ArrayList<String> categoryVotes = new ArrayList<>();
+
+    //The index at what question we are.
     public int index = 0;
 
     //the number of questions, according to requirements, must be 10
@@ -30,10 +41,21 @@ public abstract class Game {
     //ID to game:
     private String gameID;
 
+    /* A function to retrieve the answeredPlayers
+     *
+     * @pre none
+     * @returns {@code answeredPlayers}
+     */
     public ArrayList<String> getAnsweredPlayers() {
         return answeredPlayers;
     }
 
+    /* A function to get the question we are currently considering.
+     *
+     * @pre none
+     * @returns {@code question} where this is the question in the right index. If questions
+     * is null, give an empty question.
+     */
     public Question getCurrentQuestion(){
         if(questions == null){
             return new Question();
