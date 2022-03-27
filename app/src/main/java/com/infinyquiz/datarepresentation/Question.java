@@ -3,6 +3,18 @@ package com.infinyquiz.datarepresentation;
 
 import java.util.ArrayList;
 
+/* The data representation of a question.
+ * This is used in both firebase and internally to represent questions.
+ * This class has some operations which will make it easier to implement these
+ * questions in a quiz-like environement.
+ *
+ * For example, we store both all the possibilities for answers and the correct answer seperately.
+ * We also implemented some extra methods to help with internal checking:
+ *      -we overrided the equals method to properly check for equality of questions
+ *      -We implemented an empty question to test if a question is empty
+ *      -An empty question will still return usefull information into the UI (mainly that
+ *      it was not possible to load a question).
+ */
 public class Question {
 
     //The question itself
@@ -123,7 +135,13 @@ public class Question {
         return true;
     }
 
-    //A check to see if question is equal to the empty question
+    /* A check to see if question is equal to the empty question
+     *
+     * @pre {@code this != null}
+     * @returns {@code this.equals(new Question)}
+     * @modifies none
+     * @throws none
+     */
     public boolean isEmpty() {
         return this.equals(new Question());
     }
