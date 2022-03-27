@@ -24,20 +24,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emailET, passwordET;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Set the button to move to the RegisterActivity
         Button registerBtn = (Button) findViewById(R.id.toRegister);
         registerBtn.setOnClickListener(new MoveToActivityOnClickListener(new RegisterActivity(), this));
 
+        //Set button to move to the ResetPasswordActivity
+        Button resetPasswordBtn = (Button) findViewById(R.id.forgotPasswordBtn);
+        resetPasswordBtn.setOnClickListener(new MoveToActivityOnClickListener(new ResetPasswordActivity(), this));
+
+        //Set the edit text elements of the UI
         emailET = (EditText) findViewById(R.id.loginEmailInput);
         passwordET = (EditText) findViewById(R.id.loginPasswordInput);
 
-        mAuth = FirebaseAuth.getInstance();
-
+        //Set the OnClickListener that is responsible for our submit button.
         Button loginBtn = (Button) findViewById(R.id.LoginInputBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,11 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-        //Set button to reset password
-        Button resetPasswordBtn = (Button) findViewById(R.id.forgotPasswordBtn);
-        resetPasswordBtn.setOnClickListener(new MoveToActivityOnClickListener(new ResetPasswordActivity(), this));
-
+        //See if we have some data to automatically fill in.
         setOldValues();
     }
 
