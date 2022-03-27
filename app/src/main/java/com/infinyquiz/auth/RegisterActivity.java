@@ -20,6 +20,11 @@ import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
 import com.infinyquiz.datarepresentation.User;
 
+/* An activity where the user can register an account with our service.
+ * To realise this service, we user Firebase's authentication tool
+ *
+ * From this actiivty one may move to the LoginActivity.
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     //The UI elements of this activity

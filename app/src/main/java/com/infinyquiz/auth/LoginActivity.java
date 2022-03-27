@@ -20,6 +20,12 @@ import com.infinyquiz.HomeActivity;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
 
+/* An activity where users can log in. We use Firebase's authentication
+ * system to realise this service. From this activity one can move to the RegisterActivity and
+ * to the ResetPasswordActivity.
+ *
+ * In this activity, this user is NOT yet logged in.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailET, passwordET;
