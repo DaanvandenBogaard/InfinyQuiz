@@ -15,47 +15,43 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
 import com.infinyquiz.datarepresentation.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    //The UI elements of this activity
     private EditText usernameET, mailET, passwordET, passwordRepeatET;
     private Button confirmBtn;
 
-    private FirebaseAuth mAuth;
-
-    boolean usernameExists;
+    //Firebase authentication tool.
+    final private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        //Get FireBase instance:
-        mAuth = FirebaseAuth.getInstance();
 
+        //Set the button to move to the LoginActivity
         Button button = findViewById(R.id.toLogin);
         button.setOnClickListener(new MoveToActivityOnClickListener(
                 new LoginActivity(), this));
 
-
+        //Set the UI elements
         usernameET = (EditText) findViewById(R.id.registerUsernameInput);
         mailET = (EditText) findViewById(R.id.registerMailInput);
         passwordET = (EditText) findViewById(R.id.registerPasswordInput);
         passwordRepeatET = (EditText) findViewById(R.id.registerPasswordInputRepeat);
 
+        //Se the button to confirm your registration attempt and set its listener.
         confirmBtn = (Button) findViewById(R.id.registerConfirmBtn);
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (v.getId() == R.id.registerConfirmBtn) {
                     String[] input = RetrieveInput();
                     if (isValidInput(input)) {
-                        User thisUser = new User(input[0],input[1]);
+                        User thisUser = new User(input[0], input[1]);
                         createAccount(input[1], input[2], thisUser);
                     }
                 }
@@ -154,16 +150,11 @@ public class RegisterActivity extends AppCompatActivity {
             passwordRepeatET.requestFocus();
             return false;
         }
-        //This doesnt work since its asynchronus
-     /*   if(alreadyExists(username)){
-            usernameET.setError("Username already exists.");
-            usernameET.requestFocus();
-            return false;
-        } */
         return true;
     }
 
-    //A method used to make an account. Copied from google so no contract nor unit tests.
+    //A method used to make an account. Copied from google with some slight modifications,
+    //so no contract nor unit tests.
     //We assume google's code is correct.
     public void createAccount(String email, String password, User user) {
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -175,23 +166,22 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()) //Get user ID to put into database
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() { //Test whether this has gone succesfully or not.
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){ //If user has been added to realtime database
-                                                Toast.makeText(RegisterActivity.this, "User has been registered succesfully!", Toast.LENGTH_LONG).show();
-                                                //Redirect to login, with the login data:
-                                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                                //Add data to login:
-                                                intent.putExtra("email" , email);
-                                                intent.putExtra("password", password);
-                                                startActivity(intent);
-                                            }
-                                            else{
-                                                Toast.makeText(RegisterActivity.this, "Failed to put user into real time database", Toast.LENGTH_LONG).show();
-                                            }
-                                        }
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) { //If user has been added to realtime database
+                                        Toast.makeText(RegisterActivity.this, "User has been registered succesfully!", Toast.LENGTH_LONG).show();
+                                        //Redirect to login, with the login data:
+                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                        //Add data to login:
+                                        intent.putExtra("email", email);
+                                        intent.putExtra("password", password);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(RegisterActivity.this, "Failed to put user into real time database", Toast.LENGTH_LONG).show();
+                                    }
+                                }
                             });
-                        } else{ //If user could not be registered to authentication
+                        } else { //If user could not be registered to authentication
                             Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_LONG).show();
                         }
                     }
