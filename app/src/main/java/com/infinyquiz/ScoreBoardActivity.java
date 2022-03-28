@@ -59,15 +59,16 @@ public class ScoreBoardActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(timerHasBeenSet){
+                game = snapshot.getValue(RandomGame.class);
+                if(timerHasBeenSet || !game.haveAllPlayersAnswered()){
                     return;
                 }
-                game = snapshot.getValue(RandomGame.class);
                 game.clearJoinedPlayers();
                 ref.setValue(game);
-                if (game.haveAllPlayersAnswered()) {
-                    startTimer();
-                }
+                System.out.println("TEST");
+                System.out.println("HOEZO???");
+                System.out.println("TEST");
+                startTimer();
                 //set UI
                 setUI(game);
             }
