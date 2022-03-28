@@ -167,7 +167,9 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         if (view.getId() == R.id.backToHomeBtn) {
             matchMaker.leaveLobby();
-            timer.cancel();
+            if(timer != null){
+                timer.cancel();
+            }
             startActivity(new Intent(this, HomeActivity.class));
         }
     }
