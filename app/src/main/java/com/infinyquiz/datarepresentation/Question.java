@@ -154,4 +154,8 @@ public class Question {
         return reference;
     }
 
+    public boolean hasImage() {
+        return (pictureID != null && !pictureID.equals("Could not find pictureID"));
+    }
+
 }

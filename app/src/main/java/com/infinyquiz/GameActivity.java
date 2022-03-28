@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.infinyquiz.datarepresentation.Game;
 import com.infinyquiz.datarepresentation.Lobby;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.datarepresentation.RandomGame;
+import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 import java.sql.Array;
@@ -256,6 +258,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         optionB.setText(options.get(1));
         optionC.setText(options.get(2));
         optionD.setText(options.get(3));
+
+        //Set image:
+        if(question.hasImage()){
+            ImageView imageView = (ImageView) findViewById(R.id.imageView);
+            imageView.setImageBitmap(UserDataConverter.decodeImage(question.getPictureID()));
+        }
     }
 
     /* Returns the most common category in the votes
@@ -371,8 +379,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         thisIntent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         thisIntent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         thisIntent.putExtra("category", getIntent().getStringExtra("category"));
-        setUserToAnswered(thisIntent);
         timer.cancel();
+        setUserToAnswered(thisIntent);
 
     }
 
