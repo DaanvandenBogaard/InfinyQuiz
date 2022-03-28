@@ -123,7 +123,7 @@ public abstract class Game {
     }
 
     public boolean haveAllPlayersAnswered() {
-        return lobby.getLobbySize() == answeredPlayers.size();
+        return lobby.getLobbySize() <= answeredPlayers.size();
     }
 
     public void resetJoinedUsers() {

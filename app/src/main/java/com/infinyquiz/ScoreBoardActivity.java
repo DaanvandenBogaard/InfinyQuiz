@@ -55,7 +55,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 game = snapshot.getValue(RandomGame.class);
-                game.addPlayerToAnswered(FirebaseAuth.getInstance().getUid());
+                if(game.getAnsweredPlayers().contains(FirebaseAuth.getInstance().getUid())) {
+                    game.addPlayerToAnswered(FirebaseAuth.getInstance().getUid());
+                }
                 ref.setValue(game);
                 if (game.haveAllPlayersAnswered()) {
                     startTimer();
