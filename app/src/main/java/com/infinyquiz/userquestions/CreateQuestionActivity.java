@@ -32,8 +32,6 @@ import java.util.ArrayList;
 
 public class CreateQuestionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    //TODO: Implement the adding of pictures
-
     //The firebase database
     private FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
 

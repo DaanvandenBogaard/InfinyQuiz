@@ -32,7 +32,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     //will start
     private final int WAITING_TIME = 10;
     private final MatchMaker matchMaker = new MatchMaker();
-    private final int DELAY = 1000; //1 second
+    private final int DELAY = 100; //1 second
     private final int WAIT_TO_START_MATCH = 3000; //3seconds
     private String selectedCategory;
 

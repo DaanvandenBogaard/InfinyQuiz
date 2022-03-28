@@ -48,11 +48,6 @@ public class MatchMaker {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                if(stopMatchmaking){
-                    return;
-                }
-
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Lobby curLobby = data.getValue(Lobby.class);
                     if(curLobby == null){
@@ -74,7 +69,6 @@ public class MatchMaker {
                     makeNewLobby();
                 }
                 setListenerToLobby();
-
             }
 
             @Override
