@@ -72,6 +72,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         if (timerHasBeenSet) {
             return;
         }
+        startDataBaseRead();
         timerHasBeenSet = true;
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
