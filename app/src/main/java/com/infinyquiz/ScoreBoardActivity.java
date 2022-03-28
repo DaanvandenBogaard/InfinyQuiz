@@ -56,9 +56,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
                     startTimer();
                 }
                 //set UI
-                System.out.println("TEST");
-                System.out.println(game.haveAllPlayersAnswered());
-                System.out.println("TEST");
                 setUI(game);
             }
 

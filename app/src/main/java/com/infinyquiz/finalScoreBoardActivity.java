@@ -80,10 +80,12 @@ public class finalScoreBoardActivity extends AppCompatActivity {
         ;
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(getIntent().getStringExtra("gameID"));
         ref.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 game = dataSnapshot.getValue(RandomGame.class);
+                System.out.println("TEST");
+                System.out.println(game.haveAllPlayersAnswered());
+                System.out.println("TEST");
                 if (game.haveAllPlayersAnswered()) {
                     updateUI();
                 }
