@@ -77,7 +77,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
     //
     private void getGame() {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
-        ;
+
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(getIntent().getStringExtra("gameID"));
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -86,6 +86,8 @@ public class finalScoreBoardActivity extends AppCompatActivity {
                 System.out.println("TEST");
                 System.out.println(game.haveAllPlayersAnswered());
                 System.out.println("TEST");
+                game.addPlayerToAnswered(FirebaseAuth.getInstance().getUid());
+                ref.setValue(game);
                 if (game.haveAllPlayersAnswered()) {
                     updateUI();
                 }
