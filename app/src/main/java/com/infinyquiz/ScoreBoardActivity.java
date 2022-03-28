@@ -22,6 +22,8 @@ import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ScoreBoardActivity extends AppCompatActivity {
 
@@ -104,9 +106,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     //A function to set the UI accordingly
     private void setUI(Game game) {
-        System.out.println("TEST");
-        System.out.println("SET UI!!!");
-        System.out.println("TEST");
         Question question = game.getCurrentQuestion();
         TextView questionTV = (TextView) findViewById(R.id.questionTV);
         questionTV.setText(question.getQuestion().trim());
@@ -118,15 +117,27 @@ public class ScoreBoardActivity extends AppCompatActivity {
         //Make new scoreboard with usernames:
         if(converter.isReady()) {
             scoreBoardTV.setText(converter.convertScoreBoard(game.getScoreboard()).toString().trim());
+        } else {
+            //We wait one second and then assume that {@code converter.isReady()}.
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            scoreBoardTV.setText(converter.convertScoreBoard(game.getScoreboard()).toString().trim());
+                        }
+                    });
+
+                }
+            }, 1000);
         }
     }
 
     private void moveToGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
         ref.setValue(game);
-        System.out.println("test");
-        System.out.println("moving from score to game");
-        System.out.println("test");
         intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
         intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
         intent.putExtra("category", getIntent().getStringExtra("category"));

@@ -23,6 +23,8 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class finalScoreBoardActivity extends AppCompatActivity {
 
@@ -112,12 +114,34 @@ public class finalScoreBoardActivity extends AppCompatActivity {
         if (converter.isReady()) {
             number1TV.setText(converter.getUserName(top3[0].trim()) + ": " + game.getScore(top3[0]));
             number2TV.setText(converter.getUserName(top3[1].trim()) + ": " + game.getScore(top3[0]));
-            if(top3[2] == null || top3[2] == ""){
+            if (top3[2] == null || top3[2] == "") {
                 number3StaticTV.setText("");
                 number3TV.setText("");
-            } else{
+            } else {
                 number3TV.setText(converter.getUserName(top3[2].trim()) + ": " + game.getScore(top3[0]));
             }
+        } else {
+            //We wait one second and then assume that {@code converter.isReady()}.
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            number1TV.setText(converter.getUserName(top3[0].trim()) + ": " + game.getScore(top3[0]));
+                            number2TV.setText(converter.getUserName(top3[1].trim()) + ": " + game.getScore(top3[0]));
+                            if (top3[2] == null || top3[2] == "") {
+                                number3StaticTV.setText("");
+                                number3TV.setText("");
+                            } else {
+                                number3TV.setText(converter.getUserName(top3[2].trim()) + ": " + game.getScore(top3[0]));
+                            }
+                        }
+                    });
+
+                }
+            }, 1000);
         }
     }
 
