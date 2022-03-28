@@ -131,7 +131,10 @@ public abstract class Game {
     }
 
     public void addPlayerToAnswered(String playerID) {
-        answeredPlayers.add(playerID);
+
+        if(!answeredPlayers.contains(playerID)){
+            answeredPlayers.add(playerID);
+        }
     }
 
     public String getGameID() {
