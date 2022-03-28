@@ -25,33 +25,49 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.infinyquiz.ProfileActivity;
 import com.infinyquiz.R;
 import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.datarepresentation.User;
+import com.infinyquiz.datarepresentation.UserDataConverter;
 
 import java.util.ArrayList;
 
 public class SearchFriendActivity extends AppCompatActivity {
 
+    //Firebase database and authertication intantiation and reference
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    DatabaseReference databaseReference;
+
+    //Mail of the currently selected user
     String selectedUserEmail;
-    User selectedUser;
+
+    //Button for adding a user
     Button sendRequestBtn;
-    DatabaseReference friendRequestRef;
+
+    //Userdataconverter object
+    UserDataConverter converter = new UserDataConverter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_friend);
 
+        //Setting the UI elements
         ListView usersFound = (ListView) findViewById(R.id.friendSearchListView);
         SearchView friendSearch = (SearchView) findViewById(R.id.searchFriendsView);
         sendRequestBtn = (Button) findViewById(R.id.sendRequestBtn);
-        friendRequestRef =  firebaseDatabase.getReference().child("FriendRequest");
 
+        //Set Button that moves you back to FriendsActivity
+        Button toFriendsBtn = (Button) findViewById(R.id.toFriendsBtn);
+        toFriendsBtn.setOnClickListener(new com.infinyquiz.onclicklistener.MoveToActivityOnClickListener(new FriendsActitivity(), this));
+
+        //Getting firebase database reference
+        databaseReference =  firebaseDatabase.getReference();
+
+        //Update the query on typing in the friend search bar
         friendSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String s) {
                 return false;
@@ -60,11 +76,11 @@ public class SearchFriendActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 updateQuery(s, usersFound);
-
                 return false;
             }
         });
 
+        //Selection of user in the list
         usersFound.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -74,38 +90,46 @@ public class SearchFriendActivity extends AppCompatActivity {
             }
         });
 
+        //Adding friend
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (selectedUserEmail != null) {
-                    User reciever = getUserByMail(selectedUserEmail);
-
-                    if (sendRequestBtn.getText().equals("Send request")) {
-                        sendRequest(reciever);
-                    }
-                    else if (sendRequestBtn.getText().equals("Cancel request")) {
-                        cancelRequest(reciever);
-                    }
+                    addFriend();
                 }
             }
         });
     }
 
+    /* A function that updates usersFound with the result of the current query.
+     *
+     * @pre {@code converter.isReady == true && databaseReference != null}
+     * @modifies the Friend list of the current user in the firebase database
+     * @post selected user is added to the friendlist of the current user
+     */
+    private void addFriend() {
+        if (converter.isReady()) {
+           databaseReference.child("Users").child(mAuth.getCurrentUser().getUid()).child("friendList").child(converter.getID(selectedUserEmail)).setValue(selectedUserEmail);
+        }
+    }
+
+
+    /* A function that updates usersFound with the result of the current query.
+     *
+     * @pre {@code firebaseDatabase != null && mAuth != null && usersFound != null && s != null }
+     * @modifies {@code usersFound}
+     * @post usersFound displays the current query result.
+     */
     private void updateQuery(String s, ListView usersFound) {
-        DatabaseReference mRef = firebaseDatabase.getReference();
-        ArrayList<User> orderList = new ArrayList<>();
-        mRef.child("Users").orderByChild("mail").startAt(s).endAt(s+"\uf8ff").limitToFirst(20).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users").orderByChild("mail").startAt(s).endAt(s+"\uf8ff").limitToFirst(20).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> updatedQuery = new ArrayList<String>();
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    User user = userSnapshot.getValue(User.class);
-                    orderList.add(user);
+                    String mail = userSnapshot.child("mail").getValue().toString();
+                    updatedQuery.add(mail);
                 }
 
-                for (User user : orderList) {
-                    updatedQuery.add(user.getMail());
-                }
                 ArrayAdapter arrayAdapter = new ArrayAdapter<>(SearchFriendActivity.this, android.R.layout.simple_list_item_1, updatedQuery);
                 usersFound.setAdapter(arrayAdapter);
             }
@@ -114,92 +138,5 @@ public class SearchFriendActivity extends AppCompatActivity {
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
-    }
-    
-    private void sendRequest(User reciever) {
-
-        if(!requestIsValid(reciever)) {
-            DatabaseReference friendRequestRef =  firebaseDatabase.getReference().child("FriendRequest");
-            String id_sender = mAuth.getUid();
-            friendRequestRef.child(id_sender).child(reciever.getId()).child("RequestType").setValue("Sent")
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                friendRequestRef.child(reciever.getId()).child(id_sender).child("RequestType").setValue("received")
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    sendRequestBtn.setText("Cancel request");
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-                    });
-        }
-    }
-
-    private void cancelRequest(User reciever) {
-        if(!requestIsValid(reciever)) {
-            String id_sender = mAuth.getUid();
-
-            friendRequestRef.child(id_sender).child(reciever.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
-                        requestSnapshot.getRef().removeValue();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-            friendRequestRef.child(reciever.getId()).child(id_sender).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot requestSnapshot: snapshot.getChildren()) {
-                        requestSnapshot.getRef().removeValue();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-    }
-
-    private boolean requestIsValid(User reciever) {
-        if (getUserByMail(mAuth.getCurrentUser().getEmail()).friendList.contains(reciever.getId())) {
-            Toast.makeText(SearchFriendActivity.this, "Already friends with user!", Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        return true;
-    }
-
-    private User getUserByMail(String selectedUserEmail) {
-        DatabaseReference mRef =  firebaseDatabase.getReference();
-        mRef.child("Users").orderByChild("mail").equalTo(selectedUserEmail).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> updatedQuery = new ArrayList<String>();
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    selectedUser = userSnapshot.getValue(User.class);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("could not read data", "The read failed: " + databaseError.getCode());
-            }
-        });
-
-        return  selectedUser;
     }
 }

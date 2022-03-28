@@ -21,15 +21,19 @@
     <string name="fxVolume">FX Volume</string>
     <string name="publicProfile">Set public profile information</string>
 
-    // Category strings
-    <string name="cat1">History</string>
-    <string name="cat2">Science</string>
-    <string name="cat3">category3</string>
-
     // String array for categories:
     <string-array name="categories">
-        <item>@string/cat1</item>
-        <item>@string/cat2</item>
-        <item>@string/cat3</item>
+        <item>History</item>
+        <item>Science</item>
+        <item>Music</item>
     </string-array>
+    <string name="title_activity_account">AccountActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

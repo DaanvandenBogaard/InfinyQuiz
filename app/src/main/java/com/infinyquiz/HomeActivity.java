@@ -2,6 +2,7 @@ package com.infinyquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -21,10 +22,9 @@ public class HomeActivity extends AppCompatActivity {
 
         //Set buttons:
         Button logoutBtn = (Button) findViewById(R.id.logOutBtn);
-        logoutBtn.setOnClickListener(new logOutOnClickListener(new LoginActivity(), this));
+        logoutBtn.setOnClickListener((View.OnClickListener) new logOutOnClickListener(new LoginActivity(), this));
         Button playBtn = (Button) findViewById(R.id.randomMatchBtn);
         playBtn.setOnClickListener(new MoveToActivityOnClickListener(new MatchMakingActivity(),this));
-        //TODO set custom match button
         Button createQuestionBtn = (Button) findViewById(R.id.createQuestionBtn);
         createQuestionBtn.setOnClickListener(new MoveToActivityOnClickListener(new CreateQuestionActivity(), this));
         Button reviewQuestionBtn = (Button) findViewById(R.id.rateQuestionBtn);

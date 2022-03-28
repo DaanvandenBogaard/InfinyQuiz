@@ -64,28 +64,10 @@
         app:srcCompat="@drawable/logo" />
 
     <Button
-        android:id="@+id/customMatchBtn"
-        android:layout_width="200dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/lightBlueBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="@string/customMatch"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/randomMatchBtn"
-        app:strokeColor="@color/white"
-        app:strokeWidth="2dp" />
-
-    <Button
         android:id="@+id/createQuestionBtn"
         android:layout_width="200dp"
         android:layout_height="64dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="@string/createQuestion"
@@ -95,7 +77,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customMatchBtn"
+        app:layout_constraintTop_toBottomOf="@+id/randomMatchBtn"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
@@ -103,7 +85,7 @@
         android:id="@+id/rateQuestionBtn"
         android:layout_width="200dp"
         android:layout_height="64dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="@string/rateQuestion"
@@ -111,7 +93,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createQuestionBtn"
         app:strokeColor="@color/white"

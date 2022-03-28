@@ -3,7 +3,6 @@ package com.infinyquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,12 +12,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.infinyquiz.auth.LoginActivity;
-import com.infinyquiz.auth.RegisterActivity;
 import com.infinyquiz.datarepresentation.Lobby;
-import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
+import com.infinyquiz.datarepresentation.UserDataConverter;
+
+import java.util.Timer;
 
 /* In the matchmaker, we will find a lobby to join, either by joining an existing lobby or by
  * creating one.
@@ -36,12 +33,19 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     private final int WAITING_TIME = 10;
     private final MatchMaker matchMaker = new MatchMaker();
     private final int DELAY = 1000; //1 second
+    private final int WAIT_TO_START_MATCH = 3000; //3seconds
     private String selectedCategory;
 
     //Handler object for using delay
     Handler handler = new Handler();
     //Runnable object for using delay
     Runnable runnable;
+    //Timer object
+    Timer timer = null;
+
+    //Object to convert user ids to usernames
+    final private UserDataConverter converter = new UserDataConverter();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,31 +62,49 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         //update UI after every {@code DELAY} seconds, handled in "onResume" and "onPause"
     }
 
+
     @Override
     protected void onResume() {
-        handler.postDelayed(runnable = new Runnable(){
-            public void run(){
-               handler.postDelayed(runnable,DELAY);
-               if(matchMaker.getLobby() != null) {
-                   System.out.println("onResume()" + matchMaker.getLobby().getUsers().toString());
-               }
-               Lobby lobby = matchMaker.getLobby();
-               //Update UI:
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, DELAY);
+                if (matchMaker.getLobby() != null) {
+                    System.out.println("onResume()" + matchMaker.getLobby().getUsers().toString());
+                }
+                Lobby lobby = matchMaker.getLobby();
+                //Update UI:
                 updateUI(lobby);
                 //Check if game can be started
-                if(lobby != null){
+                if (lobby != null) {
                     //Check if match can start.
-                    if(lobby.getLobbySize() >= Lobby.MAX_PEOPLE || matchMaker.gameHasStarted()){
+                    if (lobby.getLobbySize() >= Lobby.MIN_PEOPLE) {
+                        if (timer == null) {
+                            timer = new java.util.Timer();
+                            timer.schedule(
+                                    new java.util.TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            startNewGameActivity();
+                                        }
+                                    },
+                                    (long) WAIT_TO_START_MATCH
+                            );
+                        }
+                    }
+                    if (lobby.getLobbySize() >= Lobby.MAX_PEOPLE || matchMaker.gameHasStarted()) {
+                        timer.cancel();
                         startNewGameActivity();
                     }
                 }
             }
-        },DELAY);
+        }, DELAY);
         super.onResume();
     }
 
+
+
     //Put this in a seperate class to be able to access from onResume
-    private void startNewGameActivity(){
+    private void startNewGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
         Lobby lobby = matchMaker.getLobby();
         matchMaker.startGame();
@@ -131,19 +153,21 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
      * @post UI is set according to "current" lobby information
      * @throws none
      */
-    private void updateUI(Lobby lobby){
-        if(lobby == null){
+    private void updateUI(Lobby lobby) {
+        if (lobby == null || !converter.isReady()) {
             return;
         }
         TextView userListTV = (TextView) findViewById(R.id.displayUsers);
 
-        userListTV.setText(lobby.getUsers().toString().trim());
+        userListTV.setText(converter.getUsernames(lobby.getUsers()).toString().trim());
     }
+
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.backToHomeBtn) {
             matchMaker.leaveLobby();
+            timer.cancel();
             startActivity(new Intent(this, HomeActivity.class));
         }
     }

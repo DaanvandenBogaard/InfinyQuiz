@@ -28,7 +28,6 @@ import java.util.Random;
 public class ReviewQuestionActivity extends AppCompatActivity implements View.OnClickListener {
 
     //TODO implement image of question!
-    //TODO implement FQ-06
 
     //The minimum number of votes needed before we either validate or invalidate our question.
     //Should be "50" according to our specifications (MUST).
@@ -65,9 +64,12 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
 
         Button positiveVoteBtn = (Button) findViewById(R.id.positiveVoteBtn);
         Button negativeVoteBtn = (Button) findViewById(R.id.voteNegativeBtn);
+        Button reportBtn = (Button) findViewById(R.id.reportBtn);
+
         //Set listener (this class)
         positiveVoteBtn.setOnClickListener(this);
         negativeVoteBtn.setOnClickListener(this);
+        reportBtn.setOnClickListener(this);
     }
 
     /*Method to get question data
@@ -175,6 +177,18 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
         if (question.isEmpty()) {
             return; //Do nothing
         }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference ref = database.getReference().child("NotValidatedQuestions");
+
+        if(view.getId() == R.id.reportBtn){
+            //Delete question from this database
+            ref.removeValue();
+
+            //Put question in reported question database
+            database.getReference().child("ReportedQuestions").child(question.getCategory()).push().setValue(question);
+        }
+
         //number of positive votes
         int numPosVotes = posVotes.size();
         //number of negative votes
@@ -189,12 +203,11 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
             posOrNeg = "posVote";
             numPosVotes++;
         }
-        DatabaseReference ref = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("NotValidatedQuestions");
+
         ref.child(question.getReference()).child(posOrNeg).push().setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         //Check if question must be moved to validated questions
         if (numPosVotes + numNegVotes >= VALIDATION_THRESHOLD) { //if threshold is exceeded
-            FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
             if (numPosVotes / (numNegVotes + numPosVotes) >= ACCEPTANCE_PERCENTAGE) {
                 //Move question to validated questions
                 database.getReference().child("ValidatedQuestions").child(question.getCategory()).push().setValue(question);

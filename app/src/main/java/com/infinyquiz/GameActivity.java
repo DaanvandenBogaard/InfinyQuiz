@@ -3,9 +3,11 @@ package com.infinyquiz;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,7 +73,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     //see if timer has been set
     private boolean timerHasBeenSet = false;
 
+    //The progress bar UI element
+    private ProgressBar timerPB;
+
     private Map<String, ArrayList<Question>> questionData = new HashMap<>();
+
+    //Handler object for using delay
+    Handler handler = new Handler();
+    //Runnable object for using delay
+    Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         Button leaveGameBtn = (Button) findViewById(R.id.leaveGameBtn);
         leaveGameBtn.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(), this));
+
+        timerPB = (ProgressBar) findViewById(R.id.timerPB);
 
         optionA = (Button) findViewById(R.id.optionABtn);
         optionB = (Button) findViewById(R.id.optionBBtn);
@@ -170,6 +182,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(hasAnsweredQuestion || !game.allPlayersJoined()){
                     return;
+                }
+                if(game.allPlayersJoined()){
+                    removeOpenLobby();
                 }
                 //Will only be executed once
                 if(game.getQuestions() == null){
@@ -282,6 +297,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (timerHasBeenSet) {
             return;
         }
+        timerPB.setProgress(0);
         timerHasBeenSet = true;
         timer = new java.util.Timer();
         timer.schedule(
@@ -293,6 +309,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 },
                 (long) DELAY
         );
+    }
+
+    //Functions to start timer
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable = new Runnable(){
+            public void run(){
+                handler.postDelayed(runnable,(long) DELAY/100);
+                timerPB.incrementProgressBy(1);
+            }
+        },(long) DELAY/100);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacks(runnable); //Stop the handler when the activity is not visible.
+        super.onPause();
     }
 
     @Override
@@ -308,7 +342,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int points = 0;
         if (answer.equals(game.getCurrentQuestion().getCorrectOption().trim())) {
             //Answered correctly
-            points = 100;
+            points = 100 - timerPB.getProgress();
         } else {
             //Answered incorrectly
             points = -10;
@@ -326,40 +360,40 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     //Temporarily move to the scoreboard activity and then come back.
     private void moveToScoreBoard() {
+        hasAnsweredQuestion = true;
+        Intent thisIntent;
         if(game.index == game.NUMBER_OF_QUESTIONS - 1){
             //GO TO FINAL SCREEN
+            thisIntent = new Intent(this,finalScoreBoardActivity.class);
+        } else {
+            thisIntent = new Intent(this, ScoreBoardActivity.class);
         }
-
-        Intent intent = new Intent(this, ScoreBoardActivity.class);
-        intent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
-        intent.putExtra("gameID", getIntent().getStringExtra("gameID"));
-        intent.putExtra("category", getIntent().getStringExtra("category"));
-        setUserToAnswered();
+        thisIntent.putExtra("lobbyID", getIntent().getStringExtra("lobbyID"));
+        thisIntent.putExtra("gameID", getIntent().getStringExtra("gameID"));
+        thisIntent.putExtra("category", getIntent().getStringExtra("category"));
+        setUserToAnswered(thisIntent);
         timer.cancel();
-        startActivity(intent);
+
     }
 
     private boolean oneTimeUse = false;
 
-    private void setUserToAnswered(){
+    private void setUserToAnswered(Intent thisIntent){
         DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!hasAnsweredQuestion || oneTimeUse){
+                if(oneTimeUse){
                     return;
                 }
                 oneTimeUse = true;
-                System.out.println("NMOOO");
-                System.out.println("NMOadwdawOO");
-                System.out.println("NMOadwdawOO123123");
                 game = dataSnapshot.getValue(RandomGame.class);
                 if (!game.getAnsweredPlayers().contains(userID)) {
                     game.addPlayerToAnswered(userID);
                     updateFirebaseGame(game);
                 }
-
+                startActivity(thisIntent);
             }
 
             @Override

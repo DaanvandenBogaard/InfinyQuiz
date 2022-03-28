@@ -20,24 +20,35 @@ import com.infinyquiz.HomeActivity;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import com.infinyquiz.R;
 
+/* An activity where users can log in. We use Firebase's authentication
+ * system to realise this service. From this activity one can move to the RegisterActivity and
+ * to the ResetPasswordActivity.
+ *
+ * In this activity, this user is NOT yet logged in.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailET, passwordET;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Set the button to move to the RegisterActivity
         Button registerBtn = (Button) findViewById(R.id.toRegister);
         registerBtn.setOnClickListener(new MoveToActivityOnClickListener(new RegisterActivity(), this));
 
+        //Set button to move to the ResetPasswordActivity
+        Button resetPasswordBtn = (Button) findViewById(R.id.forgotPasswordBtn);
+        resetPasswordBtn.setOnClickListener(new MoveToActivityOnClickListener(new ResetPasswordActivity(), this));
+
+        //Set the edit text elements of the UI
         emailET = (EditText) findViewById(R.id.loginEmailInput);
         passwordET = (EditText) findViewById(R.id.loginPasswordInput);
 
-        mAuth = FirebaseAuth.getInstance();
-
+        //Set the OnClickListener that is responsible for our submit button.
         Button loginBtn = (Button) findViewById(R.id.LoginInputBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
+        //See if we have some data to automatically fill in.
         setOldValues();
     }
 
@@ -137,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Check your email to verify your account", Toast.LENGTH_LONG).show();
                     }
 
-                    //TODO: remove temporary Toast
                     Toast.makeText(LoginActivity.this, "Successfully signed up!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login. Please check credentials", Toast.LENGTH_LONG).show();
@@ -168,4 +178,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
 }
