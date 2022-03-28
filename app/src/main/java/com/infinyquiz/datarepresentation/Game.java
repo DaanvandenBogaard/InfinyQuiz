@@ -32,9 +32,6 @@ public abstract class Game {
     //A list of votes for categories
     private ArrayList<String> categoryVotes = new ArrayList<>();
 
-    //A list players that have returned from the scoreboard to the game
-    private ArrayList<String> returnedPlayers = new ArrayList<>();
-
     //The index at what question we are.
     public int index = 0;
 
@@ -177,19 +174,8 @@ public abstract class Game {
         joinedPlayers.add(playerID);
     }
 
-    public void returnPlayer(String ID){
-        returnedPlayers.add(ID);
-    }
 
-    public void clearReturnedPlayers(){
-        returnedPlayers = new ArrayList<>();
-    }
-
-    public boolean haveAllPlayersReturned(){
-        return lobby.getLobbySize() <= returnedPlayers.size();
-    }
-
-    public ArrayList<String> getReturnedPlayers(){
-        return returnedPlayers;
+    public void clearJoinedPlayers(){
+        joinedPlayers = new ArrayList<>();
     }
 }

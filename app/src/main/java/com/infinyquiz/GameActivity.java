@@ -131,7 +131,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (!game.hasPlayerJoined(userID)) {
                     game.joinPlayer(userID);
                     game.addVote(vote);
-                    game.returnPlayer(userID);
                     updateFirebaseGame(game);
                 }
             }
@@ -183,7 +182,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(hasAnsweredQuestion || !game.allPlayersJoined() || !game.haveAllPlayersReturned()){
+                if(hasAnsweredQuestion || !game.allPlayersJoined()){
                     return;
                 }
                 if(game.allPlayersJoined()){
@@ -207,8 +206,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     updateFirebaseGame(game);
                     updateUI();
                 }
-                if(game.haveAllPlayersReturned()){
-                    game.clearReturnedPlayers();
+                if(game.allPlayersJoined()){
                     game.incrementQuestionIndex();
                     curQuestion = game.getCurrentQuestion();
                     updateFirebaseGame(game);

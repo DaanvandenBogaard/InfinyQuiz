@@ -59,7 +59,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                game = snapshot.getValue(RandomGame.class);;
+                game = snapshot.getValue(RandomGame.class);
+                game.clearJoinedPlayers();
+                ref.setValue(game);
                 if (game.haveAllPlayersAnswered()) {
                     startTimer();
                 }
@@ -113,7 +115,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private void moveToGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
         game.clearAnsweredPlayers();
-        game.returnPlayer(userID);
         ref.setValue(game);
         System.out.println("test");
         System.out.println("moving from score to game");
