@@ -182,7 +182,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(hasAnsweredQuestion || !game.allPlayersJoined()){
+                if(hasAnsweredQuestion || !game.allPlayersJoined() || !game.haveAllPlayersReturned()){
                     return;
                 }
                 if(game.allPlayersJoined()){
