@@ -123,7 +123,7 @@ public abstract class Game {
     }
 
     public boolean haveAllPlayersAnswered() {
-        return lobby.getLobbySize() == answeredPlayers.size();
+        return lobby.getLobbySize() <= answeredPlayers.size();
     }
 
     public void resetJoinedUsers() {
@@ -131,7 +131,10 @@ public abstract class Game {
     }
 
     public void addPlayerToAnswered(String playerID) {
-        answeredPlayers.add(playerID);
+
+        if(!answeredPlayers.contains(playerID)){
+            answeredPlayers.add(playerID);
+        }
     }
 
     public String getGameID() {
@@ -169,5 +172,10 @@ public abstract class Game {
     public void joinPlayer(String playerID) {
         scoreboard.put(playerID, 0);
         joinedPlayers.add(playerID);
+    }
+
+
+    public void clearJoinedPlayers(){
+        joinedPlayers = new ArrayList<>();
     }
 }

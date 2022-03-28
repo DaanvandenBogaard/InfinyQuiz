@@ -25,41 +25,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/harlowsoliditalic"
+        android:text="Friends"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/addFriendsBtn"
         android:layout_width="152dp"
         android:layout_height="58dp"
-        android:layout_marginStart="372dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="5dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:text="Add friends"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/harlowsoliditalic"
-        android:text="Friends"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/friendList"
         android:layout_width="465dp"
         android:layout_height="188dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/text_border"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addFriendsBtn" />
 

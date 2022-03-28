@@ -135,7 +135,7 @@ public class CreateQuestionActivityTest {
         list.add(optionB.trim());
         list.add(optionC.trim());
         list.add(optionD.trim());
-        Question realQuestion = new Question((String) question.trim(), arr[0].trim(), (int) 3, list, optionA.trim(), empty); //TODO once pictures are implemented, can no longer take empty
+        Question realQuestion = new Question((String) question.trim(), arr[0].trim(), (int) 3, list, optionA.trim(), null);
         activity.runOnUiThread(new Runnable() { //isValidInput makes a call to UI, cannot be on the same thread.
             public void run() {
                 assertTrue("input correctly retrieved", realQuestion.equals(retrievedQuestion));
@@ -144,7 +144,6 @@ public class CreateQuestionActivityTest {
                 assertTrue("Difficulity is equal", realQuestion.getDifficulty() == retrievedQuestion.getDifficulty());
                 assertTrue("options are the same", realQuestion.getOptions().equals(retrievedQuestion.getOptions()));
                 assertTrue("Correct option is the same", realQuestion.getCorrectOption().equals(retrievedQuestion.getCorrectOption()));
-                assertTrue("PictureID is the same", realQuestion.getPictureID().equals(retrievedQuestion.getPictureID()));
             }
         });
 

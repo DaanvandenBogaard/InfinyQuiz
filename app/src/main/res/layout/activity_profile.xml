@@ -27,11 +27,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+
     <Button
         android:id="@+id/ManageFriendsBtn"
         android:layout_width="260dp"
         android:layout_height="70dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="132dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="Manage friends"
@@ -40,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/galleryBtn"
+        app:layout_constraintTop_toBottomOf="@+id/profilePic"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
@@ -80,8 +81,9 @@
         android:id="@+id/cameraBtn"
         android:layout_width="126dp"
         android:layout_height="80dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
         android:text="Camera"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profilePic" />
@@ -90,8 +92,9 @@
         android:id="@+id/galleryBtn"
         android:layout_width="126dp"
         android:layout_height="80dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="77dp"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
         android:text="Gallery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profilePic" />

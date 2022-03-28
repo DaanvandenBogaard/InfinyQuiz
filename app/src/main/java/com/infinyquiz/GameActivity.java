@@ -204,14 +204,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     game.setQuestions(chosenQuestions);
                     curQuestion = game.getCurrentQuestion();
                     updateFirebaseGame(game);
+                    updateUI();
                 }
-                if(game.haveAllPlayersAnswered()){
-                    game.clearAnsweredPlayers();
+                if(game.allPlayersJoined()){
                     game.incrementQuestionIndex();
                     curQuestion = game.getCurrentQuestion();
                     updateFirebaseGame(game);
+                    updateUI();
                 }
-                updateUI();
+
                 setTimerForQuestion();
             }
 

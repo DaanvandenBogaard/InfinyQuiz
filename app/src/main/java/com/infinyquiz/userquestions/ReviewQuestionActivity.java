@@ -29,8 +29,6 @@ import java.util.Random;
 
 public class ReviewQuestionActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //TODO implement image of question!
-
     //The minimum number of votes needed before we either validate or invalidate our question.
     //Should be "50" according to our specifications (MUST).
     private final int VALIDATION_THRESHOLD = 1; //=50; //TODO SET CORRECT VALUE

@@ -59,7 +59,13 @@ public class ChangeUsernameActivity extends AppCompatActivity implements View.On
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    setCurUsernameUI();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setCurUsernameUI();
+                        }
+                    });
+
                 }
             }, 1000);
         }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,15 +21,22 @@ import com.infinyquiz.datarepresentation.RandomGame;
 import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
+import java.util.ArrayList;
+
 public class ScoreBoardActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
 
-    private long DELAY = 1000;
+    private long DELAY = 5000;
 
     private Game game;
 
+    DatabaseReference ref;
+
     private boolean timerHasBeenSet = false;
+
+    //The current user ID
+    final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     //Object to convert userIDs to usernames
     final private UserDataConverter converter = new UserDataConverter();
@@ -47,11 +55,13 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private void startDataBaseRead() {
         String gameID = getIntent().getStringExtra("gameID");
         database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
+        ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 game = snapshot.getValue(RandomGame.class);
+                game.clearJoinedPlayers();
+                ref.setValue(game);
                 if (game.haveAllPlayersAnswered()) {
                     startTimer();
                 }
@@ -67,11 +77,13 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     }
 
+
     //A function to start a timer to return to the GameActivity
     private void startTimer() {
         if (timerHasBeenSet) {
             return;
         }
+        startDataBaseRead();
         timerHasBeenSet = true;
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
@@ -102,6 +114,8 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private void moveToGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
+        game.clearAnsweredPlayers();
+        ref.setValue(game);
         System.out.println("test");
         System.out.println("moving from score to game");
         System.out.println("test");

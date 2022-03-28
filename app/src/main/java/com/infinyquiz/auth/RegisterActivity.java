@@ -175,6 +175,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) { //If user has been added to realtime database
                                         Toast.makeText(RegisterActivity.this, "User has been registered succesfully!", Toast.LENGTH_LONG).show();
+                                        //Send email verification:
+                                        FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification();
                                         //Redirect to login, with the login data:
                                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                         //Add data to login:
