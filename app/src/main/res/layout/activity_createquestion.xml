@@ -51,18 +51,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/questionPicBtn"
+        android:id="@+id/cameraBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
-        android:text="Add picture"
+        android:text="Camera"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
@@ -79,7 +78,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionPicBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/cameraBtn" />
 
     <EditText
         android:id="@+id/questionAnswerAInput"
@@ -102,7 +101,7 @@
         android:layout_marginTop="13dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
-        android:hint="enter correct answer"
+        android:hint="Enter incorrect answer"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -116,7 +115,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
-        android:hint="enter correct answer"
+        android:hint="Enter incorrect answer"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -130,7 +129,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/rounded_corner"
         android:ems="10"
-        android:hint="enter correct answer"
+        android:hint="Enter incorrect answer"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -198,5 +197,16 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionAnswerDInput" />
+
+    <Button
+        android:id="@+id/galleryBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.389"
+        app:layout_constraintStart_toEndOf="@+id/cameraBtn"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

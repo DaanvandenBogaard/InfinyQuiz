@@ -1,7 +1,10 @@
 package com.infinyquiz.userquestions;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,12 +19,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.infinyquiz.HomeActivity;
 import com.infinyquiz.R;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CreateQuestionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
@@ -34,12 +40,18 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
     //The string of the category will be stored here.
     private String category;
 
-    //The string that will be the pictureID
-    private String pictureID = "";
-
     //Views where the user will be able to set values:
     private TextView questionTV, answerATV, answerBTV, answerCTV, answerDTV;
     private SeekBar difficultySlider;
+
+    private Button cameraBtn, galleryBtn;
+
+    //int for requesting image capture and selectior
+    private static final int REQUEST_IMAGE_CAPTURE = 111;
+    private static final int SELECT_IMAGE = 222;
+
+    //Encoded bitmap for the question
+    private String image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +71,23 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         answerCTV = (TextView) findViewById(R.id.questionAnswerCInput);
         answerDTV = (TextView) findViewById(R.id.questionAnswerDInput);
         difficultySlider = (SeekBar) findViewById(R.id.difficultySlider);
+
+        //Set buttons:
+        Button cameraBtn = (Button) findViewById(R.id.cameraBtn);
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchCamera(); //implemented from Mike
+            }
+        });
+
+        Button galleryBtn = (Button) findViewById(R.id.galleryBtn);
+        galleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchGallery(); //Implemented from Mike
+            }
+        });
 
         //Finally, we set the submit button
         Button submitButton = (Button) findViewById(R.id.saveQuestionBtn);
@@ -102,7 +131,7 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         options.add(answerDTV.getText().toString().trim());
         return new Question((String) questionTV.getText().toString().trim(), category,
                 (int) difficultySlider.getProgress(), options, answerATV.getText().toString().trim(),
-                pictureID);
+                image);
     }
 
     /* A function that will test whether or not all fields are nonempty and if all our requirements hold.
@@ -161,4 +190,62 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
             });
         }
     }
+
+    /* A function that launches the camera
+     *
+     * @pre none
+     * @modifies none
+     * @post camera is launched
+     */
+    public void launchCamera() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+    }
+
+    /* A function that launches the gallery
+     *
+     * @pre none
+     * @modifies none
+     * @post gallery is launched
+     */
+    public void launchGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
+    }
+
+    //Reacts to the 2 methods above:
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            encodeBitmap(imageBitmap);
+        }
+        if (requestCode == SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                encodeBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /* A function that uploads the encoded image to firebase
+     *
+     * @pre {@code bitmap != null}
+     * @modifies none
+     * @post encoded image is inside firebase realtime database
+     */
+    public void encodeBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        image = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+    }
+
 }
