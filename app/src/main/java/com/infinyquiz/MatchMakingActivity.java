@@ -54,12 +54,18 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         Button backToHomeBtn = (Button) findViewById(R.id.backToHomeBtn);
         backToHomeBtn.setOnClickListener(this);
 
+        Button startBtn = (Button) findViewById(R.id.startBtn);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Let matchmaker find a lobby
+                matchMaker.lookForLobby();
+                //update UI after every {@code DELAY} seconds, handled in "onResume" and "onPause"
+            }
+        });
+
         //Set UI for spinner
         setSpinner();
-
-        //Let matchmaker find a lobby
-        matchMaker.lookForLobby();
-        //update UI after every {@code DELAY} seconds, handled in "onResume" and "onPause"
     }
 
 
