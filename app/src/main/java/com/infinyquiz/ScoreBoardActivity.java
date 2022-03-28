@@ -31,7 +31,12 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private Game game;
 
+    DatabaseReference ref;
+
     private boolean timerHasBeenSet = false;
+
+    //The current user ID
+    final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     //Object to convert userIDs to usernames
     final private UserDataConverter converter = new UserDataConverter();
@@ -50,15 +55,11 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private void startDataBaseRead() {
         String gameID = getIntent().getStringExtra("gameID");
         database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
+        ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                game = snapshot.getValue(RandomGame.class);
-                if(!game.getAnsweredPlayers().contains(FirebaseAuth.getInstance().getUid())) {
-                    game.addPlayerToAnswered(FirebaseAuth.getInstance().getUid());
-                }
-                ref.setValue(game);
+                game = snapshot.getValue(RandomGame.class);;
                 if (game.haveAllPlayersAnswered()) {
                     startTimer();
                 }
@@ -111,6 +112,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private void moveToGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
+        game.clearAnsweredPlayers();
+        game.returnPlayer(userID);
+        ref.setValue(game);
         System.out.println("test");
         System.out.println("moving from score to game");
         System.out.println("test");

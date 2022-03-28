@@ -86,10 +86,6 @@ public class finalScoreBoardActivity extends AppCompatActivity {
                 System.out.println("TEST");
                 System.out.println(game.haveAllPlayersAnswered());
                 System.out.println("TEST");
-                if(!game.getAnsweredPlayers().contains(FirebaseAuth.getInstance().getUid())) {
-                    game.addPlayerToAnswered(FirebaseAuth.getInstance().getUid());
-                }
-                ref.setValue(game);
                 if (game.haveAllPlayersAnswered()) {
                     updateUI();
                 }
