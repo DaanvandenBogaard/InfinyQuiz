@@ -127,7 +127,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(hasAnsweredQuestion){
+                if (hasAnsweredQuestion) {
                     return;
                 }
                 game = dataSnapshot.getValue(RandomGame.class);
@@ -185,14 +185,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(hasAnsweredQuestion || !game.allPlayersJoined()){
+                if (hasAnsweredQuestion || !game.allPlayersJoined()) {
                     return;
                 }
-                if(game.allPlayersJoined()){
+                if (game.allPlayersJoined()) {
                     removeOpenLobby();
                 }
                 //Will only be executed once
-                if(game.getQuestions() == null){
+                if (game.getQuestions() == null) {
                     //set questions
                     //find highest rated category
                     String votedCategory = mostPopularCategory();
@@ -211,7 +211,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     setTimerForQuestion();
                     return;
                 }
-                if(game.allPlayersJoined() & game.haveAllPlayersAnswered()){
+                if (game.allPlayersJoined() & game.haveAllPlayersAnswered()) {
                     game.clearAnsweredPlayers();
                     game.incrementQuestionIndex();
                     curQuestion = game.getCurrentQuestion();
@@ -267,7 +267,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         optionD.setText(options.get(3));
 
         //Set image:
-        if(question.hasImage()){
+        if (question.hasImage()) {
             ImageView imageView = (ImageView) findViewById(R.id.imageView);
             imageView.setImageBitmap(UserDataConverter.decodeImage(question.getPictureID()));
         }
@@ -329,12 +329,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     //Functions to start timer
     @Override
     protected void onResume() {
-        handler.postDelayed(runnable = new Runnable(){
-            public void run(){
-                handler.postDelayed(runnable,(long) DELAY/100);
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, (long) DELAY / 100);
                 timerPB.incrementProgressBy(1);
             }
-        },(long) DELAY/100);
+        }, (long) DELAY / 100);
         super.onResume();
     }
 
@@ -377,9 +377,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void moveToScoreBoard() {
         hasAnsweredQuestion = true;
         Intent thisIntent;
-        if(game.index == game.NUMBER_OF_QUESTIONS - 1){
+        if (game.index == game.NUMBER_OF_QUESTIONS - 1) {
             //GO TO FINAL SCREEN
-            thisIntent = new Intent(this,finalScoreBoardActivity.class);
+            thisIntent = new Intent(this, finalScoreBoardActivity.class);
         } else {
             thisIntent = new Intent(this, ScoreBoardActivity.class);
         }
@@ -391,30 +391,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private boolean oneTimeUse = false;
-
-    private void setUserToAnswered(Intent thisIntent){
-        DatabaseReference ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
-
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(oneTimeUse){
-                    return;
-                }
-                oneTimeUse = true;
-                game = dataSnapshot.getValue(RandomGame.class);
-                if (!game.getAnsweredPlayers().contains(userID)) {
-                    game.addPlayerToAnswered(userID);
-                    updateFirebaseGame(game);
-                }
-                startActivity(thisIntent);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("could not read data", "The read failed: " + databaseError.getCode());
-            }
-        });
+    private void setUserToAnswered(Intent thisIntent) {
+        if (!game.getAnsweredPlayers().contains(userID)) {
+            game.addPlayerToAnswered(userID);
+            updateFirebaseGame(game);
+        }
+        startActivity(thisIntent);
     }
 }

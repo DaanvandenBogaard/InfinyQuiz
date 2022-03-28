@@ -85,9 +85,6 @@ public class finalScoreBoardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 game = dataSnapshot.getValue(RandomGame.class);
-                System.out.println("TEST");
-                System.out.println(game.haveAllPlayersAnswered());
-                System.out.println("TEST");
                 if (game.haveAllPlayersAnswered()) {
                     updateUI();
                 }
