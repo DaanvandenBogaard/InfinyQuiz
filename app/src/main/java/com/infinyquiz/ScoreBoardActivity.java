@@ -54,23 +54,24 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private void startDataBaseRead() {
         String gameID = getIntent().getStringExtra("gameID");
+
         database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
         ref = database.getReference().child("Lobbies").child("gameLobbies").child(gameID);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 game = snapshot.getValue(RandomGame.class);
+                setUI(game);
                 if(timerHasBeenSet || !game.haveAllPlayersAnswered()){
+                    System.out.println("TEST");
+                    System.out.println("HOEZO???" + game.getAnsweredPlayers().toString() + timerHasBeenSet);
+                    System.out.println("TEST");
                     return;
                 }
                 game.clearJoinedPlayers();
                 ref.setValue(game);
-                System.out.println("TEST");
-                System.out.println("HOEZO???");
-                System.out.println("TEST");
+
                 startTimer();
-                //set UI
-                setUI(game);
             }
 
             @Override
@@ -102,6 +103,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     //A function to set the UI accordingly
     private void setUI(Game game) {
+        System.out.println("TEST");
+        System.out.println("SET UI!!!");
+        System.out.println("TEST");
         Question question = game.getCurrentQuestion();
         TextView questionTV = (TextView) findViewById(R.id.questionTV);
         questionTV.setText(question.getQuestion().trim());
