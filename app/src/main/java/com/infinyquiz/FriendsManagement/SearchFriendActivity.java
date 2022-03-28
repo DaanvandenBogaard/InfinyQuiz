@@ -127,7 +127,9 @@ public class SearchFriendActivity extends AppCompatActivity {
                 ArrayList<String> updatedQuery = new ArrayList<String>();
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     String mail = userSnapshot.child("mail").getValue().toString();
-                    updatedQuery.add(mail);
+                    if (!mail.equals(mAuth.getCurrentUser().getEmail())) {
+                        updatedQuery.add(mail);
+                    }
                 }
 
                 ArrayAdapter arrayAdapter = new ArrayAdapter<>(SearchFriendActivity.this, android.R.layout.simple_list_item_1, updatedQuery);
