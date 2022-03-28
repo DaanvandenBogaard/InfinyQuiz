@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.infinyquiz.HomeActivity;
 import com.infinyquiz.R;
 import com.infinyquiz.datarepresentation.Question;
+import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 import java.lang.reflect.Array;
@@ -160,6 +162,12 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
         optionsString = new StringBuilder(optionsString.substring(0, optionsString.length() - 1));
         optionsString.append(".");
         optionsTV.setText(optionsString.toString());
+
+        //set image
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        if(question.hasImage()){
+            imageView.setImageBitmap(UserDataConverter.decodeImage(question.getPictureID()));
+        }
     }
 
     /* A method that will respond to the user's choice to either vote positively or negatively for this question.
