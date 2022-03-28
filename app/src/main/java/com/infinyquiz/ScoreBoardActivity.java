@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +20,8 @@ import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.datarepresentation.RandomGame;
 import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
+
+import java.util.ArrayList;
 
 public class ScoreBoardActivity extends AppCompatActivity {
 
@@ -52,6 +55,8 @@ public class ScoreBoardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 game = snapshot.getValue(RandomGame.class);
+                game.addPlayerToAnswered(FirebaseAuth.getInstance().getUid());
+                ref.setValue(game);
                 if (game.haveAllPlayersAnswered()) {
                     startTimer();
                 }
@@ -66,6 +71,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         });
 
     }
+
 
     //A function to start a timer to return to the GameActivity
     private void startTimer() {
