@@ -1,5 +1,8 @@
 package com.infinyquiz.datarepresentation;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
@@ -148,6 +151,17 @@ public class UserDataConverter {
             return "";
         }
         return emailToID.get(email);
+    }
+
+    /* A function that uploads the encoded image to firebase
+     *
+     * @pre {@code String != null}
+     * @returns Bitmap
+     * @post image is decoded from base64 to bitmap
+     */
+    public static Bitmap decodeImage(String image) {
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
     }
 
 }
