@@ -131,6 +131,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (!game.hasPlayerJoined(userID)) {
                     game.joinPlayer(userID);
                     game.addVote(vote);
+                    game.returnPlayer(userID);
                     updateFirebaseGame(game);
                 }
             }
