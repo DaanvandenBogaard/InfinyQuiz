@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +26,7 @@ import com.infinyquiz.FriendsManagement.FriendsActitivity;
 import com.infinyquiz.auth.ChangeUsernameActivity;
 import com.infinyquiz.datarepresentation.Question;
 import com.infinyquiz.datarepresentation.User;
+import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 import java.io.ByteArrayOutputStream;
@@ -40,7 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int SELECT_IMAGE = 222;
 
     //Image button containing profile picture
-    private ImageButton profilePicture;
+    private ImageView profilePicture;
 
     //Firebase authentication
     private FirebaseAuth mAuth;
@@ -55,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //set profile picture
-        profilePicture = (ImageButton) findViewById(R.id.profilePic);
+        profilePicture = (ImageView) findViewById(R.id.profilePic);
 
         Button changeUsernameBtn = (Button) findViewById(R.id.changeUsernameBtn);
         changeUsernameBtn.setOnClickListener(new MoveToActivityOnClickListener(new ChangeUsernameActivity() , this));
@@ -66,6 +68,10 @@ public class ProfileActivity extends AppCompatActivity {
         //When clicked on managefriendsBtn we move to FriendsActivity
         Button manageFriendsBtn = (Button) findViewById(R.id.ManageFriendsBtn);
         manageFriendsBtn.setOnClickListener(new MoveToActivityOnClickListener(new FriendsActitivity(), this));
+
+        //When clicked on button move back to the home activity
+        Button homeButton = (Button) findViewById(R.id.toHomeBtn);
+        homeButton.setOnClickListener(new MoveToActivityOnClickListener(new HomeActivity(), this));
 
         //When clicked on button the gallery will be opened
         Button galleryBtn = (Button) findViewById(R.id.galleryBtn);
@@ -84,9 +90,6 @@ public class ProfileActivity extends AppCompatActivity {
                 launchCamera();
             }
         });
-
-        //TODO: Change account data Activity and set button.
-        //TODO: Add log out etc.
     }
 
     @Override
@@ -162,7 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("imageUrl").getValue() != null) {
                     String image = dataSnapshot.child("imageUrl").getValue().toString();
-                    Bitmap imageBitmap = decodeImage(image);
+                    Bitmap imageBitmap = UserDataConverter.decodeImage(image);
                     profilePicture.setImageBitmap(imageBitmap);
                 }
             }
@@ -171,16 +174,5 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());
             }
         });
-    }
-
-    /* A function that uploads the encoded image to firebase
-     *
-     * @pre {@code String != null}
-     * @returns Bitmap
-     * @post image is decoded from base64 to bitmap
-     */
-    public static Bitmap decodeImage(String image) {
-        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
     }
 }
