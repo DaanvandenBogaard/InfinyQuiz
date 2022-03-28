@@ -127,12 +127,12 @@ public class finalScoreBoardActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             number1TV.setText(converter.getUserName(top3[0].trim()) + ": " + game.getScore(top3[0]));
-                            number2TV.setText(converter.getUserName(top3[1].trim()) + ": " + game.getScore(top3[0]));
+                            number2TV.setText(converter.getUserName(top3[1].trim()) + ": " + game.getScore(top3[1]));
                             if (top3[2] == null || top3[2] == "") {
                                 number3StaticTV.setText("");
                                 number3TV.setText("");
                             } else {
-                                number3TV.setText(converter.getUserName(top3[2].trim()) + ": " + game.getScore(top3[0]));
+                                number3TV.setText(converter.getUserName(top3[2].trim()) + ": " + game.getScore(top3[2]));
                             }
                         }
                     });
