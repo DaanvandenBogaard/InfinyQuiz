@@ -188,4 +188,8 @@ public abstract class Game {
     public boolean haveAllPlayersReturned(){
         return lobby.getLobbySize() <= returnedPlayers.size();
     }
+
+    public ArrayList<String> getReturnedPlayers(){
+        return returnedPlayers;
+    }
 }
