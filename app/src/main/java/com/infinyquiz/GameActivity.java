@@ -127,6 +127,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(hasAnsweredQuestion){
+                    return;
+                }
                 game = dataSnapshot.getValue(RandomGame.class);
                 if (!game.hasPlayerJoined(userID)) {
                     game.joinPlayer(userID);
@@ -205,14 +208,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     curQuestion = game.getCurrentQuestion();
                     updateFirebaseGame(game);
                     updateUI();
+                    setTimerForQuestion();
+                    return;
                 }
-                if(game.allPlayersJoined()){
+                if(game.allPlayersJoined() & game.haveAllPlayersAnswered()){
+                    game.clearAnsweredPlayers();
                     game.incrementQuestionIndex();
                     curQuestion = game.getCurrentQuestion();
                     updateFirebaseGame(game);
-                    updateUI();
-                }
 
+                }
+                updateUI();
                 setTimerForQuestion();
             }
 
