@@ -36,24 +36,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/randomMatchBtn"
-        android:layout_width="200dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/lightBlueBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="@string/playNow"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/customMatchBtn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeLogo"
-        app:strokeColor="@color/white"
-        app:strokeWidth="2dp" />
-
     <ImageView
         android:id="@+id/homeLogo"
         android:layout_width="228dp"
@@ -66,27 +48,10 @@
         app:srcCompat="@drawable/logo" />
 
     <Button
-        android:id="@+id/customMatchBtn"
-        android:layout_width="200dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/lightBlueBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="@string/customMatch"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/randomMatchBtn"
-        app:layout_constraintTop_toBottomOf="@+id/homeLogo"
-        app:strokeColor="@color/white"
-        app:strokeWidth="2dp" />
-
-    <Button
         android:id="@+id/createQuestionBtn"
         android:layout_width="200dp"
         android:layout_height="64dp"
+        android:layout_marginTop="31dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="@string/createQuestion"
@@ -95,8 +60,26 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/rateQuestionBtn"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/randomMatchBtn"
+        app:layout_constraintTop_toBottomOf="@+id/homeLogo"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/randomMatchBtn"
+        android:layout_width="200dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="31dp"
+        android:backgroundTint="@color/lightBlueBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="@string/playNow"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/createQuestionBtn"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/randomMatchBtn"
+        app:layout_constraintTop_toBottomOf="@+id/homeLogo"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
@@ -104,6 +87,7 @@
         android:id="@+id/rateQuestionBtn"
         android:layout_width="200dp"
         android:layout_height="64dp"
+        android:layout_marginTop="31dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="@string/rateQuestion"
@@ -113,7 +97,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/createQuestionBtn"
-        app:layout_constraintTop_toBottomOf="@+id/customMatchBtn"
+        app:layout_constraintTop_toBottomOf="@+id/homeLogo"
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
@@ -121,7 +105,7 @@
         android:id="@+id/settingsBtn"
         android:layout_width="185dp"
         android:layout_height="60dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:scaleType="fitXY"

@@ -21,11 +21,16 @@
     <string name="fxVolume">FX Volume</string>
     <string name="publicProfile">Set public profile information</string>
 
+    // Category strings
+    <string name="cat1">History</string>
+    <string name="cat2">Science</string>
+    <string name="cat3">Music</string>
+
     // String array for categories:
     <string-array name="categories">
-        <item>History</item>
-        <item>Science</item>
-        <item>Music</item>
+        <item>@string/cat1</item>
+        <item>@string/cat2</item>
+        <item>@string/cat3</item>
     </string-array>
     <string name="title_activity_account">AccountActivity</string>
     <!-- Strings used for fragments for navigation -->

@@ -7,56 +7,48 @@
     android:background="@color/background">
 
     <Button
-        android:id="@+id/toRegister"
-        android:layout_width="250dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginBottom="46dp"
-        android:backgroundTint="@color/yellowBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="Don't have an account? Register!"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/LoginInputBtn"
-        app:layout_constraintTop_toBottomOf="@+id/loginPasswordInput"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/forgotPasswordBtn"
-        android:layout_width="249dp"
-        android:layout_height="54dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/yellowBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="Forgot your password?"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toRegister" />
-
-    <Button
         android:id="@+id/LoginInputBtn"
         android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginBottom="46dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
         android:text="@string/login"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/toRegister"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginEmailInput" />
+
+    <Button
+        android:id="@+id/toRegister"
+        android:layout_width="250dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="Don't have an account? Register!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/LoginInputBtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginPasswordInput" />
+
+    <Button
+        android:id="@+id/forgotPasswordBtn"
+        android:layout_width="249dp"
+        android:layout_height="44dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="Forgot your password?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/LoginInputBtn"
+        app:layout_constraintTop_toBottomOf="@+id/toRegister" />
 
     <EditText
         android:id="@+id/loginEmailInput"
