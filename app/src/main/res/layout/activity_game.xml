@@ -3,21 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <ProgressBar
+        android:id="@+id/timerPB"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="304dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="68dp"
+        android:max="100"
+        android:progress="100"
+        android:progressTint="@color/yellowBtn"
+        android:scaleY="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/optionCBtn" />
 
     <Button
         android:id="@+id/leaveGameBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="leave game"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="640dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:text="X"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/questionTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/text_border"
+        android:fontFamily="@font/buttonfont"
         android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,63 +55,66 @@
         android:id="@+id/optionABtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="72dp"
+        android:backgroundTint="@color/lightBlueBtn"
         android:text="option a"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/optionBBtn"
-        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionTV" />
+        app:layout_constraintTop_toBottomOf="@+id/questionTV"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/optionBBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginTop="72dp"
+        android:backgroundTint="@color/lightBlueBtn"
         android:text="option b"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionTV" />
-
-    <Button
-        android:id="@+id/optionDBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="60dp"
-        android:text="option d"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/optionBBtn" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/optionABtn"
+        app:layout_constraintTop_toBottomOf="@+id/questionTV"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/optionCBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="@color/lightBlueBtn"
         android:text="option c"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/optionDBtn"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/optionABtn" />
+        app:layout_constraintTop_toBottomOf="@+id/optionABtn"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
 
-    <ProgressBar
-        android:id="@+id/timerPB"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="214dp"
-        android:layout_height="16dp"
-        android:layout_marginTop="108dp"
-        android:progress="100"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <Button
+        android:id="@+id/optionDBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="@color/lightBlueBtn"
+        android:text="option d"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/optionCBtn"
-        app:layout_constraintVertical_bias="0.017" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/optionCBtn"
+        app:layout_constraintTop_toBottomOf="@+id/optionBBtn"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="390dp"
-        android:layout_height="221dp"
+        android:layout_width="371dp"
+        android:layout_height="173dp"
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"

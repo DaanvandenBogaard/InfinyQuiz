@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="371dp"
+        android:layout_height="173dp"
+        android:layout_marginTop="55dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/optionCBtn"
+        app:layout_constraintTop_toBottomOf="@+id/questionTV"
+        app:srcCompat="@drawable/logo" />
+
     <Button
         android:id="@+id/leaveGameBtn"
         android:layout_width="75dp"
@@ -24,20 +35,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/timeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/buttonfont"
-        android:text="Time:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/optionBBtn" />
-
-    <TextView
         android:id="@+id/questionTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,10 +50,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/timerPB"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="304dp"
         android:layout_height="37dp"
+        android:layout_marginTop="49dp"
         android:max="100"
         android:progress="100"
         android:progressTint="@color/yellowBtn"
@@ -64,7 +62,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeTV" />
+        app:layout_constraintTop_toBottomOf="@+id/optionBBtn" />
+
+    <Button
+        android:id="@+id/optionCBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:backgroundTint="@color/lightBlueBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="option c"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/optionABtn"
+        app:layout_constraintTop_toBottomOf="@+id/questionTV"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/optionDBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:backgroundTint="@color/lightBlueBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="option d"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/optionBBtn"
+        app:layout_constraintTop_toBottomOf="@+id/optionCBtn"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/optionABtn"
@@ -84,27 +116,10 @@
         app:strokeWidth="2dp" />
 
     <Button
-        android:id="@+id/optionCBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:backgroundTint="@color/lightBlueBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="option c"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/optionABtn"
-        app:layout_constraintTop_toBottomOf="@+id/questionTV"
-        app:strokeColor="@color/white"
-        app:strokeWidth="2dp" />
-
-    <Button
         android:id="@+id/optionBBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="41dp"
         android:backgroundTint="@color/lightBlueBtn"
         android:fontFamily="@font/buttonfont"
         android:text="option b"
@@ -117,20 +132,4 @@
         app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
-    <Button
-        android:id="@+id/optionDBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
-        android:backgroundTint="@color/lightBlueBtn"
-        android:fontFamily="@font/buttonfont"
-        android:text="option d"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/optionBBtn"
-        app:layout_constraintTop_toBottomOf="@+id/optionCBtn"
-        app:strokeColor="@color/white"
-        app:strokeWidth="2dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

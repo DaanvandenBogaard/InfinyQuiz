@@ -8,14 +8,30 @@
 
     <Button
         android:id="@+id/reportBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="21dp"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
         android:text="Report question"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:icon="@drawable/flag_icon"
+        app:iconTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.972"
-        app:layout_constraintStart_toEndOf="@+id/quitToHomeBtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/voteNegativeBtn"
+        app:layout_constraintTop_toBottomOf="@+id/staticTV5" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="197dp"
+        android:layout_height="123dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/questionTV"
+        app:layout_constraintTop_toBottomOf="@+id/StaticViewPlaceHolder"
+        app:srcCompat="@drawable/logo" />
 
     <Button
         android:id="@+id/quitToHomeBtn"
@@ -38,34 +54,15 @@
         android:id="@+id/questionTV"
         android:layout_width="241dp"
         android:layout_height="102dp"
-        android:layout_marginStart="53dp"
-        android:layout_marginEnd="437dp"
         android:background="@drawable/text_border"
         android:fontFamily="@font/buttonfont"
         android:text="Loading..."
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/staticTV" />
-
-    <Button
-        android:id="@+id/voteNegativeBtn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:backgroundTint="@color/red"
-        android:fontFamily="@font/buttonfont"
-        android:text="Dislike Question"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:icon="@drawable/dislike_icon"
-        app:iconPadding="3dp"
-        app:iconTint="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/positiveVoteBtn"
-        app:layout_constraintTop_toBottomOf="@+id/staticTV5" />
 
     <Button
         android:id="@+id/positiveVoteBtn"
@@ -85,13 +82,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/StaticTV3" />
 
+    <Button
+        android:id="@+id/voteNegativeBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/buttonfont"
+        android:text="Dislike Question"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:icon="@drawable/dislike_icon"
+        app:iconPadding="3dp"
+        app:iconTint="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/reportBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/positiveVoteBtn"
+        app:layout_constraintTop_toBottomOf="@+id/staticTV5" />
+
     <TextView
         android:id="@+id/staticTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
+        android:layout_marginStart="179dp"
         android:layout_marginTop="68dp"
-        android:layout_marginEnd="528dp"
+        android:layout_marginEnd="485dp"
         android:text="Question:"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -202,6 +217,7 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="219dp"
         android:fontFamily="@font/buttonfont"
+        android:maxWidth="200dp"
         android:text="Loading..."
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -212,13 +228,11 @@
         android:id="@+id/StaticViewPlaceHolder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="544dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="143dp"
+        android:layout_marginStart="266dp"
+        android:layout_marginTop="56dp"
         android:text="Picture"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/staticTV"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
