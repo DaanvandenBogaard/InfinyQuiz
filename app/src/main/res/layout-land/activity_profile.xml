@@ -7,6 +7,17 @@
     android:background="@color/background">
 
 
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="185dp"
+        android:layout_height="185dp"
+        android:layout_marginTop="9dp"
+        app:layout_constraintEnd_toStartOf="@+id/galleryBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/cameraBtn"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:srcCompat="@drawable/logo" />
+
     <Button
         android:id="@+id/toHomeBtn"
         android:layout_width="75dp"
@@ -24,18 +35,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/profilePic"
-        android:layout_width="181dp"
-        android:layout_height="164dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/circlebutton"
-        app:layout_constraintEnd_toStartOf="@+id/galleryBtn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cameraBtn"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
     <Button
         android:id="@+id/ManageFriendsBtn"
