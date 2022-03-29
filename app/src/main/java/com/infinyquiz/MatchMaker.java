@@ -33,6 +33,7 @@ public class MatchMaker {
     private int userIndex;
     private String userSelectedCategory;
     private boolean stopMatchmaking = false;
+    private boolean hasStartedMatchmaking = false;
 
     //The current user ID
     final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -43,6 +44,10 @@ public class MatchMaker {
     }
 
     public void lookForLobby() {
+        if(hasStartedMatchmaking){
+            return;
+        }
+        hasStartedMatchmaking = true;
         DatabaseReference ref = database.getReference().child("Lobbies").child("OpenLobbies");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
