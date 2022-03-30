@@ -38,6 +38,7 @@
         <activity android:name=".finalScoreBoardActivity"/>
         <activity android:name=".auth.ResetPasswordActivity"/>
         <activity android:name=".auth.ChangeUsernameActivity"/>
+        <activity android:name=".SettingsActivity"/>
     </application>
 
 </manifest>

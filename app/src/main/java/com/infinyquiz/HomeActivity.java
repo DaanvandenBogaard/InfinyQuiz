@@ -1,6 +1,7 @@
 package com.infinyquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +25,14 @@ public class HomeActivity extends AppCompatActivity {
         Button logoutBtn = (Button) findViewById(R.id.logOutBtn);
         logoutBtn.setOnClickListener((View.OnClickListener) new logOutOnClickListener(new LoginActivity(), this));
         Button playBtn = (Button) findViewById(R.id.randomMatchBtn);
-        playBtn.setOnClickListener(new MoveToActivityOnClickListener(new MatchMakingActivity(),this));
+        playBtn.setOnClickListener(new MoveToActivityOnClickListener(new MatchMakingActivity(), this));
         Button createQuestionBtn = (Button) findViewById(R.id.createQuestionBtn);
         createQuestionBtn.setOnClickListener(new MoveToActivityOnClickListener(new CreateQuestionActivity(), this));
         Button reviewQuestionBtn = (Button) findViewById(R.id.rateQuestionBtn);
         reviewQuestionBtn.setOnClickListener(new MoveToActivityOnClickListener(new ReviewQuestionActivity(), this));
         Button profileBtn = (Button) findViewById(R.id.profileBtn);
-        profileBtn.setOnClickListener( new MoveToActivityOnClickListener(new ProfileActivity(), this));
+        profileBtn.setOnClickListener(new MoveToActivityOnClickListener(new ProfileActivity(), this));
+        Button settingsBtn = (Button) findViewById(R.id.settingsBtn);
+        settingsBtn.setOnClickListener(new MoveToActivityOnClickListener(new SettingsActivity(), this));
     }
 }
