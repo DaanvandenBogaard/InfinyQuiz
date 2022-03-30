@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/InfinyQuiz/app/src/main/res/layout-land/activity_createquestion.xml" value="0.33" />
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout-land/activity_finalscoreboard.xml" value="0.3651041666666667" />
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout-land/activity_main.xml" value="0.28541666666666665" />
         <entry key="..\:/InfinyQuiz/app/src/main/res/layout-land/activity_reviewquestion.xml" value="0.5378378378378378" />
@@ -32,7 +31,7 @@
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/drawable/text_border.xml" value="0.4985" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_accountdata.xml" value="0.5" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_changeusername.xml" value="0.38385416666666666" />
-        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_createquestion.xml" value="0.440625" />
+        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_createquestion.xml" value="0.75" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_finalscoreboard.xml" value="0.8208333333333333" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_friends_actitivity.xml" value="0.440625" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_game.xml" value="0.5" />
@@ -44,6 +43,8 @@
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_resetpassword.xml" value="0.440625" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_reviewquestion.xml" value="0.38385416666666666" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_scoreboard.xml" value="0.440625" />
+        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_search_friend.xml" value="0.403125" />
+        <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_selectcategories.xml" value="0.403125" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout-land/activity_settings.xml" value="0.403125" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_accountdata.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/Tijn/StudioProjects/InfinyQuizNew/app/src/main/res/layout/activity_changeusername.xml" value="0.55" />
