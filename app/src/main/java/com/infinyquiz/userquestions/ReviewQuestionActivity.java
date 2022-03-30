@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -193,6 +194,9 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
 
             //Put question in reported question database
             database.getReference().child("ReportedQuestions").child(question.getCategory()).push().setValue(question);
+            Toast.makeText(this, "Reported question", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, ReviewQuestionActivity.class));
+            return;
         }
 
         //number of positive votes
