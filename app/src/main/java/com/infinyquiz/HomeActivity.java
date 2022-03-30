@@ -29,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
         createQuestionBtn.setOnClickListener(new MoveToActivityOnClickListener(new CreateQuestionActivity(), this));
         Button reviewQuestionBtn = (Button) findViewById(R.id.rateQuestionBtn);
         reviewQuestionBtn.setOnClickListener(new MoveToActivityOnClickListener(new ReviewQuestionActivity(), this));
-        ImageButton profileBtn = (ImageButton) findViewById(R.id.profileBtn);
+        Button profileBtn = (Button) findViewById(R.id.profileBtn);
         profileBtn.setOnClickListener( new MoveToActivityOnClickListener(new ProfileActivity(), this));
     }
 }

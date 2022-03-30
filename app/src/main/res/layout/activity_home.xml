@@ -6,24 +6,26 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <ImageButton
+    <Button
         android:id="@+id/profileBtn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="325dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="303dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/circlebutton"
-        android:contentDescription="Button to profile with profile picture"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="Profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/googleg_standard_color_18" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/homeAppnameView"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="86dp"
         android:fontFamily="@font/harlowsoliditalic"
         android:text="@string/app_name"
         android:textAlignment="center"
@@ -32,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileBtn" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/randomMatchBtn"

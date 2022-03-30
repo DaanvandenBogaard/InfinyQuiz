@@ -6,20 +6,21 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <ImageButton
+    <Button
         android:id="@+id/profileBtn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="325dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/circlebutton"
-        android:contentDescription="Button to profile with profile picture"
+        android:backgroundTint="@color/yellowBtn"
+        android:fontFamily="@font/buttonfont"
+        android:text="Profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/googleg_standard_color_18" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/homeAppnameView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/homeAppnameView"
@@ -31,9 +32,9 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/profileBtn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/logOutBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -123,7 +124,6 @@
         android:id="@+id/logOutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/yellowBtn"
         android:fontFamily="@font/buttonfont"
@@ -131,6 +131,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/homeAppnameView"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
