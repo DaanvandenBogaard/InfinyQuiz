@@ -101,6 +101,17 @@ public class ChangeUsernameActivity extends AppCompatActivity implements View.On
             newUsername.requestFocus();
             return;
         }
+        if(username.length() < 3){
+            newUsername.setError("Minimal size of username is 3 characters");
+            newUsername.requestFocus();
+            return;
+        }
+
+        if(username.length() > 15){
+            newUsername.setError("Maximal size of username is 15 characters");
+            newUsername.requestFocus();
+            return;
+        }
         Intent intent = new Intent(this, ProfileActivity.class);
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
         User curUser = converter.getUser(userID);
