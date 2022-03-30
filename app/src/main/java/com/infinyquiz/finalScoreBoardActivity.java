@@ -21,6 +21,8 @@ import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -40,7 +42,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
 
     //UI elements:
     private TextView finalMessageTv;
-    private TextView number1TV, number2TV, number3TV, number3StaticTV;
+    private TextView number1TV, number2TV, number3TV, number3StaticTV, scoreBoard;
 
     private Button leaveMatchBtn;
 
@@ -71,7 +73,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
         number2TV = (TextView) findViewById(R.id.numberTwoTV);
         number3TV = (TextView) findViewById(R.id.numberThreeTV);
         number3StaticTV = (TextView) findViewById(R.id.thirdPlaceStaticTV);
-
+        scoreBoard = (TextView) findViewById(R.id.generalScoreboardTV);
         leaveMatchBtn = (Button) findViewById(R.id.leaveMatchBtn);
     }
 
@@ -117,6 +119,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
             } else {
                 number3TV.setText(converter.getUserName(top3[2].trim()) + ": " + game.getScore(top3[2]));
             }
+            scoreBoard.setText(getScores(game.getScoreboard()));
         } else {
             //We wait one second and then assume that {@code converter.isReady()}.
             Timer timer = new Timer();
@@ -134,6 +137,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
                             } else {
                                 number3TV.setText(converter.getUserName(top3[2].trim()) + ": " + game.getScore(top3[2]));
                             }
+                            scoreBoard.setText(getScores(game.getScoreboard()));
                         }
                     });
 
@@ -184,6 +188,32 @@ public class finalScoreBoardActivity extends AppCompatActivity {
             }
         }
         return highestUser;
+    }
+
+    //Function to get the scoreboard
+    public String getScores(Map<String, Integer> scoreboard) {
+        String scores = "";
+        ArrayList<Integer> listOfScores = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : scoreboard.entrySet()) {
+            listOfScores.add(entry.getValue());
+        }
+        //Sort in reverse order
+        Collections.sort(listOfScores, Collections.reverseOrder());
+        //build the string:
+        for (int i = 1; i <= listOfScores.size(); i++) {
+            //find a key that suits
+            for (Map.Entry<String, Integer> entry : scoreboard.entrySet()) {
+                if (entry.getValue() == listOfScores.get(i - 1)) {
+                    scores += i + ") " + converter.getUserName(entry.getKey()) + ": " + entry.getValue();
+                    if (i != listOfScores.size()) {
+                        scores += "\n";
+                    }
+
+                }
+            }
+        }
+
+        return scores;
     }
 
 

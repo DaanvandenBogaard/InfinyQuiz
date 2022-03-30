@@ -21,7 +21,10 @@ import com.infinyquiz.datarepresentation.RandomGame;
 import com.infinyquiz.datarepresentation.UserDataConverter;
 import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -63,7 +66,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 game = snapshot.getValue(RandomGame.class);
-                if(timerHasBeenSet || !game.haveAllPlayersAnswered()){
+                if (timerHasBeenSet || !game.haveAllPlayersAnswered()) {
                     return;
                 }
                 setUI(game);
@@ -71,7 +74,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
                 game.clearJoinedPlayers();
                 ref.setValue(game);
 
-                if(game.haveAllPlayersAnswered()){
+                if (game.haveAllPlayersAnswered()) {
                     startTimer();
                 }
 
@@ -115,8 +118,8 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
         TextView scoreBoardTV = (TextView) findViewById(R.id.scoreboardTV);
         //Make new scoreboard with usernames:
-        if(converter.isReady()) {
-            scoreBoardTV.setText(converter.convertScoreBoard(game.getScoreboard()).toString().trim());
+        if (converter.isReady()) {
+            scoreBoardTV.setText(getScores(game.getScoreboard()));
         } else {
             //We wait one second and then assume that {@code converter.isReady()}.
             Timer timer = new Timer();
@@ -126,13 +129,39 @@ public class ScoreBoardActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            scoreBoardTV.setText(converter.convertScoreBoard(game.getScoreboard()).toString().trim());
+                            scoreBoardTV.setText(getScores(game.getScoreboard()));
                         }
                     });
 
                 }
             }, 1000);
         }
+    }
+
+    //Function to get the scoreboard
+    public String getScores(Map<String, Integer> scoreboard) {
+        String scores = "";
+        ArrayList<Integer> listOfScores = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : scoreboard.entrySet()) {
+            listOfScores.add(entry.getValue());
+        }
+        //Sort in reverse order
+        Collections.sort(listOfScores, Collections.reverseOrder());
+        //build the string:
+        for (int i = 1; i <= listOfScores.size(); i++) {
+            //find a key that suits
+            for (Map.Entry<String, Integer> entry : scoreboard.entrySet()) {
+                if (entry.getValue() == listOfScores.get(i - 1)) {
+                    scores += i + ") " + converter.getUserName(entry.getKey()) + ": " + entry.getValue();
+                    if (i != listOfScores.size()) {
+                        scores += "\n";
+                    }
+
+                }
+            }
+        }
+
+        return scores;
     }
 
     private void moveToGameActivity() {
@@ -144,5 +173,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
         intent.putExtra("index", getIntent().getIntExtra("index", 0));
         startActivity(intent);
     }
+
 
 }
