@@ -362,10 +362,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //Answered incorrectly
             points = -10;
         }
-        //Set points (will be updated when moving to next question).
-        if (!game.getScoreboard().containsKey(userID)) {
-            game.setScore(userID, 0);
-        }
         game.setScore(userID, game.getScore(userID) + points);
         updateFirebaseGame(game);
 
