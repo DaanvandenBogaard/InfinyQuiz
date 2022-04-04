@@ -74,8 +74,6 @@ public abstract class Game {
     public Game() {
     }
 
-    ;
-
     public Game(Lobby lobby) {
         this.lobby = lobby;
     }
@@ -93,6 +91,10 @@ public abstract class Game {
     }
 
     public int getScore(String userId) {
+        if (!scoreboard.keySet().contains(userId)) {
+            scoreboard.put(userId, 0);
+        }
+
         return scoreboard.get(userId);
     }
 
@@ -101,6 +103,9 @@ public abstract class Game {
     }
 
     public void setScore(String userId, int score) {
+        if (scoreboard == null) {
+            scoreboard = new HashMap<>();
+        }
         scoreboard.put(userId, score);
     }
 
@@ -132,7 +137,7 @@ public abstract class Game {
 
     public void addPlayerToAnswered(String playerID) {
 
-        if(!answeredPlayers.contains(playerID)){
+        if (!answeredPlayers.contains(playerID)) {
             answeredPlayers.add(playerID);
         }
     }
@@ -170,12 +175,11 @@ public abstract class Game {
      * @modifies {@code joinedPlayers}
      */
     public void joinPlayer(String playerID) {
-        scoreboard.put(playerID, 0);
         joinedPlayers.add(playerID);
     }
 
 
-    public void clearJoinedPlayers(){
+    public void clearJoinedPlayers() {
         joinedPlayers = new ArrayList<>();
     }
 }
