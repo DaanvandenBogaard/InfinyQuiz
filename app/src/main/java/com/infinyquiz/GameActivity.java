@@ -254,8 +254,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      *
      */
     private boolean hasUpdatedUI = false;
+
     private void updateUI() {
-        if(hasUpdatedUI){
+        if (hasUpdatedUI) {
             return;
         }
         TextView questionTV = (TextView) findViewById(R.id.questionTV);

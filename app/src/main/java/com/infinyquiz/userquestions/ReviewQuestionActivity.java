@@ -83,7 +83,7 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
      * @modifies none
      * @throws DatabaseError if no connection could be made to the database
      */
-    private void getQuestion(){
+    private void getQuestion() {
         Question[] returnQuestion = new Question[1];
         returnQuestion[0] = new Question();
 
@@ -164,7 +164,7 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
 
         //set image
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        if(question.hasImage()){
+        if (question.hasImage()) {
             imageView.setImageBitmap(UserDataConverter.decodeImage(question.getPictureID()));
         }
     }
@@ -188,7 +188,7 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://infinyquiz-a135e-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference ref = database.getReference().child("NotValidatedQuestions");
 
-        if(view.getId() == R.id.reportBtn){
+        if (view.getId() == R.id.reportBtn) {
             //Delete question from this database
             ref.removeValue();
 
@@ -205,11 +205,12 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
         int numNegVotes = negVotes.size();
 
         //Set whether or not this was a positive vote.
-        String posOrNeg = "posVote";;
+        String posOrNeg = "posVote";
+        ;
         if (view.getId() == R.id.voteNegativeBtn) {
             posOrNeg = "negVote";
             numNegVotes++;
-        } else if (view.getId() == R.id.positiveVoteBtn){
+        } else if (view.getId() == R.id.positiveVoteBtn) {
             posOrNeg = "posVote";
             numPosVotes++;
         }

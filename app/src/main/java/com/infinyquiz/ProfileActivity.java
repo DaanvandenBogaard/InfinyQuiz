@@ -60,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
         profilePicture = (ImageView) findViewById(R.id.profilePic);
 
         Button changeUsernameBtn = (Button) findViewById(R.id.changeUsernameBtn);
-        changeUsernameBtn.setOnClickListener(new MoveToActivityOnClickListener(new ChangeUsernameActivity() , this));
+        changeUsernameBtn.setOnClickListener(new MoveToActivityOnClickListener(new ChangeUsernameActivity(), this));
 
         //retrieves image from firebase and updates profile picture
         updateImage();
@@ -135,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
     }
 
     /* A function that uploads the encoded image to firebase
@@ -169,6 +169,7 @@ public class ProfileActivity extends AppCompatActivity {
                     profilePicture.setImageBitmap(imageBitmap);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("could not read data", "The read failed: " + databaseError.getCode());

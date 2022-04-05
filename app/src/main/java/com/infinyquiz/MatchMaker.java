@@ -44,7 +44,7 @@ public class MatchMaker {
     }
 
     public void lookForLobby() {
-        if(hasStartedMatchmaking){
+        if (hasStartedMatchmaking) {
             return;
         }
         hasStartedMatchmaking = true;
@@ -55,11 +55,11 @@ public class MatchMaker {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Lobby curLobby = data.getValue(Lobby.class);
-                    if(curLobby == null){
+                    if (curLobby == null) {
                         continue;
                     }
 
-                    if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE ) {
+                    if (curLobby.getLobbySize() <= Lobby.MAX_PEOPLE) {
                         lobby = curLobby;
                         curLobby.setID(data.getKey());
                         lobbyID = curLobby.getId();
@@ -84,7 +84,7 @@ public class MatchMaker {
 
     }
 
-    private void setListenerToLobby(){
+    private void setListenerToLobby() {
         //Now lobby is set, we will set listener to
         DatabaseReference refToLobby = database.getReference().child("Lobbies").child("OpenLobbies").child(lobbyID);
         refToLobby.addValueEventListener(new ValueEventListener() {
@@ -151,7 +151,7 @@ public class MatchMaker {
         database.getReference().child("Lobbies").child("OpenLobbies").child(lobby.getId()).child("users").child(String.valueOf(lobby.getUsers().indexOf(userID))).removeValue();
     }
 
-    public String getUserSelectedCategory(){
+    public String getUserSelectedCategory() {
         return userSelectedCategory;
     }
 

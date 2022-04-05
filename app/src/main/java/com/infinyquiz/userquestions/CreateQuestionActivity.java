@@ -138,29 +138,29 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
      * @modifies none
      * @returns {@result == (the input satisfies our conditions)}
      */
-    public boolean isValidInput(){
+    public boolean isValidInput() {
         //Test for being non empty
-        if(questionTV.getText().toString().trim().isEmpty()){
+        if (questionTV.getText().toString().trim().isEmpty()) {
             questionTV.setError("Question must be entered.");
             questionTV.requestFocus();
             return false;
         }
-        if(answerATV.getText().toString().trim().isEmpty()){
+        if (answerATV.getText().toString().trim().isEmpty()) {
             answerATV.setError("Correct answer must be entered.");
             answerATV.requestFocus();
             return false;
         }
-        if(answerBTV.getText().toString().trim().isEmpty()){
+        if (answerBTV.getText().toString().trim().isEmpty()) {
             answerBTV.setError("option must be entered.");
             answerBTV.requestFocus();
             return false;
         }
-        if(answerCTV.getText().toString().trim().isEmpty()){
+        if (answerCTV.getText().toString().trim().isEmpty()) {
             answerCTV.setError("option must be entered.");
             answerCTV.requestFocus();
             return false;
         }
-        if(answerDTV.getText().toString().trim().isEmpty()){
+        if (answerDTV.getText().toString().trim().isEmpty()) {
             answerDTV.setError("option must be entered.");
             answerDTV.requestFocus();
             return false;
@@ -170,18 +170,17 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
 
     @Override
     public void onClick(View view) {
-        if(isValidInput()){
+        if (isValidInput()) {
             Question question = getQuestionFromInput();
             //Submit question to database
             database.getReference().child("NotValidatedQuestions").push().setValue(question).addOnCompleteListener(new OnCompleteListener<Void>() { //Test whether this has gone succesfully or not.
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){ //If user has been added to realtime database
+                    if (task.isSuccessful()) { //If user has been added to realtime database
                         Toast.makeText(CreateQuestionActivity.this, "Question succesfully submitted!!", Toast.LENGTH_LONG).show();
                         //Reload page
                         startActivity(new Intent(CreateQuestionActivity.this, CreateQuestionActivity.class));
-                    }
-                    else{
+                    } else {
                         Toast.makeText(CreateQuestionActivity.this, "Something went wrong with your submission, please try again!", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -210,7 +209,7 @@ public class CreateQuestionActivity extends AppCompatActivity implements Adapter
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
     }
 
     //Reacts to the 2 methods above:

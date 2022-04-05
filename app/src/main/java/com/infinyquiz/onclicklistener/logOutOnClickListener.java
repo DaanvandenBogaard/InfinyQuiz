@@ -9,8 +9,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class logOutOnClickListener extends MoveToActivityOnClickListener {
 
-    public logOutOnClickListener(AppCompatActivity destination, Context context){
-        super(destination,context);
+    public logOutOnClickListener(AppCompatActivity destination, Context context) {
+        super(destination, context);
     }
 
     @Override

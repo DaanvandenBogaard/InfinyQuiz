@@ -107,8 +107,6 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
         super.onResume();
     }
 
-
-
     //Put this in a seperate class to be able to access from onResume
     private void startNewGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
@@ -173,7 +171,7 @@ public class MatchMakingActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         if (view.getId() == R.id.backToHomeBtn) {
             matchMaker.leaveLobby();
-            if(timer != null){
+            if (timer != null) {
                 timer.cancel();
             }
             startActivity(new Intent(this, HomeActivity.class));

@@ -164,16 +164,16 @@ public class LoginActivity extends AppCompatActivity {
      * (if {@code extras.getString("email") != null} then the value in the UI field is set accordingly) &
      * (if {@code extras.getString("password") != null} then the value in the UI field is set accordingly)
      */
-    private void setOldValues(){
+    private void setOldValues() {
         //Retrieve (possible) info from register activity
         Bundle info = getIntent().getExtras();
         if (info != null) {
             String email = info.getString("email");
             String password = info.getString("password");
-            if(email != null){
+            if (email != null) {
                 emailET.setText(email);
             }
-            if(password != null){
+            if (password != null) {
                 passwordET.setText(password);
             }
         }

@@ -12,13 +12,13 @@ public class MoveToActivityOnClickListener implements View.OnClickListener {
     Context context;
 
     //Constructor with destionation and context ("to" - "from") notation.
-    public MoveToActivityOnClickListener(AppCompatActivity destination, Context context){
+    public MoveToActivityOnClickListener(AppCompatActivity destination, Context context) {
         this.intent = new Intent(context, destination.getClass());
         this.context = context;
     }
 
     //Constructor with explicit content (usefull in case we want to pass date)
-    public MoveToActivityOnClickListener(Intent intent){
+    public MoveToActivityOnClickListener(Intent intent) {
         this.intent = intent;
     }
 

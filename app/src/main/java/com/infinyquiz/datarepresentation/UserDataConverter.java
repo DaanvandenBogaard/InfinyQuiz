@@ -4,12 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,11 +60,11 @@ public class UserDataConverter {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 idToUsername = new HashMap<String, String>();
                 idToUser = new HashMap<String, User>();
-                emailToID = new HashMap<String,String>();
+                emailToID = new HashMap<String, String>();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     User thisUser = data.getValue(User.class);
                     idToUsername.put(data.getKey(), thisUser.getUsername());
-                    idToUser.put(data.getKey(),thisUser);
+                    idToUser.put(data.getKey(), thisUser);
                     emailToID.put(thisUser.getMail(), data.getKey());
                 }
                 isReady = true;
@@ -114,8 +117,8 @@ public class UserDataConverter {
      * @pre {@code idToUsername != null}
      * @returns {@code idToUsername.get(id)}
      */
-    public String getUserName(String id){
-        if(idToUsername == null){
+    public String getUserName(String id) {
+        if (idToUsername == null) {
             return "";
         }
         return idToUsername.get(id);
@@ -133,8 +136,8 @@ public class UserDataConverter {
      * @pre {@code idToUser != null}
      * @returns {@code idToUser.get(id)}
      */
-    public User getUser(String id){
-        if(idToUser == null){
+    public User getUser(String id) {
+        if (idToUser == null) {
             return new User(); //return empty user.
         }
         return idToUser.get(id);
@@ -146,8 +149,8 @@ public class UserDataConverter {
      * @pre {@code emailToID != null}
      * @post {@code emailToID.get(email)}
      */
-    public String getID(String email){
-        if(emailToID == null){
+    public String getID(String email) {
+        if (emailToID == null) {
             return "";
         }
         return emailToID.get(email);
