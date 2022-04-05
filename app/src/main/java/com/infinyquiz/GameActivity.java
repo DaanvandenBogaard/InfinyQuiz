@@ -253,7 +253,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /* updates to UI according to game
      *
      */
+    private boolean hasUpdatedUI = false;
     private void updateUI() {
+        if(hasUpdatedUI){
+            return;
+        }
         TextView questionTV = (TextView) findViewById(R.id.questionTV);
         Question question = game.getCurrentQuestion();
         questionTV.setText(question.getQuestion());
@@ -271,6 +275,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             ImageView imageView = (ImageView) findViewById(R.id.imageView);
             imageView.setImageBitmap(UserDataConverter.decodeImage(question.getPictureID()));
         }
+        hasUpdatedUI = true;
     }
 
     /* Returns the most common category in the votes
