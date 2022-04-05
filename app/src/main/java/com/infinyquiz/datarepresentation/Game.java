@@ -36,7 +36,7 @@ public abstract class Game {
     public int index = 0;
 
     //the number of questions, according to requirements, must be 10
-    public static int NUMBER_OF_QUESTIONS = 2; // 10; //TODO set requirement
+    public static int NUMBER_OF_QUESTIONS = 10;
 
     //ID to game:
     private String gameID;
