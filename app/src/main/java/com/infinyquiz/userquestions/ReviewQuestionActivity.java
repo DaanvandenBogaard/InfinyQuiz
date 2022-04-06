@@ -219,7 +219,9 @@ public class ReviewQuestionActivity extends AppCompatActivity implements View.On
 
         //Check if question must be moved to validated questions
         if (numPosVotes + numNegVotes >= VALIDATION_THRESHOLD) { //if threshold is exceeded
-            if (numPosVotes / (numNegVotes + numPosVotes) >= ACCEPTANCE_PERCENTAGE) {
+            float newNumPosVotes = (float) numPosVotes;
+            float newNumNegVotes = (float) numNegVotes;
+            if (newNumPosVotes / (newNumNegVotes + newNumPosVotes) >= ACCEPTANCE_PERCENTAGE) {
                 //Move question to validated questions
                 database.getReference().child("ValidatedQuestions").child(question.getCategory()).push().setValue(question);
             }
