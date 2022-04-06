@@ -151,6 +151,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         }
         //Sort in reverse order
         Collections.sort(listOfScores, Collections.reverseOrder());
+        listOfScores.removeAll(Collections.singleton(null));
         //build the string:
         for (int i = 1; i <= listOfScores.size(); i++) {
             //find a key that suits
