@@ -22,6 +22,7 @@ import com.infinyquiz.onclicklistener.MoveToActivityOnClickListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -199,6 +200,7 @@ public class finalScoreBoardActivity extends AppCompatActivity {
         }
         //Sort in reverse order
         Collections.sort(listOfScores, Collections.reverseOrder());
+        listOfScores.removeAll(Collections.singleton(null));
         //build the string:
         for (int i = 1; i <= listOfScores.size(); i++) {
             //find a key that suits

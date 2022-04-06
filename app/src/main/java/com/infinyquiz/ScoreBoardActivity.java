@@ -108,7 +108,11 @@ public class ScoreBoardActivity extends AppCompatActivity {
     }
 
     //A function to set the UI accordingly
+    private boolean hasSetUI = false;
     private void setUI(Game game) {
+        if(hasSetUI){
+            return;
+        }
         Question question = game.getCurrentQuestion();
         TextView questionTV = (TextView) findViewById(R.id.questionTV);
         questionTV.setText(question.getQuestion().trim());
@@ -147,6 +151,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         }
         //Sort in reverse order
         Collections.sort(listOfScores, Collections.reverseOrder());
+        listOfScores.removeAll(Collections.singleton(null));
         //build the string:
         for (int i = 1; i <= listOfScores.size(); i++) {
             //find a key that suits
@@ -160,6 +165,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
                 }
             }
         }
+        hasSetUI = true;
 
         return scores;
     }
