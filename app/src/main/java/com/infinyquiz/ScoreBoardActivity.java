@@ -108,7 +108,11 @@ public class ScoreBoardActivity extends AppCompatActivity {
     }
 
     //A function to set the UI accordingly
+    private boolean hasSetUI = false;
     private void setUI(Game game) {
+        if(hasSetUI){
+            return;
+        }
         Question question = game.getCurrentQuestion();
         TextView questionTV = (TextView) findViewById(R.id.questionTV);
         questionTV.setText(question.getQuestion().trim());
@@ -160,6 +164,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
                 }
             }
         }
+        hasSetUI = true;
 
         return scores;
     }
